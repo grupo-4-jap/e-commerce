@@ -15,13 +15,4 @@ loginForm.addEventListener("submit", (e) => {
     } else {
         alert("Debe ingresar su usuario y contraseña");
     }
-
-    // Simulación de verificación de credenciales (reemplazar con lógica real)
-    // if (username === "usuario" && password === "contraseña") {
-    //     loginStatus.textContent = "Inicio de sesión exitoso";
-    //     loginStatus.style.color = "green";
-    // } else {
-    //     loginStatus.textContent = "Credenciales incorrectas";
-    //     loginStatus.style.color = "red";
-    // }
 });
