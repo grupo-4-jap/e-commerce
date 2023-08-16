@@ -43,15 +43,11 @@ let getJSONData = function(url){
 document.addEventListener('DOMContentLoaded', () => {
   const isLog = isLogged();
   console.log(`El usuario esta logeado? ${isLog}`);
-  const locationPage = window.location.pathname
-  console.log(locationPage)
-  return
   
-  if (!isLog && locationPage !== '/login.html') {
-    location.href = '/login.html'
-  } else if (isLog && locationPage === '/login.html') {
-    alert('El usuario ya esta logeado, yendo a index...');
-    location.href = '/index.html';
+  if (!isLog && !checkPage('login.html')) {
+    location.href = 'login.html';
+  } else if (isLog && checkPage('login.html')) {
+    location.href = 'index.html';
   }
 });
 
@@ -98,4 +94,14 @@ function getUserData() {
     return null
   }
   return JSON.parse(localStorage.getItem('userData'));
+}
+
+function getCurrentPage() {
+  const pathname = window.location.pathname;
+  const split = pathname.split("/");
+  return split[split.length - 1] == target
+}
+
+function checkPage(target) {
+  return getCurrentPage() === target;
 }
