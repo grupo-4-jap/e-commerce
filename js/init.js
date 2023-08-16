@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log(`El usuario esta logeado? ${isLog}`);
   const locationPage = window.location.pathname
   console.log(locationPage)
+  return
   
   if (!isLog && locationPage !== '/login.html') {
     location.href = '/login.html'
