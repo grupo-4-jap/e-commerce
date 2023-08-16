@@ -61,6 +61,7 @@ function isLogged() {
 }
 
 
+// logea al usuario
 function login(userData) {
   if (isLogged()) {
     console.log('El usuario ya esta logeado');
