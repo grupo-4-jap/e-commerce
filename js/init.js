@@ -99,7 +99,7 @@ function getUserData() {
 function getCurrentPage() {
   const pathname = window.location.pathname;
   const split = pathname.split("/");
-  return split[split.length - 1] == target
+  return split[split.length - 1]
 }
 
 function checkPage(target) {
