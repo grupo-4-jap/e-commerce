@@ -211,7 +211,7 @@ a.custom-card:hover {
 }
 
 .login-bg {
-    background-image: url('img/cover_back_without_personita.png');
+    background-image: url('../img/cover_back_without_personita.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
