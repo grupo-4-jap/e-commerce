@@ -6,7 +6,7 @@
 .card-body,
 .container,
 .site-header {
-    font-family: "Verdana", serif !important;
+    font-family: 'Verdana', serif !important;
 }
 
 .jumbotron .display-4 {
@@ -37,7 +37,7 @@ nav a {
     padding: 5em inherit;
     margin-bottom: 0;
     background-color: #53c0fb;
-    background: url("../img/cover_back.png");
+    background: url('../img/cover_back.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -194,7 +194,7 @@ a.custom-card:hover {
 }
 
 .login {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 .login button {
@@ -211,7 +211,7 @@ a.custom-card:hover {
 }
 
 .login-bg {
-    background-image: url("/img/cover_back_witout_personita.png");
+    background-image: url('../img/cover_back_without_personita.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
