@@ -5,18 +5,18 @@ const userPassword = document.getElementById('floatingPassword');
 const loginStatus = document.getElementById('login-status');
 
 loginForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Evita el envío del formulario
+  e.preventDefault(); // Evita el envío del formulario
 
-    const username = userInput.value;
-    const password = userPassword.value;
+  const username = userInput.value;
+  const password = userPassword.value;
 
-    if (username != '' && password != '') {
-        login({
-            email: username,
-            password: password,
-        });
-        location.href = 'index.html';
-    } else {
-        alert('Debe ingresar su usuario y contraseña');
-    }
+  if (username != '' && password != '') {
+    login({
+      email: username,
+      password: password,
+    });
+    location.href = 'index.html';
+  } else {
+    alert('Debe ingresar su usuario y contraseña');
+  }
 });
