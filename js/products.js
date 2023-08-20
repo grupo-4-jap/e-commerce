@@ -1,5 +1,5 @@
-const URL_CATALOG = 'https://japceibal.github.io/emercado-api/cats_products/101.json';
-
+const URL_CATALOG =
+  'https://japceibal.github.io/emercado-api/cats_products/101.json';
 
 /**
  * {
@@ -15,41 +15,40 @@ const URL_CATALOG = 'https://japceibal.github.io/emercado-api/cats_products/101.
         "image": "img/prod50921_1.jpg"
  *  },
     ...
- ]
+]
  * }
  */
 
 async function getCatalogData() {
-    const result = {};
+  const result = {};
 
-    try {
-        const response = await fetch(URL_CATALOG);
+  try {
+    const response = await fetch(URL_CATALOG);
 
-        if (response.ok) {
-            const json = await response.json();
-            result.status = 'ok';
-            result.body = json;
-        } else {
-            throw Error(response.statusText);
-        }
-    } catch (err) {
-        result.status = 'error';
-        result.errorMessage = err.message;
-        result.body = {}
+    if (response.ok) {
+      const json = await response.json();
+      result.status = 'ok';
+      result.body = json;
+    } else {
+      throw Error(response.statusText);
     }
+  } catch (err) {
+    result.status = 'error';
+    result.errorMessage = err.message;
+    result.body = {};
+  }
 
-    return result;
+  return result;
 }
 
-
 function showProducts(products) {
-    const container = document.getElementById('containerProducts');
-    container.innerHTML = '';
+  const container = document.getElementById('containerProducts');
+  container.innerHTML = '';
 
-    for (const p of products) {
-        const { name, description, cost, currency, soldCount, image } = p;
-    
-        container.innerHTML += `
+  for (const p of products) {
+    const { name, description, cost, currency, soldCount, image } = p;
+
+    container.innerHTML += `
         <div class="list-group-item list-group-item-action">
             <div class="row">
                 <div class="col-3">
@@ -67,12 +66,11 @@ function showProducts(products) {
                 </div>
             </div>
         </div>`;
-    }
+  }
 }
 
-
 document.addEventListener('DOMContentLoaded', async () => {
-    const data = await getCatalogData();
-    console.log(data);
-    showProducts(data.body.products);
+  const data = await getCatalogData();
+  console.log(data);
+  showProducts(data.body.products);
 });
