@@ -1,5 +1,4 @@
-const URL_CATALOG =
-  'https://japceibal.github.io/emercado-api/cats_products/101.json';
+const URL_CATALOG = 'https://japceibal.github.io/emercado-api/cats_products/';
 
 /**
  * {
@@ -19,11 +18,18 @@ const URL_CATALOG =
  * }
  */
 
+
+function getCatId() {
+  const catid = localStorage.getItem('catID')
+  return  catid !== null ? catid : 101;
+}
+
+
 async function getCatalogData() {
   const result = {};
 
   try {
-    const response = await fetch(URL_CATALOG);
+    const response = await fetch(URL_CATALOG + getCatId() + '.json');
 
     if (response.ok) {
       const json = await response.json();
@@ -70,7 +76,10 @@ function showProducts(products) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const catName = document.getElementById('catName');
+  catName.innerHTML = '';
   const data = await getCatalogData();
   console.log(data);
+  catName.innerHTML = data.body.catName;
   showProducts(data.body.products);
 });
