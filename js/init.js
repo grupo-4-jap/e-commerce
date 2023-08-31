@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } else if (isLog && checkPage('login.html')) {
     location.href = 'index.html';
   }
+  createUserNav()
 });
 
 
@@ -104,4 +105,12 @@ function getCurrentPage() {
 
 function checkPage(target) {
   return getCurrentPage() === target;
+}
+
+const navLinks = document.querySelectorAll('.nav-item')
+console.log(navLinks)
+
+const createUserNav = () => {
+  const {email} = getUserData();
+  navLinks[navLinks.length - 1].innerHTML = `<span class="nav-link" id="loggeado">${email}</span>`
 }
