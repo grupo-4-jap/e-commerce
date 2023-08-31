@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function updateProductsArray(data) {
-  currentCategoriesArray = data.body.products;
+  currentProductsArray = data.body.products;
 }
 
 // *************************
@@ -97,7 +97,7 @@ function updateProductsArray(data) {
 const ORDER_ASC_BY_NUM = '09';
 const ORDER_DESC_BY_NUM = '90';
 const ORDER_BY_PROD_SOLD = 'Vendidos';
-let currentCategoriesArray = [];
+let currentProductsArray = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
@@ -142,16 +142,16 @@ function sortCategories(criteria, array) {
   return result;
 }
 
-function sortAndShowCategories(sortCriteria, categoriesArray) {
+function sortAndShowCategories(sortCriteria, productsArray) {
   currentSortCriteria = sortCriteria;
 
-  if (categoriesArray != undefined) {
-    currentCategoriesArray = categoriesArray;
+  if (productsArray != undefined) {
+    currentProductsArray = productsArray;
   }
 
-  currentCategoriesArray = sortCategories(
+  currentProductsArray = sortCategories(
     currentSortCriteria,
-    currentCategoriesArray
+    currentProductsArray
   );
 
   //Muestro las categorías ordenadas
@@ -160,8 +160,8 @@ function sortAndShowCategories(sortCriteria, categoriesArray) {
 
 function showCategoriesList() {
   let htmlContentToAppend = '';
-  for (let i = 0; i < currentCategoriesArray.length; i++) {
-    let category = currentCategoriesArray[i];
+  for (let i = 0; i < currentProductsArray.length; i++) {
+    let category = currentProductsArray[i];
 
     const { id, image, description, name, soldCount, currency, cost } =
       category;
