@@ -18,12 +18,10 @@ const URL_CATALOG = 'https://japceibal.github.io/emercado-api/cats_products/';
  * }
  */
 
-
 function getCatId() {
-  const catid = localStorage.getItem('catID')
-  return  catid !== null ? catid : 101;
+  const catid = localStorage.getItem('catID');
+  return catid !== null ? catid : 101;
 }
-
 
 async function getCatalogData() {
   const result = {};
