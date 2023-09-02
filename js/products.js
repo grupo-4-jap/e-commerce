@@ -1,12 +1,16 @@
 import {
   sortAndShowCategories,
-  updateProductsArray,
   ORDER_ASC_BY_NUM,
   ORDER_DESC_BY_NUM,
   ORDER_BY_PROD_SOLD,
 } from './utils/sortProducts.js';
 
+import filterProducts from './utils/filterProducts.js';
+import showProductList from './utils/showProductList.js';
+
 const URL_CATALOG = 'https://japceibal.github.io/emercado-api/cats_products/';
+let data = {};
+let productList = [];
 
 /**
  * {
@@ -53,32 +57,8 @@ async function getCatalogData() {
   return result;
 }
 
-function showProducts(products) {
-  const container = document.getElementById('containerProducts');
-  container.innerHTML = '';
-
-  for (const p of products) {
-    const { name, description, cost, currency, soldCount, image } = p;
-
-    container.innerHTML += `
-        <div class="list-group-item list-group-item-action">
-            <div class="row">
-                <div class="col-3">
-                    <img src="${image}" alt="product image" class="img-thumbnail">
-                </div>
-                <div class="col">
-                    <div class="d-flex w-100 justify-content-between">
-                        <div class="mb-1">
-                        <h4> ${name} - ${currency} ${cost} </h4> 
-                        <p>${description}</p> 
-                        </div>
-                        <small class="text-muted">${soldCount} Vendidos</small> 
-                    </div>
-
-                </div>
-            </div>
-        </div>`;
-  }
+function clearFilters() {
+  showProductList(productList);
 }
 
 // Events
@@ -86,22 +66,35 @@ function showProducts(products) {
 document.addEventListener('DOMContentLoaded', async () => {
   const catName = document.getElementById('catName');
   catName.innerHTML = '';
-  const data = await getCatalogData();
-  console.log(data);
+  data = await getCatalogData();
+  productList = await data.body.products;
   catName.innerHTML = data.body.catName;
-  showProducts(data.body.products);
-
-  updateProductsArray(data);
+  showProductList(productList);
 });
 
 document.getElementById('sortAsc').addEventListener('click', function () {
-  sortAndShowCategories(ORDER_ASC_BY_NUM);
+  sortAndShowCategories(ORDER_ASC_BY_NUM, productList);
 });
 
 document.getElementById('sortDesc').addEventListener('click', function () {
-  sortAndShowCategories(ORDER_DESC_BY_NUM);
+  sortAndShowCategories(ORDER_DESC_BY_NUM, productList);
 });
 
 document.getElementById('sortByCount').addEventListener('click', function () {
-  sortAndShowCategories(ORDER_BY_PROD_SOLD);
+  sortAndShowCategories(ORDER_BY_PROD_SOLD, productList);
 });
+
+document
+  .getElementById('rangeFilterCount')
+  .addEventListener('click', async function () {
+    const min = Number(document.getElementById('rangeFilterCountMin').value);
+    const max = Number(document.getElementById('rangeFilterCountMax').value);
+    showProductList(filterProducts(productList, min, max));
+  });
+
+document
+  .getElementById('clearRangeFilter')
+  .addEventListener('click', function (e) {
+    e.stopPropagation();
+    clearFilters();
+  });
