@@ -12,6 +12,10 @@
       href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/a3e39000f7.js"
+      crossorigin="anonymous"
+    ></script>
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
@@ -52,10 +56,96 @@
         <div class="text-center">
           <h1>Productos</h1>
           <p>
-            Verás aquí todos los productos de la categoria
+            Verás aquí todos los productos de la categoría
             <strong id="catName">Autos</strong>
           </p>
         </div>
+
+        <!-- Group buttons -->
+        <div class="container">
+          <div class="row">
+            <div class="col text-end">
+              <div
+                class="btn-group btn-group-toggle mb-4"
+                data-bs-toggle="buttons"
+              >
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="sortAsc"
+                />
+
+                <label class="btn btn-light" for="sortAsc"
+                  ><i class="fa-solid fa-arrow-up-1-9"></i
+                ></label>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="sortDesc"
+                />
+                <label class="btn btn-light" for="sortDesc"
+                  ><i class="fa-solid fa-arrow-down-9-1"></i
+                ></label>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="sortByCount"
+                  checked
+                />
+                <label class="btn btn-light" for="sortByCount"
+                  ><i class="fas fa-sort-amount-down mr-1"></i
+                ></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
+              <div class="row container p-0 m-0">
+                <div class="col">
+                  <p class="font-weight-normal text-end my-2">Precio</p>
+                </div>
+                <div class="col">
+                  <input
+                    class="form-control"
+                    type="number"
+                    placeholder="min."
+                    id="rangeFilterCountMin"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    class="form-control"
+                    type="number"
+                    placeholder="máx."
+                    id="rangeFilterCountMax"
+                  />
+                </div>
+                <div class="col-3 p-0">
+                  <div class="btn-group" role="group">
+                    <button
+                      class="btn btn-light btn-block"
+                      id="rangeFilterCount"
+                    >
+                      Filtrar
+                    </button>
+                    <button class="btn btn-link btn-sm" id="clearRangeFilter">
+                      Limpiar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="list-group" id="cat-list-container"></div>
+          </div>
+        </div>
+
+        <!-- Card container -->
         <div class="container pt-5" id="containerProducts"></div>
       </div>
     </main>
@@ -81,7 +171,7 @@
       </div>
     </div>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/init.js"></script>
-    <script src="js/products.js"></script>
+    <script defer src="js/init.js"></script>
+    <script defer src="js/products.js"></script>
   </body>
 </html>
