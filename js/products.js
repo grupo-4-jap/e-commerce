@@ -81,6 +81,8 @@ function showProducts(products) {
   }
 }
 
+// Events
+
 document.addEventListener('DOMContentLoaded', async () => {
   const catName = document.getElementById('catName');
   catName.innerHTML = '';
