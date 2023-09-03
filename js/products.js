@@ -7,6 +7,7 @@ import {
 
 import filterProducts from './utils/filterProducts.js';
 import showProductList from './utils/showProductList.js';
+import filterByName from './utils/filterByName.js';
 
 const URL_CATALOG = 'https://japceibal.github.io/emercado-api/cats_products/';
 let data = {};
@@ -98,3 +99,10 @@ document
     e.stopPropagation();
     clearFilters();
   });
+
+document.getElementById('search-input').addEventListener('input', function (e) {
+  const value = e.target.value;
+
+  const filteredProducts = filterByName(value, productList);
+  showProductList(filteredProducts);
+});
