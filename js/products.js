@@ -5,8 +5,9 @@ import {
   ORDER_BY_PROD_SOLD,
 } from './utils/sortProducts.js';
 
-import filterProducts from './utils/filterProducts.js';
+import filterByPrice from './utils/filterByPrice.js';
 import showProductList from './utils/showProductList.js';
+import filterByNameAndDescription from './utils/filterByName.js';
 
 const URL_CATALOG = 'https://japceibal.github.io/emercado-api/cats_products/';
 let data = {};
@@ -89,7 +90,7 @@ document
   .addEventListener('click', async function () {
     const min = Number(document.getElementById('rangeFilterCountMin').value);
     const max = Number(document.getElementById('rangeFilterCountMax').value);
-    showProductList(filterProducts(productList, min, max));
+    showProductList(filterByPrice(productList, min, max));
   });
 
 document
@@ -98,3 +99,10 @@ document
     e.stopPropagation();
     clearFilters();
   });
+
+document.getElementById('search-input').addEventListener('input', function (e) {
+  const value = e.target.value;
+
+  const filteredProducts = filterByNameAndDescription(value, productList);
+  showProductList(filteredProducts);
+});
