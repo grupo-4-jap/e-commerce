@@ -61,9 +61,9 @@
           </p>
         </div>
 
-        <!-- Group buttons -->
         <div class="container">
-          <div class="row">
+          <div class="row m-0">
+            <!-- Sort buttons -->
             <div class="col text-end">
               <div
                 class="btn-group btn-group-toggle mb-4"
@@ -100,11 +100,32 @@
                 ></label>
               </div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
-              <div class="row container p-0 m-0">
+            <div class="row container p-0 m-0">
+              <!-- Search field -->
+              <div class="col">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Buscar producto"
+                    aria-label="Buscar producto"
+                    aria-describedby="basic-addon2"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      id="search-button"
+                    >
+                      Buscar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Price search field -->
+              <div class="col row">
                 <div class="col">
                   <p class="font-weight-normal text-end my-2">Precio</p>
                 </div>
@@ -124,7 +145,7 @@
                     id="rangeFilterCountMax"
                   />
                 </div>
-                <div class="col-3 p-0">
+                <div class="col p-0">
                   <div class="btn-group" role="group">
                     <button
                       class="btn btn-light btn-block"
@@ -140,13 +161,10 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="list-group" id="cat-list-container"></div>
-          </div>
-        </div>
 
-        <!-- Card container -->
-        <div class="container pt-5" id="containerProducts"></div>
+          <!-- Card container -->
+          <div class="container pt-5" id="containerProducts"></div>
+        </div>
       </div>
     </main>
     <footer class="text-muted">
