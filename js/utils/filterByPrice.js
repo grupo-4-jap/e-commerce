@@ -1,4 +1,4 @@
-function filterProducts(array, min, max) {
+function filterByPrice(array, min, max) {
   return array.filter((element) => {
     if (element.cost >= min && element.cost <= max) {
       return element;
@@ -6,4 +6,4 @@ function filterProducts(array, min, max) {
   });
 }
 
-export default filterProducts;
+export default filterByPrice;

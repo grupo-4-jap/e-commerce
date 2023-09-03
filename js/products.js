@@ -5,7 +5,7 @@ import {
   ORDER_BY_PROD_SOLD,
 } from './utils/sortProducts.js';
 
-import filterProducts from './utils/filterProducts.js';
+import filterByPrice from './utils/filterByPrice.js';
 import showProductList from './utils/showProductList.js';
 import filterByNameAndDescription from './utils/filterByName.js';
 
@@ -90,7 +90,7 @@ document
   .addEventListener('click', async function () {
     const min = Number(document.getElementById('rangeFilterCountMin').value);
     const max = Number(document.getElementById('rangeFilterCountMax').value);
-    showProductList(filterProducts(productList, min, max));
+    showProductList(filterByPrice(productList, min, max));
   });
 
 document
