@@ -1,4 +1,9 @@
-function showProductList(array) {
+function setProductID(id) {
+  localStorage.setItem('productID', id);
+  window.location = 'product-info.html';
+}
+
+function showList(array, onClickFunc) {
   let htmlContentToAppend = '';
   for (let i = 0; i < array.length; i++) {
     let product = array[i];
@@ -6,7 +11,7 @@ function showProductList(array) {
     const { id, image, description, name, soldCount, currency, cost } = product;
 
     htmlContentToAppend += `
-            <div onclick="setCatID(${id})" class="list-group-item list-group-item-action cursor-active">
+            <div id=${id} class="list-group-item list-group-item-action cursor-active">
                 <div class="row">
                     <div class="col-3">
                         <img src="${image}" alt="${description}" class="img-thumbnail">
@@ -27,4 +32,4 @@ function showProductList(array) {
   }
 }
 
-export default showProductList;
+export default showList;

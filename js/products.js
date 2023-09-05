@@ -6,7 +6,7 @@ import {
 } from './utils/sortProducts.js';
 
 import filterByPrice from './utils/filterByPrice.js';
-import showProductList from './utils/showProductList.js';
+import showList from './utils/showList.js';
 import filterByNameAndDescription from './utils/filterByName.js';
 
 const URL_CATALOG = 'https://japceibal.github.io/emercado-api/cats_products/';
@@ -36,6 +36,11 @@ function getCatId() {
   return catid !== null ? catid : 101;
 }
 
+function setProductID(id) {
+  localStorage.setItem('productID', id);
+  window.location = 'product-info.html';
+}
+
 async function getCatalogData() {
   const result = {};
 
@@ -59,7 +64,7 @@ async function getCatalogData() {
 }
 
 function clearFilters() {
-  showProductList(productList);
+  showList(productList);
 }
 
 // Events
@@ -70,7 +75,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   data = await getCatalogData();
   productList = await data.body.products;
   catName.innerHTML = data.body.catName;
-  showProductList(productList);
+  showList(productList);
+  console.log(productList);
+
+  const nodeProducts = document.querySelectorAll('.list-group-item');
+
+  // This creates an event for each product card
+  Array.from(nodeProducts).forEach(function (product) {
+    product.addEventListener('click', function () {
+      const { id } = product;
+      setProductID(id);
+    });
+  });
 });
 
 document.getElementById('sortAsc').addEventListener('click', function () {
@@ -90,7 +106,7 @@ document
   .addEventListener('click', async function () {
     const min = Number(document.getElementById('rangeFilterCountMin').value);
     const max = Number(document.getElementById('rangeFilterCountMax').value);
-    showProductList(filterByPrice(productList, min, max));
+    showList(filterByPrice(productList, min, max));
   });
 
 document
@@ -104,5 +120,5 @@ document.getElementById('search-input').addEventListener('input', function (e) {
   const value = e.target.value;
 
   const filteredProducts = filterByNameAndDescription(value, productList);
-  showProductList(filteredProducts);
+  showList(filteredProducts);
 });

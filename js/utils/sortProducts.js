@@ -1,4 +1,4 @@
-import showProductList from './showProductList.js';
+import showProductList from './showList.js';
 
 const ORDER_ASC_BY_NUM = '09';
 const ORDER_DESC_BY_NUM = '90';
