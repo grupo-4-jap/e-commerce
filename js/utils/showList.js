@@ -35,7 +35,6 @@ function showProductList(array) {
 }
 
 function showCategoryList(array) {
-  console.log('reach this');
   let htmlContentToAppend = '';
 
   array.forEach((category) => {

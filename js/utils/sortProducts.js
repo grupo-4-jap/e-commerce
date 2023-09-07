@@ -4,12 +4,14 @@ import {
   ORDER_DESC,
   ORDER_BY_PROD_SOLD,
   ORDER_BY_PROD_COUNT,
+  PRODUCT,
+  CATEGORY,
 } from '../constants/CONSTANTS.js';
 
 let currentProductsArray = [];
 let currentSortCriteria = undefined;
 
-function sortCategories(criteria, array) {
+function sortProducts(criteria, array) {
   let result = [];
   if (criteria === ORDER_ASC) {
     result = array.sort(function (a, b) {
@@ -44,6 +46,33 @@ function sortCategories(criteria, array) {
       }
       return 0;
     });
+  }
+
+  return result;
+}
+
+function sortCategories(criteria, array) {
+  let result = [];
+  if (criteria === ORDER_ASC) {
+    result = array.sort(function (a, b) {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+  } else if (criteria === ORDER_DESC) {
+    result = array.sort(function (a, b) {
+      if (a.name > b.name) {
+        return -1;
+      }
+      if (a.name < b.name) {
+        return 1;
+      }
+      return 0;
+    });
   } else if (criteria === ORDER_BY_PROD_COUNT) {
     result = array.sort(function (a, b) {
       let aCount = parseInt(a.productCount);
@@ -73,10 +102,17 @@ export default function sortAndShowCategories(
     currentProductsArray = productsArray;
   }
 
-  currentProductsArray = sortCategories(
-    currentSortCriteria,
-    currentProductsArray
-  );
+  if (dataType === PRODUCT) {
+    currentProductsArray = sortProducts(
+      currentSortCriteria,
+      currentProductsArray
+    );
+  } else if (dataType === CATEGORY) {
+    currentProductsArray = sortCategories(
+      currentSortCriteria,
+      currentProductsArray
+    );
+  }
 
   //Muestro las categorías ordenadas
   showList(currentProductsArray, { type: dataType });
