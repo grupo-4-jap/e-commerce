@@ -12,7 +12,6 @@ import filterByPrice from './utils/filterByPrice.js';
 import showList from './utils/showList.js';
 import filterByNameAndDescription from './utils/filterByName.js';
 
-const DOMProducts = document.querySelectorAll('.list-group-item');
 const btnSortAsc = document.getElementById('sortAsc');
 const btnSortDesc = document.getElementById('sortDesc');
 const btnSortByCount = document.getElementById('sortByCount');
@@ -51,6 +50,7 @@ function getCatId() {
 }
 
 function setProductID(id) {
+  console.log('this lunchs');
   localStorage.setItem('productID', id);
   window.location = 'product-info.html';
 }
@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   showList(productList, { type: PRODUCT });
 
   // This creates an event for each product card
+  const DOMProducts = document.querySelectorAll('.list-group-item');
   Array.from(DOMProducts).forEach(function (product) {
     product.addEventListener('click', function () {
       const { id } = product;
