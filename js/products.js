@@ -1,8 +1,9 @@
 import { PRODUCTS_URL } from './constants/API.js';
 import {
-  ORDER_ASC_BY_NUM,
-  ORDER_DESC_BY_NUM,
+  ORDER_ASC,
+  ORDER_DESC,
   ORDER_BY_PROD_SOLD,
+  PRODUCT,
 } from './constants/CONSTANTS.js';
 
 import getJSONData from './utils/getJSONData.js';
@@ -45,8 +46,8 @@ let productList = [];
 // Functions
 
 function getCatId() {
-  const catid = localStorage.getItem('catID');
-  return catid !== null ? catid : 101;
+  const catID = localStorage.getItem('catID');
+  return catID !== null ? catID : 101;
 }
 
 function setProductID(id) {
@@ -55,7 +56,7 @@ function setProductID(id) {
 }
 
 function clearFilters() {
-  showList(productList);
+  showList(productList, { type: PRODUCT });
 }
 
 // Events
@@ -68,11 +69,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Get data
   const catID = getCatId();
   data = await getJSONData({ URL: PRODUCTS_URL, options: catID });
-  productList = await data.body.products;
+  productList = data.body.products;
 
   // Render list and sub-title
   catName.innerHTML = data.body.catName;
-  showList(productList);
+  showList(productList, { type: PRODUCT });
 
   // This creates an event for each product card
   Array.from(DOMProducts).forEach(function (product) {
@@ -84,21 +85,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 btnSortAsc.addEventListener('click', function () {
-  sortAndShowCategories(ORDER_ASC_BY_NUM, productList);
+  sortAndShowCategories(ORDER_ASC, productList, PRODUCT);
 });
 
 btnSortDesc.addEventListener('click', function () {
-  sortAndShowCategories(ORDER_DESC_BY_NUM, productList);
+  sortAndShowCategories(ORDER_DESC, productList, PRODUCT);
 });
 
 btnSortByCount.addEventListener('click', function () {
-  sortAndShowCategories(ORDER_BY_PROD_SOLD, productList);
+  sortAndShowCategories(ORDER_BY_PROD_SOLD, productList, PRODUCT);
 });
 
 btnRangeFilterCount.addEventListener('click', async function () {
   const min = Number(document.getElementById('rangeFilterCountMin').value);
   const max = Number(document.getElementById('rangeFilterCountMax').value);
-  showList(filterByPrice(productList, min, max));
+  showProductList(filterByPrice(productList, min, max));
 });
 
 btnClearRangeFilter.addEventListener('click', function (e) {
@@ -110,5 +111,5 @@ searchBar.addEventListener('input', function (e) {
   const value = e.target.value;
 
   const filteredProducts = filterByNameAndDescription(value, productList);
-  showList(filteredProducts);
+  showProductList(filteredProducts);
 });
