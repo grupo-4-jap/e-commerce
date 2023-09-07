@@ -1,6 +1,11 @@
-const URL_PRODUCT = 'https://japceibal.github.io/emercado-api/products/';
-const URL_COMMENTS =
-  'https://japceibal.github.io/emercado-api/products_comments/';
+import {
+  PRODUCT_INFO_COMMENTS_URL,
+  PRODUCT_INFO_URL,
+} from './constants/API.js';
+import getJSONData from './utils/getJSONData.js';
+
+let productData = {};
+let commentsData = {};
 
 /* {
   "id": 40281,
@@ -30,50 +35,36 @@ const URL_COMMENTS =
   ]
 } */
 
+/*  {
+    "product": 50741,
+    "score": 5,
+    "description": "Precioso, a mi nena le encantó",
+    "user": "silvia_fagundez",
+    "dateTime": "2021-02-20 14:00:42"
+}, */
+
 function getProductID() {
   const productID = localStorage.getItem('productID');
   return productID !== null ? productID : 50921;
 }
 
-async function getProductData() {
-  const result = {};
-
-  try {
-    const response = await fetch(URL_PRODUCT + getProductID() + '.json');
-
-    if (response.ok) {
-      const json = await response.json();
-      result.status = 'ok';
-      result.body = json;
-    } else {
-      throw Error(response.statusText);
-    }
-  } catch (err) {
-    result.status = 'error';
-    result.errorMessage = err.message;
-    result.body = {};
-  }
-
-  return result;
-}
-
-async function showProduct(product) {
+function showProduct(product) {
   const container = document.getElementById('product-container');
   const { name, cost, description, currency, soldCount, category, images } =
     product;
   container.innerHTML = `
-  <p class="fw-bold pb-4">${name}</p>
-  <hr>
-  <p class="fw-bold">Precio</p>
-  <p class="fw-light">${currency} ${cost}</p>
-  <p class="fw-bold">Descripción</p>
-  <p class="fw-light">${description}</p>
-  <p class="fw-bold">Categoría</p>
-  <p class="fw-light">${category}</p>
-  <p class="fw-bold">Cantidades vendidas</p>
-  <p class="fw-light">${soldCount}</p>
-  <p class="fw-bold">Imágenes ilustrativas</p>
-  <div class="images-container" id="images-container"></div>
+    <p class="fw-bold pb-4">${name}</p>
+    <hr>
+    <p class="fw-bold">Precio</p>
+    <p class="fw-light">${currency} ${cost}</p>
+    <p class="fw-bold">Descripción</p>
+    <p class="fw-light">${description}</p>
+    <p class="fw-bold">Categoría</p>
+    <p class="fw-light">${category}</p>
+    <p class="fw-bold">Cantidades vendidas</p>
+    <p class="fw-light">${soldCount}</p>
+    <p class="fw-bold">Imágenes ilustrativas</p>
+    <div class="images-container" id="images-container"></div>
   `;
   const imagesContainer = document.getElementById('images-container');
   images.forEach((image) => {
@@ -81,36 +72,9 @@ async function showProduct(product) {
     img.className = 'card-image';
     img.src = `${image}`;
     img.style.objectFit = 'contain';
-    // img.style.aspectRatio = '16/9';
     imagesContainer.appendChild(img);
   });
 }
-
-// <img class="card-img-top" src="..." alt="Card image cap">
-
-// Sección comentarios
-async function loadComments() {
-  try {
-    const response = await fetch(URL_COMMENTS + getProductID() + '.json ');
-
-    if (response.ok) {
-      const comments = await response.json();
-      showComments(comments);
-    } else {
-      throw new Error('Error al obtener comentarios.'); // new
-    }
-  } catch (error) {
-    console.error(error); // esto lo busqué no sé si está bien pero no lo cacé con el result
-  }
-}
-
-//   {
-//     "product": 50741,
-//     "score": 5,
-//     "description": "Precioso, a mi nena le encantó",
-//     "user": "silvia_fagundez",
-//     "dateTime": "2021-02-20 14:00:42"
-// },
 
 function showComments(comments) {
   const commentator = document.getElementById('comments-container');
@@ -132,10 +96,12 @@ function showComments(comments) {
       const starContainer = document.getElementById(`star-container${count}`);
       showStars(comment.score, starContainer);
       count++;
-      console.log(comment.score);
     });
   }
 }
+
+// <span class="fa fa-star"></span> → estrella color negro
+// <span class="fa fa-star checked"></span> → estrella color amarillo
 
 function showStars(score, parent) {
   let count = 1;
@@ -151,11 +117,21 @@ function showStars(score, parent) {
   }
 }
 
-// <span class="fa fa-star"></span> → estrella color negro
-// <span class="fa fa-star checked"></span> → estrella color amarillo
-
 document.addEventListener('DOMContentLoaded', async () => {
-  data = await getProductData();
-  showProduct(data.body);
-  loadComments(data.body.id); // carga los comentarios
+  // Get product-info data
+  const productID = getProductID();
+  productData = await getJSONData({
+    URL: PRODUCT_INFO_URL,
+    options: productID,
+  });
+
+  showProduct(productData.body);
+
+  // Get product comment data
+  commentsData = await getJSONData({
+    URL: PRODUCT_INFO_COMMENTS_URL,
+    options: productID,
+  });
+
+  showComments(commentsData.body);
 });
