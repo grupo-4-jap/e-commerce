@@ -1,3 +1,5 @@
+const navLinks = document.querySelectorAll('.nav-item');
+
 let showSpinner = function () {
   document.getElementById('spinner-wrapper').style.display = 'block';
 };
@@ -72,8 +74,7 @@ function checkPage(target) {
   return getCurrentPage() === target;
 }
 
-const navLinks = document.querySelectorAll('.nav-item');
-
+// Creates the UI User Nav
 const createUserNav = () => {
   const { email } = getUserData();
   navLinks[
