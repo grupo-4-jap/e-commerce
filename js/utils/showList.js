@@ -1,10 +1,5 @@
 import { CATEGORY, PRODUCT } from '../constants/CONSTANTS.js';
 
-function setProductID(id) {
-  localStorage.setItem('productID', id);
-  window.location = 'product-info.html';
-}
-
 function showProductList(array) {
   let htmlContentToAppend = '';
   for (let i = 0; i < array.length; i++) {

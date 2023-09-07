@@ -11,6 +11,7 @@ import sortAndShowCategories from './utils/sortProducts.js';
 import filterByPrice from './utils/filterByPrice.js';
 import showList from './utils/showList.js';
 import filterByNameAndDescription from './utils/filterByName.js';
+import addEvents from './utils/addEvents.js';
 
 const btnSortAsc = document.getElementById('sortAsc');
 const btnSortDesc = document.getElementById('sortDesc');
@@ -49,14 +50,8 @@ function getCatId() {
   return catID !== null ? catID : 101;
 }
 
-function setProductID(id) {
-  console.log('this lunchs');
-  localStorage.setItem('productID', id);
-  window.location = 'product-info.html';
-}
-
 function clearFilters() {
-  showList(productList, { type: PRODUCT });
+  sortAndShowCategories(ORDER_BY_PROD_SOLD, productList, PRODUCT);
 }
 
 // Events
@@ -74,33 +69,30 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Render list and sub-title
   catName.innerHTML = data.body.catName;
   showList(productList, { type: PRODUCT });
-
-  // This creates an event for each product card
-  const DOMProducts = document.querySelectorAll('.list-group-item');
-  Array.from(DOMProducts).forEach(function (product) {
-    product.addEventListener('click', function () {
-      const { id } = product;
-      setProductID(id);
-    });
-  });
+  addEvents('list-group-item', PRODUCT);
 });
 
 btnSortAsc.addEventListener('click', function () {
   sortAndShowCategories(ORDER_ASC, productList, PRODUCT);
+  addEvents('list-group-item', PRODUCT);
 });
 
 btnSortDesc.addEventListener('click', function () {
   sortAndShowCategories(ORDER_DESC, productList, PRODUCT);
+  addEvents('list-group-item', PRODUCT);
 });
 
 btnSortByCount.addEventListener('click', function () {
   sortAndShowCategories(ORDER_BY_PROD_SOLD, productList, PRODUCT);
+  addEvents('list-group-item', PRODUCT);
 });
 
 btnRangeFilterCount.addEventListener('click', async function () {
   const min = Number(document.getElementById('rangeFilterCountMin').value);
   const max = Number(document.getElementById('rangeFilterCountMax').value);
-  showProductList(filterByPrice(productList, min, max));
+  const filteredList = filterByPrice(productList, min, max);
+  showList(filteredList, { type: PRODUCT });
+  addEvents('list-group-item', PRODUCT);
 });
 
 btnClearRangeFilter.addEventListener('click', function (e) {
@@ -112,5 +104,5 @@ searchBar.addEventListener('input', function (e) {
   const value = e.target.value;
 
   const filteredProducts = filterByNameAndDescription(value, productList);
-  showProductList(filteredProducts);
+  showList(filteredProducts, { type: PRODUCT });
 });
