@@ -1,0 +1,5 @@
+const ORDER_ASC_BY_NUM = '09';
+const ORDER_DESC_BY_NUM = '90';
+const ORDER_BY_PROD_SOLD = 'Vendidos';
+
+export { ORDER_ASC_BY_NUM, ORDER_DESC_BY_NUM, ORDER_BY_PROD_SOLD };

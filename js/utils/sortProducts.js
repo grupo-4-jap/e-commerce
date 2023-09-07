@@ -1,12 +1,12 @@
 import showProductList from './showList.js';
+import {
+  ORDER_ASC_BY_NUM,
+  ORDER_DESC_BY_NUM,
+  ORDER_BY_PROD_SOLD,
+} from '../constants/CONSTANTS.js';
 
-const ORDER_ASC_BY_NUM = '09';
-const ORDER_DESC_BY_NUM = '90';
-const ORDER_BY_PROD_SOLD = 'Vendidos';
 let currentProductsArray = [];
 let currentSortCriteria = undefined;
-let minCount = undefined;
-let maxCount = undefined;
 
 function sortCategories(criteria, array) {
   let result = [];
@@ -48,7 +48,7 @@ function sortCategories(criteria, array) {
   return result;
 }
 
-function sortAndShowCategories(sortCriteria, productsArray) {
+export default function sortAndShowCategories(sortCriteria, productsArray) {
   currentSortCriteria = sortCriteria;
 
   if (productsArray != undefined) {
@@ -63,14 +63,3 @@ function sortAndShowCategories(sortCriteria, productsArray) {
   //Muestro las categorías ordenadas
   showProductList(currentProductsArray);
 }
-
-// function updateProductsArray(data) {
-//   currentProductsArray = data.body.products;
-// }
-
-export {
-  sortAndShowCategories,
-  ORDER_ASC_BY_NUM,
-  ORDER_DESC_BY_NUM,
-  ORDER_BY_PROD_SOLD,
-};
