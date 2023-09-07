@@ -6,22 +6,33 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>eMercado - Todo lo que busques está aquí</title>
 
+    <!-- Libraries -->
     <link
       href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i"
       rel="stylesheet"
     />
     <script
+      defer
       src="https://kit.fontawesome.com/a3e39000f7.js"
       crossorigin="anonymous"
     ></script>
+
+    <!-- CSS Files -->
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
+
+    <!-- JS Files -->
+    <script defer type="module" src="js/init.js"></script>
+    <script defer src="js/bootstrap.bundle.min.js"></script>
+    <script defer type="module" src="js/products.js"></script>
+
+    <title>eMercado - Todo lo que busques está aquí</title>
   </head>
 
   <body>
+    <!-- Navigation bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
       <div class="container">
         <button
@@ -51,6 +62,8 @@
         </div>
       </div>
     </nav>
+
+    <!-- Main body -->
     <main class="pb-5 container">
       <div class="pt-5">
         <div class="text-center">
@@ -101,6 +114,7 @@
               </div>
             </div>
 
+            <!-- Filter controls -->
             <div class="row container p-0 m-0">
               <!-- Search field -->
               <div class="col">
@@ -189,8 +203,5 @@
         <div></div>
       </div>
     </div>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script defer src="js/init.js"></script>
-    <script defer type="module" src="js/products.js"></script>
   </body>
 </html>
