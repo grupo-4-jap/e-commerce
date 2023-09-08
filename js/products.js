@@ -1,17 +1,29 @@
+import { PRODUCTS_URL } from './constants/API.js';
 import {
-  sortAndShowCategories,
-  ORDER_ASC_BY_NUM,
-  ORDER_DESC_BY_NUM,
+  ORDER_ASC,
+  ORDER_DESC,
   ORDER_BY_PROD_SOLD,
-} from './utils/sortProducts.js';
+  PRODUCT,
+} from './constants/CONSTANTS.js';
 
+import getJSONData from './utils/getJSONData.js';
+import sortAndShowCategories from './utils/sortProducts.js';
 import filterByPrice from './utils/filterByPrice.js';
 import showList from './utils/showList.js';
 import filterByNameAndDescription from './utils/filterByName.js';
+import addEvents from './utils/addEvents.js';
 
-const URL_CATALOG = 'https://japceibal.github.io/emercado-api/cats_products/';
+const btnSortAsc = document.getElementById('sortAsc');
+const btnSortDesc = document.getElementById('sortDesc');
+const btnSortByCount = document.getElementById('sortByCount');
+const btnRangeFilterCount = document.getElementById('rangeFilterCount');
+const btnClearRangeFilter = document.getElementById('clearRangeFilter');
+const searchBar = document.getElementById('search-input');
+
 let data = {};
 let productList = [];
+
+// Expected JSON Data
 
 /**
  * {
@@ -31,94 +43,66 @@ let productList = [];
  * }
  */
 
+// Functions
+
 function getCatId() {
-  const catid = localStorage.getItem('catID');
-  return catid !== null ? catid : 101;
-}
-
-function setProductID(id) {
-  localStorage.setItem('productID', id);
-  window.location = 'product-info.html';
-}
-
-async function getCatalogData() {
-  const result = {};
-
-  try {
-    const response = await fetch(URL_CATALOG + getCatId() + '.json');
-
-    if (response.ok) {
-      const json = await response.json();
-      result.status = 'ok';
-      result.body = json;
-    } else {
-      throw Error(response.statusText);
-    }
-  } catch (err) {
-    result.status = 'error';
-    result.errorMessage = err.message;
-    result.body = {};
-  }
-
-  return result;
+  const catID = localStorage.getItem('catID');
+  return catID !== null ? catID : 101;
 }
 
 function clearFilters() {
-  showList(productList);
+  sortAndShowCategories(ORDER_BY_PROD_SOLD, productList, PRODUCT);
 }
 
 // Events
 
 document.addEventListener('DOMContentLoaded', async () => {
+  // Changes the page's sub-title
   const catName = document.getElementById('catName');
   catName.innerHTML = '';
-  data = await getCatalogData();
-  productList = await data.body.products;
+
+  // Get data
+  const catID = getCatId();
+  data = await getJSONData({ URL: PRODUCTS_URL, options: catID });
+  productList = data.body.products;
+
+  // Render list and sub-title
   catName.innerHTML = data.body.catName;
-  showList(productList);
-  console.log(productList);
-
-  const nodeProducts = document.querySelectorAll('.list-group-item');
-
-  // This creates an event for each product card
-  Array.from(nodeProducts).forEach(function (product) {
-    product.addEventListener('click', function () {
-      const { id } = product;
-      setProductID(id);
-    });
-  });
+  showList(productList, { type: PRODUCT });
+  addEvents('list-group-item', PRODUCT);
 });
 
-document.getElementById('sortAsc').addEventListener('click', function () {
-  sortAndShowCategories(ORDER_ASC_BY_NUM, productList);
+btnSortAsc.addEventListener('click', function () {
+  sortAndShowCategories(ORDER_ASC, productList, PRODUCT);
+  addEvents('list-group-item', PRODUCT);
 });
 
-document.getElementById('sortDesc').addEventListener('click', function () {
-  sortAndShowCategories(ORDER_DESC_BY_NUM, productList);
+btnSortDesc.addEventListener('click', function () {
+  sortAndShowCategories(ORDER_DESC, productList, PRODUCT);
+  addEvents('list-group-item', PRODUCT);
 });
 
-document.getElementById('sortByCount').addEventListener('click', function () {
-  sortAndShowCategories(ORDER_BY_PROD_SOLD, productList);
+btnSortByCount.addEventListener('click', function () {
+  sortAndShowCategories(ORDER_BY_PROD_SOLD, productList, PRODUCT);
+  addEvents('list-group-item', PRODUCT);
 });
 
-document
-  .getElementById('rangeFilterCount')
-  .addEventListener('click', async function () {
-    const min = Number(document.getElementById('rangeFilterCountMin').value);
-    const max = Number(document.getElementById('rangeFilterCountMax').value);
-    showList(filterByPrice(productList, min, max));
-  });
+btnRangeFilterCount.addEventListener('click', async function () {
+  const min = Number(document.getElementById('rangeFilterCountMin').value);
+  const max = Number(document.getElementById('rangeFilterCountMax').value);
+  const filteredList = filterByPrice(productList, min, max);
+  showList(filteredList, { type: PRODUCT });
+  addEvents('list-group-item', PRODUCT);
+});
 
-document
-  .getElementById('clearRangeFilter')
-  .addEventListener('click', function (e) {
-    e.stopPropagation();
-    clearFilters();
-  });
+btnClearRangeFilter.addEventListener('click', function (e) {
+  e.stopPropagation();
+  clearFilters();
+});
 
-document.getElementById('search-input').addEventListener('input', function (e) {
+searchBar.addEventListener('input', function (e) {
   const value = e.target.value;
 
   const filteredProducts = filterByNameAndDescription(value, productList);
-  showList(filteredProducts);
+  showList(filteredProducts, { type: PRODUCT });
 });

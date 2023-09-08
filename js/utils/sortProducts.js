@@ -1,16 +1,19 @@
-import showProductList from './showList.js';
+import showList from './showList.js';
+import {
+  ORDER_ASC,
+  ORDER_DESC,
+  ORDER_BY_PROD_SOLD,
+  ORDER_BY_PROD_COUNT,
+  PRODUCT,
+  CATEGORY,
+} from '../constants/CONSTANTS.js';
 
-const ORDER_ASC_BY_NUM = '09';
-const ORDER_DESC_BY_NUM = '90';
-const ORDER_BY_PROD_SOLD = 'Vendidos';
 let currentProductsArray = [];
 let currentSortCriteria = undefined;
-let minCount = undefined;
-let maxCount = undefined;
 
-function sortCategories(criteria, array) {
+function sortProducts(criteria, array) {
   let result = [];
-  if (criteria === ORDER_ASC_BY_NUM) {
+  if (criteria === ORDER_ASC) {
     result = array.sort(function (a, b) {
       if (a.cost < b.cost) {
         return -1;
@@ -20,7 +23,7 @@ function sortCategories(criteria, array) {
       }
       return 0;
     });
-  } else if (criteria === ORDER_DESC_BY_NUM) {
+  } else if (criteria === ORDER_DESC) {
     result = array.sort(function (a, b) {
       if (a.cost > b.cost) {
         return -1;
@@ -48,29 +51,69 @@ function sortCategories(criteria, array) {
   return result;
 }
 
-function sortAndShowCategories(sortCriteria, productsArray) {
+function sortCategories(criteria, array) {
+  let result = [];
+  if (criteria === ORDER_ASC) {
+    result = array.sort(function (a, b) {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+  } else if (criteria === ORDER_DESC) {
+    result = array.sort(function (a, b) {
+      if (a.name > b.name) {
+        return -1;
+      }
+      if (a.name < b.name) {
+        return 1;
+      }
+      return 0;
+    });
+  } else if (criteria === ORDER_BY_PROD_COUNT) {
+    result = array.sort(function (a, b) {
+      let aCount = parseInt(a.productCount);
+      let bCount = parseInt(b.productCount);
+
+      if (aCount > bCount) {
+        return -1;
+      }
+      if (aCount < bCount) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  return result;
+}
+
+export default function sortAndShowCategories(
+  sortCriteria,
+  productsArray,
+  dataType
+) {
   currentSortCriteria = sortCriteria;
 
   if (productsArray != undefined) {
     currentProductsArray = productsArray;
   }
 
-  currentProductsArray = sortCategories(
-    currentSortCriteria,
-    currentProductsArray
-  );
+  if (dataType === PRODUCT) {
+    currentProductsArray = sortProducts(
+      currentSortCriteria,
+      currentProductsArray
+    );
+  } else if (dataType === CATEGORY) {
+    currentProductsArray = sortCategories(
+      currentSortCriteria,
+      currentProductsArray
+    );
+  }
 
   //Muestro las categorías ordenadas
-  showProductList(currentProductsArray);
+  showList(currentProductsArray, { type: dataType });
 }
-
-// function updateProductsArray(data) {
-//   currentProductsArray = data.body.products;
-// }
-
-export {
-  sortAndShowCategories,
-  ORDER_ASC_BY_NUM,
-  ORDER_DESC_BY_NUM,
-  ORDER_BY_PROD_SOLD,
-};
