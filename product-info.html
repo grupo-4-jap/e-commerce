@@ -1,121 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>eMercado - Todo lo que busques está aquí</title>
 
-    <link
-      href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i"
-      rel="stylesheet"
-    />
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>eMercado - Todo lo que busques está aquí</title>
 
-    <!-- UI Libraries -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" />
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link href="css/styles.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet" />
 
-    <!-- JS Files -->
-    <script defer src="js/init.js"></script>
-    <script defer src="js/bootstrap.bundle.min.js"></script>
-    <script defer type="module" src="js/product-info.js"></script>
-  </head>
+  <!-- UI Libraries -->
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link href="css/styles.css" rel="stylesheet" />
 
-  <body>
-    <!-- Navigation bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
-      <div class="container">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="categories.html">Categorías</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="sell.html">Vender</a>
-            </li>
-            <li class="nav-item"></li>
-          </ul>
-        </div>
+  <!-- JS Files -->
+  <script defer src="js/init.js"></script>
+  <script defer src="js/bootstrap.bundle.min.js"></script>
+  <script defer type="module" src="js/product-info.js"></script>
+</head>
+
+<body>
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav w-100 justify-content-between">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="categories.html">Categorías</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="sell.html">Vender</a>
+          </li>
+          <li class="nav-item"></li>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- Main body -->
-    <main>
-      <div class="container pt-5" id="product-container"></div>
-      <div class="container pt-5">
-        <h3>Comentarios</h3>
-        <hr />
-      </div>
-      <div class="container pt-2" id="comments-container"></div>
-      <div class="container pt-5" id="add-comments-container">
-        <div class="mb-3">
-          <h3>Comentar</h3>
-          <label for="text-area" class="form-label"> Tu opinión: </label>
-          <textarea
-            style="width: 600px"
-            class="form-control"
-            id="text-area"
-            rows="3"
-          ></textarea>
-          <p class="mt-3">Tu puntuación:</p>
-          <select
-            style="width: 150px"
-            class="form-select"
-            aria-label="Default select example"
-          >
+  <!-- Main body -->
+  <main>
+    <div class="container pt-5" id="product-container"></div>
+    <div class="container pt-5" id="comments-container"></div>
+    <div class="container pt-2">
+      <form id="form-save-comment">
+        <h3>Comentar</h3>
+        <label class="form-label" for="comment-area">Tu opinión:</label><br>
+        <textarea rows="3" id="comment-area" class="form-control"></textarea><br>
+
+        <div class="mr-5">
+          <label class="form-label" for="puntuation">Tu puntuación:</label><br>
+          <select class="form-select" id="puntuation">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
           </select>
-          <button class="btn btn-primary mt-3" type="submit">Enviar</button>
         </div>
-      </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="text-muted">
-      <div class="container">
-        <p class="float-end">
-          <a href="#">Volver arriba</a>
-        </p>
-        <p>
-          Este sitio forma parte de
-          <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
-            >Jovenes a Programar</a
-          >
-        </p>
-      </div>
-    </footer>
-    <div id="spinner-wrapper">
-      <div class="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+        <div class="pt-3">
+          <button type="submit" id="btn-add-comment" class="btn btn-primary">Enviar</button>
+        </div>
+      </form>
     </div>
-  </body>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-end">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>
+        Este sitio forma parte de
+        <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
+    </div>
+  </footer>
+  <div id="spinner-wrapper">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</body>
+
 </html>
