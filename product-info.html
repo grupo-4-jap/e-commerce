@@ -63,7 +63,36 @@
     <!-- Main body -->
     <main>
       <div class="container pt-5" id="product-container"></div>
-      <div class="container pt-5" id="comments-container"></div>
+      <div class="container pt-5">
+        <h3>Comentarios</h3>
+        <hr />
+      </div>
+      <div class="container pt-2" id="comments-container"></div>
+      <div class="container pt-5" id="add-comments-container">
+        <div class="mb-3">
+          <h3>Comentar</h3>
+          <label for="text-area" class="form-label"> Tu opinión: </label>
+          <textarea
+            style="width: 600px"
+            class="form-control"
+            id="text-area"
+            rows="3"
+          ></textarea>
+          <p class="mt-3">Tu puntuación:</p>
+          <select
+            style="width: 150px"
+            class="form-select"
+            aria-label="Default select example"
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <button class="btn btn-primary mt-3" type="submit">Enviar</button>
+        </div>
+      </div>
     </main>
 
     <!-- Footer -->
