@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('form-save-comment').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const commentInp = document.getElementById('comment-area');
     const puntuationSel = document.getElementById('puntuation');
 
@@ -157,9 +157,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       URL: PRODUCT_INFO_COMMENTS_URL,
       options: productID,
     });
-  
+
     const comments = commentsData.body.concat(getComments());
-  
+
     showComments(comments);
   });
 });
@@ -187,10 +187,10 @@ function saveComment(description, score) {
   const userData = getUserData();
 
   if (allComments) {
-    allComments.push({user: userData.email, description, score, dateTime: new Date()});
+    allComments.push({ user: userData.email, description, score, dateTime: new Date() });
     localStorage.setItem('Comments', JSON.stringify(allComments));
   } else {
-    localStorage.setItem('Comments', JSON.stringify([{user: userData.email, description, score, dateTime: new Date()}]));
+    localStorage.setItem('Comments', JSON.stringify([{ user: userData.email, description, score, dateTime: new Date() }]));
   }
 }
 
