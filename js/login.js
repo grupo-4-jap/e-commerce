@@ -1,4 +1,5 @@
-// const loginForm = document.getElementById("login-form");
+import { login } from './utils/loggingUser.js';
+
 const loginForm = document.querySelector('.login');
 const userInput = document.getElementById('floatingInput');
 const userPassword = document.getElementById('floatingPassword');

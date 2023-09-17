@@ -100,7 +100,6 @@ function showComments(comments) {
   }
 }
 
-
 function showStars(score, parent) {
   let count = 1;
   for (let i = 0; i < 5; i++) {
@@ -135,33 +134,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   showComments(comments);
 
-  document.getElementById('form-save-comment').addEventListener('submit', async (e) => {
-    e.preventDefault();
+  document
+    .getElementById('form-save-comment')
+    .addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    const commentInp = document.getElementById('comment-area');
-    const puntuationSel = document.getElementById('puntuation');
+      const commentInp = document.getElementById('comment-area');
+      const punctuationSel = document.getElementById('punctuation');
 
-    const comment = commentInp.value.trim();
+      const comment = commentInp.value.trim();
 
-    if (comment.length === 0) {
-      alert('El comentario no puede estar vació!');
-      return
-    }
+      if (comment.length === 0) {
+        alert('El comentario no puede estar vacío!');
+        return;
+      }
 
-    const punt = parseInt(puntuationSel.value);
+      const punt = parseInt(punctuationSel.value);
 
-    saveComment(comment, punt);
-    commentInp.value = '';
-    puntuationSel.value = 1
-    commentsData = await getJSONData({
-      URL: PRODUCT_INFO_COMMENTS_URL,
-      options: productID,
+      saveComment(comment, punt);
+      commentInp.value = '';
+      punctuationSel.value = 1;
+      commentsData = await getJSONData({
+        URL: PRODUCT_INFO_COMMENTS_URL,
+        options: productID,
+      });
+
+      const comments = commentsData.body.concat(getComments());
+
+      showComments(comments);
     });
-
-    const comments = commentsData.body.concat(getComments());
-
-    showComments(comments);
-  });
 });
 
 function getComments() {
@@ -187,11 +188,19 @@ function saveComment(description, score) {
   const userData = getUserData();
 
   if (allComments) {
-    allComments.push({ user: userData.email, description, score, dateTime: new Date() });
+    allComments.push({
+      user: userData.email,
+      description,
+      score,
+      dateTime: new Date(),
+    });
     localStorage.setItem('Comments', JSON.stringify(allComments));
   } else {
-    localStorage.setItem('Comments', JSON.stringify([{ user: userData.email, description, score, dateTime: new Date() }]));
+    localStorage.setItem(
+      'Comments',
+      JSON.stringify([
+        { user: userData.email, description, score, dateTime: new Date() },
+      ])
+    );
   }
 }
-
-
