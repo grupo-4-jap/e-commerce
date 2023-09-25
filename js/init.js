@@ -38,6 +38,28 @@ const createUserNav = () => {
     const { email } = getUserData();
     navLinks[
       navLinks.length - 1
-    ].innerHTML = `<span class="nav-link" id="loggeado">${email}</span>`;
+    ].innerHTML = `<div class="nav-link dropdown" id="loggeado">
+    <button class="btn dropdown-toggle" style="color: rgba(255,255,255,.55);" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      Hola ${email}
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <li><a id="cart" class="dropdown-item" href="#">Mi carrito</a></li>
+      <li><a id="profile" class="dropdown-item" href="#">Mi perfil</a></li>
+      <li><a id="finish" class="dropdown-item" href="#">Cerrar sesión</a></li>
+    </ul>
+  </div>`;
   }
 };
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('cart').addEventListener('click', function () {
+    window.location.href = 'cart.html';
+  });
+  document.getElementById('profile').addEventListener('click', function () {
+    window.location.href = 'my-profile.html';
+  });
+  document.getElementById('finish').addEventListener('click', function () {
+    localStorage.removeItem('userData');
+    window.location.href = 'login.html';
+  });
+});
