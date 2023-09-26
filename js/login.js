@@ -6,7 +6,7 @@ const userPassword = document.getElementById('floatingPassword');
 const loginStatus = document.getElementById('login-status');
 
 loginForm.addEventListener('submit', (e) => {
-  e.preventDefault(); // Evita el envío del formulario
+  e.preventDefault();
 
   const username = userInput.value;
   const password = userPassword.value;
