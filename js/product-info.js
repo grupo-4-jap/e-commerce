@@ -113,6 +113,30 @@ function showStars(score, parent) {
     parent.appendChild(star);
   }
 }
+/* relatedProducts
+ 
+id: 50924
+image: "img/prod50924_1.jpg"
+name: "Peugeot 208"  
+id: 50922
+image: "img/prod50922_1.jpg"
+name: "Fiat Way"*/
+
+function showRelatedProducts() {
+  const relatedProductsContainer = document.getElementById('related-container');
+  const relatedProducts = productData.body.relatedProducts;
+  console.log(relatedProductsContainer);
+
+  relatedProducts.forEach((relatedProduct) => {
+    const productCard = document.createElement('div');
+    const { name, image } = relatedProduct;
+    productCard.innerHTML = `
+    <img class='card-image' src="${image}" alt="${relatedProduct.name}">
+      <h6>${name}</h6>
+    `;
+    relatedProductsContainer.appendChild(productCard);
+  });
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Get product-info data
@@ -123,6 +147,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   showProduct(productData.body);
+  showRelatedProducts();
 
   // Get product comment data
   commentsData = await getJSONData({
