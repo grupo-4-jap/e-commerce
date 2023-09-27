@@ -290,3 +290,12 @@ a.custom-card:hover {
   border: 1px #b4b4b4 solid;
   border-radius: 0.25rem;
 }
+
+.my-dropdown-menu {
+  --bs-dropdown-min-width: 45px;
+}
+
+.my-dropdown-menu li {
+  display: flex;
+  justify-content: center;
+}

@@ -37,7 +37,7 @@ const createUserNav = () => {
   if (getUserData() != null) {
     const { email } = getUserData();
     navLinks[
-      navLinks.length - 1
+      navLinks.length - 2
     ].innerHTML = `<div class="nav-link dropdown" id="loggeado">
     <button class="btn dropdown-toggle" style="color: rgba(255,255,255,.55);" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
       Hola ${email}
