@@ -3,6 +3,8 @@ import {
   PRODUCT_INFO_URL,
 } from './constants/API.js';
 import getJSONData from './utils/getJSONData.js';
+import addEvents, { setProductID } from './utils/addEvents.js';
+import { PRODUCT } from './constants/CONSTANTS.js';
 
 let productData = {};
 let commentsData = {};
@@ -113,27 +115,23 @@ function showStars(score, parent) {
     parent.appendChild(star);
   }
 }
-/* relatedProducts
- 
-id: 50924
-image: "img/prod50924_1.jpg"
-name: "Peugeot 208"  
-id: 50922
-image: "img/prod50922_1.jpg"
-name: "Fiat Way"*/
 
+// Show related products
 function showRelatedProducts() {
   const relatedProductsContainer = document.getElementById('related-container');
   const relatedProducts = productData.body.relatedProducts;
-  console.log(relatedProductsContainer);
 
   relatedProducts.forEach((relatedProduct) => {
     const productCard = document.createElement('div');
-    const { name, image } = relatedProduct;
+    const { name, image, id } = relatedProduct;
+
     productCard.innerHTML = `
-    <img class='card-image' src="${image}" alt="${relatedProduct.name}">
-      <h6>${name}</h6>
+    <div class="related cursor-active border p-2" id="${id}">
+      <img class="card-image border-0" src="${image}" alt="${name}" >
+      <h5 class="text-center">${name}</h5>
+    </div>
     `;
+
     relatedProductsContainer.appendChild(productCard);
   });
 }
@@ -148,6 +146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   showProduct(productData.body);
   showRelatedProducts();
+  addEvents('related', PRODUCT);
 
   // Get product comment data
   commentsData = await getJSONData({
