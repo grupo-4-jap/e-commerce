@@ -3,7 +3,7 @@ import {
   PRODUCT_INFO_URL,
 } from './constants/API.js';
 import getJSONData from './utils/getJSONData.js';
-import addEvents, { setProductID } from './utils/addEvents.js';
+import addEvents from './utils/addEvents.js';
 import { PRODUCT } from './constants/CONSTANTS.js';
 
 let productData = {};
