@@ -56,14 +56,14 @@ function toggleTheme(event) {
       ? {
           theme: 'dark',
           iconSrc: './icons/sun-fill.svg',
-          imageSrc: '../img/cover_back_dark.png',
+          imageSrc: './img/cover_back_dark.png',
           bgColor: 'bg-dark',
           borderColor: 'border-secondary',
         }
       : {
           theme: 'light',
           iconSrc: './icons/moon-stars-fill.svg',
-          imageSrc: '../img/cover_back.png',
+          imageSrc: './img/cover_back.png',
           bgColor: 'bg-light',
           borderColor: '',
         };
