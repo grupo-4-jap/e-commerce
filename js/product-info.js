@@ -62,7 +62,7 @@ function showProduct(product) {
   const { name, cost, description, currency, soldCount, category, images } =
     product;
   container.innerHTML = `
-    <h2 class="pb-4">${name}</h2>
+    <h1 class="pb-4">${name}</h1>
     <hr>
     <p class="fw-bold">Precio</p>
     <p class="fw-light">${currency} ${cost}</p>
@@ -72,8 +72,6 @@ function showProduct(product) {
     <p class="fw-light">${category}</p>
     <p class="fw-bold">Cantidades vendidas</p>
     <p class="fw-light">${soldCount}</p>
-    <p class="fw-bold">Imágenes ilustrativas</p>
-    <div class="images-container" id="images-container"></div>
   `;
 
   // This renders the carousel images
@@ -99,9 +97,9 @@ function showComments(comments) {
 
   if (comments.length == null) {
     commentator.innerHTML =
-      '<p>No hay comentarios aún. Sé el primero en comentar.</p>';
+      '<p>No hay comentarios aún. Se la primera en comentar.</p>';
   } else {
-    commentator.innerHTML = '';
+    commentator.innerHTML += '';
     let count = 0;
     comments.forEach((comment) => {
       const commentElement = document.createElement('div');
