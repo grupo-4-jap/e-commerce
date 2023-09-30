@@ -12,7 +12,7 @@ function setProductID(id) {
 
 export default function addEvents(domElement, dataType) {
   const elements = Array.from(document.getElementsByClassName(domElement));
-  console.log(elements);
+
   elements.forEach(function (e) {
     e.addEventListener('click', function () {
       const { id } = e;
