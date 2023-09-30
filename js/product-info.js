@@ -9,6 +9,13 @@ import { PRODUCT } from './constants/CONSTANTS.js';
 let productData = {};
 let commentsData = {};
 
+const myCarouselElement = document.querySelector('#carouselExampleIndicators');
+
+const carousel = new bootstrap.Carousel(myCarouselElement, {
+  interval: 2000,
+  touch: false,
+});
+
 /* {
   "id": 40281,
   "name": "Computadora de escritorio",
@@ -51,7 +58,7 @@ function getProductID() {
 }
 
 function showProduct(product) {
-  const container = document.getElementById('product-container');
+  const container = document.getElementById('product-description');
   const { name, cost, description, currency, soldCount, category, images } =
     product;
   container.innerHTML = `
@@ -68,14 +75,23 @@ function showProduct(product) {
     <p class="fw-bold">Imágenes ilustrativas</p>
     <div class="images-container" id="images-container"></div>
   `;
-  const imagesContainer = document.getElementById('images-container');
-  images.forEach((image) => {
-    const img = document.createElement('img');
-    img.className = 'card-image';
-    img.src = `${image}`;
-    img.style.objectFit = 'contain';
-    imagesContainer.appendChild(img);
-  });
+
+  // This renders the carousel images
+  const carouselImages = document.querySelectorAll('.carousel-image-handler');
+  for (let i = 0; i < 4; i++) {
+    console.log(carouselImages[i]);
+    carouselImages[i].src = images[i];
+  }
+
+  // This renders the images
+  // const imagesContainer = document.getElementById('images-container');
+  // images.forEach((image) => {
+  //   const img = document.createElement('img');
+  //   img.className = 'card-image';
+  //   img.src = `${image}`;
+  //   img.style.objectFit = 'contain';
+  //   imagesContainer.appendChild(img);
+  // });
 }
 
 function showComments(comments) {
