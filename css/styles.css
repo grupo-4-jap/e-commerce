@@ -295,6 +295,10 @@ a.custom-card:hover {
   --bs-dropdown-min-width: 45px;
 }
 
+.dropdown-menu[data-bs-popper] {
+  left: -5px;
+}
+
 .my-dropdown-menu li {
   display: flex;
   justify-content: center;
