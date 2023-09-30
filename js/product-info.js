@@ -9,6 +9,13 @@ import { PRODUCT } from './constants/CONSTANTS.js';
 let productData = {};
 let commentsData = {};
 
+const myCarouselElement = document.querySelector('#carouselExampleIndicators');
+
+const carousel = new bootstrap.Carousel(myCarouselElement, {
+  interval: 2000,
+  touch: false,
+});
+
 /* {
   "id": 40281,
   "name": "Computadora de escritorio",
@@ -51,11 +58,11 @@ function getProductID() {
 }
 
 function showProduct(product) {
-  const container = document.getElementById('product-container');
+  const container = document.getElementById('product-description');
   const { name, cost, description, currency, soldCount, category, images } =
     product;
   container.innerHTML = `
-    <h2 class="pb-4">${name}</h2>
+    <h1 class="pb-4">${name}</h1>
     <hr>
     <p class="fw-bold">Precio</p>
     <p class="fw-light">${currency} ${cost}</p>
@@ -65,17 +72,24 @@ function showProduct(product) {
     <p class="fw-light">${category}</p>
     <p class="fw-bold">Cantidades vendidas</p>
     <p class="fw-light">${soldCount}</p>
-    <p class="fw-bold">Imágenes ilustrativas</p>
-    <div class="images-container" id="images-container"></div>
   `;
-  const imagesContainer = document.getElementById('images-container');
-  images.forEach((image) => {
-    const img = document.createElement('img');
-    img.className = 'card-image';
-    img.src = `${image}`;
-    img.style.objectFit = 'contain';
-    imagesContainer.appendChild(img);
-  });
+
+  // This renders the carousel images
+  const carouselImages = document.querySelectorAll('.carousel-image-handler');
+  for (let i = 0; i < 4; i++) {
+    console.log(carouselImages[i]);
+    carouselImages[i].src = images[i];
+  }
+
+  // This renders the images
+  // const imagesContainer = document.getElementById('images-container');
+  // images.forEach((image) => {
+  //   const img = document.createElement('img');
+  //   img.className = 'card-image';
+  //   img.src = `${image}`;
+  //   img.style.objectFit = 'contain';
+  //   imagesContainer.appendChild(img);
+  // });
 }
 
 function showComments(comments) {
@@ -83,9 +97,9 @@ function showComments(comments) {
 
   if (comments.length == null) {
     commentator.innerHTML =
-      '<p>No hay comentarios aún. Sé el primero en comentar.</p>';
+      '<p>No hay comentarios aún. Se la primera en comentar.</p>';
   } else {
-    commentator.innerHTML = '';
+    commentator.innerHTML += '';
     let count = 0;
     comments.forEach((comment) => {
       const commentElement = document.createElement('div');
