@@ -72,6 +72,7 @@ function showProduct(product) {
     <p class="fw-light">${category}</p>
     <p class="fw-bold">Cantidades vendidas</p>
     <p class="fw-light">${soldCount}</p>
+    <button class="btn btn-primary" id="buy-btn">Comprar</button>
   `;
 
   // This renders the carousel images
@@ -201,7 +202,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       showComments(comments);
     });
+
+  const buyBtn = document.querySelector('#buy-btn');
+  buyBtn.addEventListener('click', function () {
+    getProductData(productData.body);
+    window.location.href = 'cart.html';
+  });
 });
+
+function getProductData(product) {
+  localStorage.setItem('product', JSON.stringify(product));
+}
 
 function getComments() {
   const comments = [];
