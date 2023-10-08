@@ -78,7 +78,6 @@ function showProduct(product) {
   // This renders the carousel images
   const carouselImages = document.querySelectorAll('.carousel-image-handler');
   for (let i = 0; i < 4; i++) {
-    console.log(carouselImages[i]);
     carouselImages[i].src = images[i];
   }
 
@@ -96,8 +95,8 @@ function showProduct(product) {
 function showComments(comments) {
   const commentator = document.getElementById('comments-container');
 
-  if (comments.length == null) {
-    commentator.innerHTML =
+  if (comments.length === 0) {
+    commentator.innerHTML +=
       '<p>No hay comentarios aún. Se la primera en comentar.</p>';
   } else {
     commentator.innerHTML += '';
