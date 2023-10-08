@@ -205,13 +205,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const buyBtn = document.querySelector('#buy-btn');
   buyBtn.addEventListener('click', function () {
-    getProductData(productData.body);
-    window.location.href = 'cart.html';
+    addCart(productData.body);
+    // window.location.href = 'cart.html';
   });
 });
 
-function getProductData(product) {
-  localStorage.setItem('product', JSON.stringify(product));
+function addCart(product) {
+  const products =
+    JSON.parse(localStorage.getItem('products')) === null
+      ? []
+      : JSON.parse(localStorage.getItem('products'));
+  products.push(product);
+
+  localStorage.setItem('products', JSON.stringify(products));
 }
 
 function getComments() {

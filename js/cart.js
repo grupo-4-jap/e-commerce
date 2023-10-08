@@ -1,6 +1,10 @@
 import getJSONData from './utils/getJSONData.js';
 import { CART_INFO_URL } from './constants/API.js';
 
+function getProducts() {
+  localStorage.getItem('carts');
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await getJSONData({ URL: CART_INFO_URL, options: '25801' });
   const articles = data.body.articles;
