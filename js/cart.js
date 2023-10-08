@@ -1,13 +1,21 @@
 import getJSONData from './utils/getJSONData.js';
 import { CART_INFO_URL } from './constants/API.js';
 
+function getProducts() {
+  const cart = JSON.parse(localStorage.getItem('cart'));
+  return cart != null ? cart : [];
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await getJSONData({ URL: CART_INFO_URL, options: '25801' });
-  console.log(data);
   const articles = data.body.articles;
 
+  const cart = getProducts();
+  const shoppingCart = articles.concat(cart);
+
+  console.log(shoppingCart);
   const tbody = document.querySelector('tbody');
-  articles.forEach((product) => {
+  shoppingCart.forEach((product) => {
     const row = document.createElement('tr');
     row.className = 'article';
 
