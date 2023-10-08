@@ -3,7 +3,6 @@ import { CART_INFO_URL } from './constants/API.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await getJSONData({ URL: CART_INFO_URL, options: '25801' });
-  console.log(data);
   const articles = data.body.articles;
 
   const tbody = document.querySelector('tbody');
