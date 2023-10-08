@@ -211,13 +211,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function addCart(product) {
-  const products =
-    JSON.parse(localStorage.getItem('products')) === null
-      ? []
-      : JSON.parse(localStorage.getItem('products'));
-  products.push(product);
+  const localProducts = JSON.parse(localStorage.getItem('cart'));
+  const products = localProducts === null ? [] : localProducts;
+  const { id, name, cost, currency, images } = product;
 
-  localStorage.setItem('products', JSON.stringify(products));
+  products.push({
+    id,
+    name,
+    unitCost: cost,
+    currency,
+    image: images[0],
+    count: 1,
+  });
+
+  localStorage.setItem('cart', JSON.stringify(products));
 }
 
 function getComments() {
