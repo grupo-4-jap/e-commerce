@@ -57,9 +57,18 @@ function showCategoryList(array) {
 }
 
 export default function showList(array, { type }) {
-  if (type === CATEGORY) {
-    showCategoryList(array);
-  } else if (type === PRODUCT) {
-    showProductList(array);
+  if (array.length === 0) {
+    const main = document.querySelector('main');
+    main.innerHTML = `
+      <h1 class="d-flex justify-content-center align-items-center" style="height: 50vh">
+        WOOOOPS!! PARECE QUE NO HAY PRODUCTOS
+      </h1>
+      `;
+  } else {
+    if (type === CATEGORY) {
+      showCategoryList(array);
+    } else if (type === PRODUCT) {
+      showProductList(array);
+    }
   }
 }

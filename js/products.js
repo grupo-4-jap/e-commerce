@@ -44,7 +44,6 @@ let productList = [];
  */
 
 // Functions
-
 function getCatId() {
   const catID = localStorage.getItem('catID');
   return catID !== null ? catID : 101;
@@ -55,7 +54,6 @@ function clearFilters() {
 }
 
 // Events
-
 document.addEventListener('DOMContentLoaded', async () => {
   // Changes the page's sub-title
   const catName = document.getElementById('catName');
