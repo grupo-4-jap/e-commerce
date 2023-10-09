@@ -13,30 +13,34 @@ document.addEventListener('DOMContentLoaded', async () => {
   const cart = getProducts();
   const shoppingCart = articles.concat(cart);
 
-  console.log(shoppingCart);
   const tbody = document.querySelector('tbody');
   shoppingCart.forEach((product) => {
+    const { name, unitCost, count, currency, image } = product;
     const row = document.createElement('tr');
     row.className = 'article';
 
     row.innerHTML = `
-    <td>${product.name}</td>
-    <td class="cost">${product.unitCost}</td>
-    <td><input type="number" value="${product.count}" style="width:5em"></td>
-    <td>${product.currency}</td>
-    <td><img src="${product.image}" alt="Imagen del product" width="50"></td>
-    <td class="total">${product.unitCost * product.count}</td>
-    `;
+      <td class="d-flex align-items-center gap-3">
+        <img src="${image}" alt="Imagen del producto" width="150">
+        <p>${name}</p>
+      </td>
+      <td class="cost">${currency} ${unitCost}</td>
+      <td><input class="text-center" type="number" value="${count}" min="1" style="width:5em"></td>
+      <td class="total">${currency} ${unitCost * count}</td>
+      `;
 
     tbody.appendChild(row);
   });
 
   document.querySelectorAll('.article').forEach((item) => {
     const input = item.querySelector('input');
+    console.log(item);
     input.addEventListener('input', (e) => {
       const quantity = e.target.value;
-      const cost = item.querySelector('.cost').innerText;
-      item.querySelector('.total').innerText = cost * quantity;
+      const productPrice = item.querySelector('.cost').innerText;
+      const [currency, cost] = productPrice.split(' ');
+
+      item.querySelector('.total').innerText = `${currency} ${cost * quantity}`;
     });
   });
 });
