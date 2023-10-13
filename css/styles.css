@@ -211,10 +211,10 @@ a.custom-card:hover {
 }
 
 .login-bg {
-  background-image: url('../img/cover_back_without_personita.png');
+  background-image: url('../img/cover_back_logo.png');
   background-size: contain;
-  background-position: center;
   background-repeat: no-repeat;
+  height: 105vh;
 }
 
 .my-flex {
@@ -222,46 +222,69 @@ a.custom-card:hover {
   gap: 20px;
 }
 
-.bg-p {
-  background-color: #212529c2;
-  position: absolute;
-  top: 20%;
-  left: 55%;
-}
-
 .login-container {
-  width: 400px;
+  width: 320px;
+  height: 450px;
+
+  position: relative;
+  transform: translateY(150px);
+  background-color: #212529c2;
 }
 
-@media (width <= 900px) {
-  .bg-p {
-    left: 50%;
+@media (width >= 425px) {
+  .login-container {
+    transform: translateY(50vw);
+  }
+  .login-bg {
+    height: 150vw;
   }
 }
 
-@media (width <= 768px) {
+@media (width >= 768px) {
+  .login-container {
+    width: 450px;
+    height: 600px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  button[type='submit'] {
+    width: 200px;
+    margin: 0 auto;
+  }
+
   .login-bg {
-    background-position: top left;
-    background-size: 150%;
+    height: 150vw;
+  }
+
+  form {
+    width: 350px;
+  }
+}
+
+@media (width >= 1024px) {
+  .login-bg {
+    height: auto;
+
+    background-image: url('../img/cover_back_without_personita.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .login-container {
+    width: 400px;
+    height: 500px;
+    transform: translateY(0) translateX(250px);
   }
 
   main {
-    margin-top: 0;
+    min-height: 80dvh;
   }
 
-  .bg-p {
-    position: static;
-    transform: translateY(15rem);
-  }
-}
-
-@media (width <= 425px) {
-  .login-bg {
-    background-size: 180%;
-  }
-
-  .bg-p {
-    transform: translateY(10rem);
+  .login {
+    width: 320px;
   }
 }
 
@@ -308,4 +331,40 @@ a.custom-card:hover {
 .my-dropdown-menu li {
   display: flex;
   justify-content: center;
+}
+
+/* Media query for nav dropdown menu */
+
+@media (width <= 768px) {
+  .nav-btn {
+    left: -13px;
+    position: inherit;
+  }
+  .user-dropdown {
+    position: absolute !important;
+    left: -13px !important;
+    top: 50px !important;
+  }
+}
+
+/* Media query for category titles*/
+
+@media (width >= 768px) {
+  .category-title {
+    font-size: 1.5rem;
+  }
+}
+
+/*Media query for the tag price*/
+
+@media (width <= 425px) {
+  .small-price {
+    font-size: 0.8rem;
+  }
+}
+
+@media (width <= 768px) {
+  .small-price {
+    font-size: 1rem;
+  }
 }
