@@ -9,16 +9,17 @@ function showProductList(array) {
 
     htmlContentToAppend += `
             <div id=${id} class="list-group-item list-group-item-action cursor-active">
-                <div class="row">
-                    <div class="col-3">
+                <div class="row d-flex flex-column flex-md-row">
+                    <div class="col col-md-3">
                         <img src="${image}" alt="${description}" class="img-thumbnail">
                     </div>
                     <div class="col">
                         <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${name} - ${currency} ${cost} </h4>
-                            <small class="text-muted">${soldCount} artículos</small>
+                            <h5 class="mb-1 category-title">${name} <span class="d-none d-lg-inline">-</span> <br class="d-lg-none" /> 
+                            <span class="text-secondary small-price">${currency} ${cost}</span> </h5>
+                            <small class="text-muted">${soldCount} vendidos</small>
                         </div>
-                        <p class="mb-1">${description}</p>
+                        <p class="mb-1 d-none d-md-inline">${description}</p>
                     </div>
                 </div>
             </div>
@@ -37,16 +38,16 @@ function showCategoryList(array) {
 
     htmlContentToAppend += `
       <div id="${id}" class="list-group-item list-group-item-action cursor-active">
-        <div class="row">
-            <div class="col-3">
+        <div class="row d-flex flex-column flex-md-row">
+            <div class="col col-md-3">
                 <img src="${imgSrc}" alt="${description}" class="img-thumbnail">
             </div>
             <div class="col">
                 <div class="d-flex w-100 justify-content-between">
-                    <h4 class="mb-1">${name}</h4>
+                    <h5 class="mb-1 category-title">${name}</h5>
                     <small class="text-muted">${productCount} artículos</small>
                 </div>
-                <p class="mb-1">${description}</p>
+                <p class="mb-1 d-none d-md-inline">${description}</p>
             </div>
         </div>
     </div>

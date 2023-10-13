@@ -18,6 +18,7 @@
   </head>
 
   <body>
+    <!-- Navigation bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
       <div class="container">
         <button
@@ -32,18 +33,22 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
+          <ul
+            class="navbar-nav w-100 justify-content-between align-items-lg-center"
+          >
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Inicio</a>
+              <a class="nav-link active" href="index.html">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="categories.html">Categorías</a>
+              <a class="nav-link" href="categories.html">Categorías</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="sell.html">Vender</a>
             </li>
-            <li class="nav-item d-flex">
-              <div class="nav-link dropdown" id="loggeado"></div>
+            <div class="d-flex flex-row">
+              <li class="nav-item d-flex">
+                <div class="nav-link dropdown" id="loggeado"></div>
+              </li>
               <button type="button" class="btn btn-dark" id="theme-toggler">
                 <img
                   src="./icons/moon-stars-fill.svg"
@@ -53,7 +58,7 @@
                   style="filter: invert(100%)"
                 />
               </button>
-            </li>
+            </div>
           </ul>
         </div>
       </div>
@@ -98,42 +103,46 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
-            <div class="row container p-0 m-0">
-              <div class="col">
-                <p class="font-weight-normal text-end my-2">Cant.</p>
-              </div>
-              <div class="col">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="min."
-                  id="rangeFilterCountMin"
-                />
-              </div>
-              <div class="col">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="máx."
-                  id="rangeFilterCountMax"
-                />
-              </div>
-              <div class="col-3 p-0">
-                <div class="btn-group" role="group">
-                  <button class="btn btn-light btn-block" id="rangeFilterCount">
-                    Filtrar
-                  </button>
-                  <button class="btn btn-link btn-sm" id="clearRangeFilter">
-                    Limpiar
-                  </button>
+          <div class="row d-flex flex-row justify-content-end">
+            <div class="mb-1 p-0 col-md-9 col-lg-6 offset-lg-6">
+              <div class="row container p-0 m-0">
+                <div class="col d-flex flex-row">
+                  <div class="col">
+                    <p class="font-weight-normal text-end my-2">Cant.</p>
+                  </div>
+                  <div class="col">
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="min."
+                      id="rangeFilterCountMin"
+                    />
+                  </div>
+                  <div class="col">
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="máx."
+                      id="rangeFilterCountMax"
+                    />
+                  </div>
+                </div>
+                <div class="align-self-end p-0" style="width: 157.91px">
+                  <div class="btn-group" role="group">
+                    <button class="btn bg-light" id="rangeFilterCount">
+                      Filtrar
+                    </button>
+                    <button class="btn bg-light" id="clearRangeFilter">
+                      Limpiar
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="list-group" id="cat-list-container"></div>
+        <div class="row m-auto">
+          <div class="list-group p-0" id="cat-list-container"></div>
         </div>
       </div>
     </main>

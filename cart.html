@@ -17,6 +17,7 @@
   </head>
 
   <body>
+    <!-- Navigation bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
       <div class="container">
         <button
@@ -31,9 +32,11 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
+          <ul
+            class="navbar-nav w-100 justify-content-between align-items-lg-center"
+          >
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Inicio</a>
+              <a class="nav-link active" href="index.html">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="categories.html">Categorías</a>
@@ -41,8 +44,10 @@
             <li class="nav-item">
               <a class="nav-link" href="sell.html">Vender</a>
             </li>
-            <li class="nav-item d-flex">
-              <div class="nav-link dropdown" id="loggeado"></div>
+            <div class="d-flex flex-row">
+              <li class="nav-item d-flex">
+                <div class="nav-link dropdown" id="loggeado"></div>
+              </li>
               <button type="button" class="btn btn-dark" id="theme-toggler">
                 <img
                   src="./icons/moon-stars-fill.svg"
@@ -52,11 +57,13 @@
                   style="filter: invert(100%)"
                 />
               </button>
-            </li>
+            </div>
           </ul>
         </div>
       </div>
     </nav>
+
+    <!-- Main body -->
     <main>
       <div id="cart-container">
         <div class="container mt-5">
@@ -67,84 +74,12 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Costo</th>
                 <th scope="col">Cantidad</th>
-                <th scope="col" width="200">Subtotal</th>
+                <th scope="col">Subtotal</th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
-          <hr class="mt-4" />
         </div>
-      </div>
-      <div class="container">
-        <h4 class="mt-4 mb-3">Tipo de envío</h4>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault1"
-          />
-          <label class="form-check-label" for="flexRadioDefault1">
-            Premium 2 a 5 días (15%)
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault2"
-            checked
-          />
-          <label class="form-check-label" for="flexRadioDefault2">
-            Express 5 a 8 días (7%)
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault1"
-          />
-          <label class="form-check-label" for="flexRadioDefault1">
-            Standard 12 a 15 días (5%)
-          </label>
-        </div>
-        <h4 class="mt-4 mb-3">Dirección de envío</h4>
-        <div class="row">
-          <div class="mb-3 col">
-            <label for="exampleFormControlInput1" class="form-label"
-              >Calle:</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="exampleFormControlInput1"
-            />
-          </div>
-          <div class="mb-3 col">
-            <label for="exampleFormControlInput1" class="form-label"
-              >Número:</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="exampleFormControlInput1"
-            />
-          </div>
-        </div>
-        <div class="mb-3 col-6">
-          <label for="exampleFormControlInput1" class="form-label"
-            >Esquina:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="exampleFormControlInput1"
-          />
-        </div>
-        <hr class="mt-5" />
       </div>
     </main>
     <footer class="text-muted">

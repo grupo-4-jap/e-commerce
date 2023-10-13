@@ -32,10 +32,10 @@ const createUserNav = () => {
   if (getUserData() != null) {
     const { email } = getUserData();
     userDropdown.innerHTML = `
-    <button class="btn dropdown-toggle" style="color: rgba(255,255,255,.55);" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    <button class="btn dropdown-toggle nav-btn" style="color: rgba(255,255,255,.55);" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
       Hola ${email}
     </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <ul class="dropdown-menu user-dropdown ms-lg-3" aria-labelledby="dropdownMenuButton1">
       <li><a id="cart" class="dropdown-item" href="#">Mi carrito</a></li>
       <li><a id="profile" class="dropdown-item" href="#">Mi perfil</a></li>
       <li><a id="finish" class="dropdown-item" href="#">Cerrar sesión</a></li>

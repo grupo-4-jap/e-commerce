@@ -47,9 +47,11 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
+          <ul
+            class="navbar-nav w-100 justify-content-between align-items-lg-center"
+          >
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Inicio</a>
+              <a class="nav-link active" href="index.html">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="categories.html">Categorías</a>
@@ -57,8 +59,10 @@
             <li class="nav-item">
               <a class="nav-link" href="sell.html">Vender</a>
             </li>
-            <li class="nav-item d-flex">
-              <div class="nav-link dropdown" id="loggeado"></div>
+            <div class="d-flex flex-row">
+              <li class="nav-item d-flex">
+                <div class="nav-link dropdown" id="loggeado"></div>
+              </li>
               <button type="button" class="btn btn-dark" id="theme-toggler">
                 <img
                   src="./icons/moon-stars-fill.svg"
@@ -68,7 +72,7 @@
                   style="filter: invert(100%)"
                 />
               </button>
-            </li>
+            </div>
           </ul>
         </div>
       </div>
@@ -126,9 +130,9 @@
             </div>
 
             <!-- Filter controls -->
-            <div class="row container p-0 m-0">
+            <div class="row container p-0 m-0 gap-3">
               <!-- Search field -->
-              <div class="col">
+              <div class="row col-lg">
                 <div class="input-group">
                   <input
                     type="text"
@@ -152,10 +156,10 @@
 
               <!-- Price search field -->
               <div class="col row">
-                <div class="col">
+                <div class="col pe-1">
                   <p class="font-weight-normal text-end my-2">Precio</p>
                 </div>
-                <div class="col">
+                <div class="col p-0">
                   <input
                     class="form-control"
                     type="number"
@@ -163,7 +167,7 @@
                     id="rangeFilterCountMin"
                   />
                 </div>
-                <div class="col">
+                <div class="col p-0">
                   <input
                     class="form-control"
                     type="number"
@@ -179,7 +183,7 @@
                     >
                       Filtrar
                     </button>
-                    <button class="btn btn-link btn-sm" id="clearRangeFilter">
+                    <button class="btn btn-light btn-sm" id="clearRangeFilter">
                       Limpiar
                     </button>
                   </div>
@@ -189,7 +193,7 @@
           </div>
 
           <!-- Card container -->
-          <div class="container pt-5" id="containerProducts"></div>
+          <div class="list-group container pt-2" id="containerProducts"></div>
         </div>
       </div>
     </main>

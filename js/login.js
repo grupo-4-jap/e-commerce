@@ -3,7 +3,6 @@ import { login } from './utils/loggingUser.js';
 const loginForm = document.querySelector('.login');
 const userInput = document.getElementById('floatingInput');
 const userPassword = document.getElementById('floatingPassword');
-const loginStatus = document.getElementById('login-status');
 
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -20,4 +19,8 @@ loginForm.addEventListener('submit', (e) => {
   } else {
     alert('Debe ingresar su usuario y contraseña');
   }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('body').style.backgroundColor = '#f8f9fa';
 });
