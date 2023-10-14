@@ -80,16 +80,6 @@ function showProduct(product) {
   for (let i = 0; i < 4; i++) {
     carouselImages[i].src = images[i];
   }
-
-  // This renders the images
-  // const imagesContainer = document.getElementById('images-container');
-  // images.forEach((image) => {
-  //   const img = document.createElement('img');
-  //   img.className = 'card-image';
-  //   img.src = `${image}`;
-  //   img.style.objectFit = 'contain';
-  //   imagesContainer.appendChild(img);
-  // });
 }
 
 function showComments(comments) {
@@ -140,9 +130,11 @@ function showRelatedProducts() {
     const { name, image, id } = relatedProduct;
 
     productCard.innerHTML = `
-    <div class="related cursor-active border p-2" id="${id}">
-      <img class="card-image border-0" src="${image}" alt="${name}" >
-      <h5 class="text-center">${name}</h5>
+    <div class="card m-3" style="max-width: 18rem;">
+      <img src="${image}" class="card-img-top" alt="${name}">
+      <div class="card-body">
+        <h5 class="card-title">${name}</h5>
+      </div>
     </div>
     `;
 

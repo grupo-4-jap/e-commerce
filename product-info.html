@@ -78,9 +78,11 @@
     <!-- Main body -->
     <main>
       <div class="container d-flex flex-column align-items-center">
-        <div class="row d-flex justify-content-center w-100">
+        <div
+          class="row d-flex flex-column justify-content-center w-100 flex-md-row"
+        >
           <div
-            class="pt-5 container col-6 d-flex flex-column justify-content-center"
+            class="pt-5 container d-flex flex-column justify-content-center col-md-7 col-xxl-5"
           >
             <div id="carouselExampleIndicators" class="carousel slide">
               <div class="carousel-indicators">
@@ -166,9 +168,9 @@
                 <span class="visually-hidden">Next</span>
               </button>
             </div>
-            <h5 class="pt-4">Imágenes ilustrativas</h5>
+            <h5 class="pt-4 d-none">Imágenes ilustrativas</h5>
           </div>
-          <div class="container col-4">
+          <div class="container col col-md-5">
             <div class="container pt-5" id="product-description"></div>
           </div>
         </div>
@@ -208,7 +210,10 @@
         </div>
         <div class="container mt-5">
           <h4>Productos relacionados</h4>
-          <div class="images-container pt-2" id="related-container"></div>
+          <div
+            class="pt-2 justify-content-center d-md-flex justify-content-md-start"
+            id="related-container"
+          ></div>
         </div>
       </div>
     </main>
