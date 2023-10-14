@@ -130,7 +130,7 @@ function showRelatedProducts() {
     const { name, image, id } = relatedProduct;
 
     productCard.innerHTML = `
-    <div class="card m-3" style="max-width: 18rem;">
+    <div class="related card m-3 cursor-active" style="max-width: 18rem;" id="${id}">
       <img src="${image}" class="card-img-top" alt="${name}">
       <div class="card-body">
         <h5 class="card-title">${name}</h5>
