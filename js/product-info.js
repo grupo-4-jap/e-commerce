@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const buyBtn = document.querySelector('#buy-btn');
   buyBtn.addEventListener('click', function () {
     addCart(productData.body);
-    // window.location.href = 'cart.html';
+    window.location.href = 'cart.html';
   });
 });
 
