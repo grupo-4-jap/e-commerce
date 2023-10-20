@@ -1,16 +1,24 @@
+// Imports
 import {
   PRODUCT_INFO_COMMENTS_URL,
   PRODUCT_INFO_URL,
 } from './constants/API.js';
 import getJSONData from './utils/getJSONData.js';
+import { getUserData } from './utils/loggingUser.js';
 import addEvents from './utils/addEvents.js';
 import { PRODUCT } from './constants/CONSTANTS.js';
 
+// Get product-info data
+const productID = getProductID();
+
+// DOM Elements
+const form = document.getElementById('form-save-comment');
+
+// Global variables
 let productData = {};
 let commentsData = {};
 
 const myCarouselElement = document.querySelector('#carouselExampleIndicators');
-
 const carousel = new bootstrap.Carousel(myCarouselElement, {
   interval: 2000,
   touch: false,
@@ -89,19 +97,23 @@ function showComments(comments) {
     commentator.innerHTML +=
       '<p>No hay comentarios aún. Se la primera en comentar.</p>';
   } else {
-    commentator.innerHTML += '';
+    commentator.innerHTML = '';
     let count = 0;
     comments.forEach((comment) => {
-      const commentElement = document.createElement('div');
-      commentElement.innerHTML = `
-          <p><b>${comment.user}</b> - ${comment.dateTime} - <span id="star-container${count}"></span></p>
-          <p>${comment.description}</p>
-          <hr>
-        `;
-      commentator.appendChild(commentElement);
-      const starContainer = document.getElementById(`star-container${count}`);
-      showStars(comment.score, starContainer);
-      count++;
+      const { user, dateTime, description, score } = comment;
+
+      if (comment.productID === productID || comment.productID === undefined) {
+        const commentElement = document.createElement('div');
+        commentElement.innerHTML = `
+            <p><b>${user}</b> - ${dateTime} - <span id="star-container${count}"></span></p>
+            <p>${description}</p>
+            <hr>
+          `;
+        commentator.appendChild(commentElement);
+        const starContainer = document.getElementById(`star-container${count}`);
+        showStars(score, starContainer);
+        count++;
+      }
     });
   }
 }
@@ -123,7 +135,7 @@ function showStars(score, parent) {
 // Show related products
 function showRelatedProducts() {
   const relatedProductsContainer = document.getElementById('related-container');
-  const relatedProducts = productData.body.relatedProducts;
+  const relatedProducts = productData.relatedProducts;
 
   relatedProducts.forEach((relatedProduct) => {
     const productCard = document.createElement('div');
@@ -141,65 +153,6 @@ function showRelatedProducts() {
     relatedProductsContainer.appendChild(productCard);
   });
 }
-
-document.addEventListener('DOMContentLoaded', async () => {
-  // Get product-info data
-  const productID = getProductID();
-  productData = await getJSONData({
-    URL: PRODUCT_INFO_URL,
-    options: productID,
-  });
-
-  showProduct(productData.body);
-  showRelatedProducts();
-  addEvents('related', PRODUCT);
-
-  // Get product comment data
-  commentsData = await getJSONData({
-    URL: PRODUCT_INFO_COMMENTS_URL,
-    options: productID,
-  });
-
-  const comments = commentsData.body.concat(getComments());
-
-  showComments(comments);
-
-  document
-    .getElementById('form-save-comment')
-    .addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const commentInp = document.getElementById('comment-area');
-      const punctuationSel = document.getElementById('punctuation');
-
-      const comment = commentInp.value.trim();
-
-      if (comment.length === 0) {
-        alert('El comentario no puede estar vacío!');
-        return;
-      }
-
-      const punt = parseInt(punctuationSel.value);
-
-      saveComment(comment, punt);
-      commentInp.value = '';
-      punctuationSel.value = 1;
-      commentsData = await getJSONData({
-        URL: PRODUCT_INFO_COMMENTS_URL,
-        options: productID,
-      });
-
-      const comments = commentsData.body.concat(getComments());
-
-      showComments(comments);
-    });
-
-  const buyBtn = document.querySelector('#buy-btn');
-  buyBtn.addEventListener('click', function () {
-    addCart(productData.body);
-    window.location.href = 'cart.html';
-  });
-});
 
 function addCart(product) {
   const localProducts = JSON.parse(localStorage.getItem('cart'));
@@ -246,14 +199,78 @@ function saveComment(description, score) {
       description,
       score,
       dateTime: new Date(),
+      productID: productID,
     });
     localStorage.setItem('Comments', JSON.stringify(allComments));
   } else {
     localStorage.setItem(
       'Comments',
       JSON.stringify([
-        { user: userData.email, description, score, dateTime: new Date() },
+        {
+          user: userData.email,
+          description,
+          score,
+          dateTime: new Date(),
+          productID: productID,
+        },
       ])
     );
   }
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+  productData = await getJSONData({
+    URL: PRODUCT_INFO_URL,
+    options: productID,
+  }).then((data) => data.body);
+
+  showProduct(productData);
+  showRelatedProducts();
+  addEvents('related', PRODUCT);
+
+  // Get product comment data
+  commentsData = await getJSONData({
+    URL: PRODUCT_INFO_COMMENTS_URL,
+    options: productID,
+  });
+
+  const comments = commentsData.body.concat(getComments());
+
+  showComments(comments);
+
+  const buyBtn = document.querySelector('#buy-btn');
+  buyBtn.addEventListener('click', function () {
+    addCart(productData);
+    window.location.href = 'cart.html';
+  });
+
+  console.log(comments[0].productID);
+});
+
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const commentInp = document.getElementById('comment-area');
+  const punctuationSel = document.getElementById('punctuation');
+
+  const comment = commentInp.value.trim();
+
+  if (comment.length === 0) {
+    alert('El comentario no puede estar vacío!');
+    return;
+  }
+
+  const punt = parseInt(punctuationSel.value);
+
+  saveComment(comment, punt);
+  commentInp.value = '';
+  punctuationSel.value = 1;
+  commentsData = await getJSONData({
+    URL: PRODUCT_INFO_COMMENTS_URL,
+    options: productID,
+  });
+
+  const comments = commentsData.body.concat(getComments());
+
+  showComments(comments);
+});
