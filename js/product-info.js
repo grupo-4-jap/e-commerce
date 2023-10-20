@@ -1,16 +1,21 @@
+// Imports
 import {
   PRODUCT_INFO_COMMENTS_URL,
   PRODUCT_INFO_URL,
 } from './constants/API.js';
 import getJSONData from './utils/getJSONData.js';
+import { getUserData } from './utils/loggingUser.js';
 import addEvents from './utils/addEvents.js';
 import { PRODUCT } from './constants/CONSTANTS.js';
 
+// DOM Elements
+const form = document.getElementById('form-save-comment');
+
+// Global variables
 let productData = {};
 let commentsData = {};
 
 const myCarouselElement = document.querySelector('#carouselExampleIndicators');
-
 const carousel = new bootstrap.Carousel(myCarouselElement, {
   interval: 2000,
   touch: false,
@@ -142,65 +147,6 @@ function showRelatedProducts() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // Get product-info data
-  const productID = getProductID();
-  productData = await getJSONData({
-    URL: PRODUCT_INFO_URL,
-    options: productID,
-  });
-
-  showProduct(productData.body);
-  showRelatedProducts();
-  addEvents('related', PRODUCT);
-
-  // Get product comment data
-  commentsData = await getJSONData({
-    URL: PRODUCT_INFO_COMMENTS_URL,
-    options: productID,
-  });
-
-  const comments = commentsData.body.concat(getComments());
-
-  showComments(comments);
-
-  document
-    .getElementById('form-save-comment')
-    .addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const commentInp = document.getElementById('comment-area');
-      const punctuationSel = document.getElementById('punctuation');
-
-      const comment = commentInp.value.trim();
-
-      if (comment.length === 0) {
-        alert('El comentario no puede estar vacío!');
-        return;
-      }
-
-      const punt = parseInt(punctuationSel.value);
-
-      saveComment(comment, punt);
-      commentInp.value = '';
-      punctuationSel.value = 1;
-      commentsData = await getJSONData({
-        URL: PRODUCT_INFO_COMMENTS_URL,
-        options: productID,
-      });
-
-      const comments = commentsData.body.concat(getComments());
-
-      showComments(comments);
-    });
-
-  const buyBtn = document.querySelector('#buy-btn');
-  buyBtn.addEventListener('click', function () {
-    addCart(productData.body);
-    window.location.href = 'cart.html';
-  });
-});
-
 function addCart(product) {
   const localProducts = JSON.parse(localStorage.getItem('cart'));
   const products = localProducts === null ? [] : localProducts;
@@ -257,3 +203,60 @@ function saveComment(description, score) {
     );
   }
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // Get product-info data
+  const productID = getProductID();
+  productData = await getJSONData({
+    URL: PRODUCT_INFO_URL,
+    options: productID,
+  });
+
+  showProduct(productData.body);
+  showRelatedProducts();
+  addEvents('related', PRODUCT);
+
+  // Get product comment data
+  commentsData = await getJSONData({
+    URL: PRODUCT_INFO_COMMENTS_URL,
+    options: productID,
+  });
+
+  const comments = commentsData.body.concat(getComments());
+
+  showComments(comments);
+
+  const buyBtn = document.querySelector('#buy-btn');
+  buyBtn.addEventListener('click', function () {
+    addCart(productData.body);
+    window.location.href = 'cart.html';
+  });
+});
+
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const commentInp = document.getElementById('comment-area');
+  const punctuationSel = document.getElementById('punctuation');
+
+  const comment = commentInp.value.trim();
+
+  if (comment.length === 0) {
+    alert('El comentario no puede estar vacío!');
+    return;
+  }
+
+  const punt = parseInt(punctuationSel.value);
+
+  saveComment(comment, punt);
+  commentInp.value = '';
+  punctuationSel.value = 1;
+  commentsData = await getJSONData({
+    URL: PRODUCT_INFO_COMMENTS_URL,
+    options: productID,
+  });
+
+  const comments = commentsData.body.concat(getComments());
+
+  showComments(comments);
+});
