@@ -68,18 +68,69 @@
       <div id="cart-container">
         <div class="container mt-5">
           <h1>Carrito de Compras</h1>
-          <table class="table align-middle">
-            <thead>
-              <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Costo</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Subtotal</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+
+          <!-- Cart table -->
+
+          <!-- Table for Phone Size -->
+          <ul class="list-group d-md-none">
+            <li class="list-group-item d-flex justify-content-center">
+              <div class="card border-0">
+                <img src="img/car1.jpg" alt="..." />
+                <div class="mt-2">
+                  <h5 class="card-title">Chevrolet Onix</h5>
+                  <div class="row">
+                    <div class="row col-9">
+                      <div class="col">
+                        <p><span class="fw-bold">Costo</span> U$D15000</p>
+                        <p><span class="fw-bold">Subtotal</span> U$D15000</p>
+                      </div>
+                      <div class="col-3 d-flex align-self-center">
+                        <input
+                          class="text-center"
+                          type="number"
+                          style="width: 3rem"
+                          value="1"
+                          min="1"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="col d-flex justify-content-center align-self-center ms-3 m-sm-0"
+                    >
+                      <div>
+                        <img
+                          class="border rounded border-danger p-2"
+                          src="./icons/trash3.svg"
+                          width="40"
+                          height="40"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">A second item</li>
+            <li class="list-group-item">A third item</li>
+            <li class="list-group-item">A fourth item</li>
+            <li class="list-group-item">And a fifth one</li>
+          </ul>
+
+          <!-- Table for MD Size -->
+          <div class="d-none d-md-inline">
+            <table class="table align-middle">
+              <thead>
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Costo</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Subtotal</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
           <hr class="mt-4" />
         </div>
       </div>
