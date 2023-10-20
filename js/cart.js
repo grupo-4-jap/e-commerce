@@ -10,6 +10,10 @@ function isProductInCart(cartProducts, productID) {
   return true;
 }
 
+// If the cart is empty this will be filled with the defaultCartProduct that is
+// get from the JSON, but if the cart already have it this won't be filled,
+// then the cart will be concatenated with the localStorage cart
+// which is created with the user activity
 async function getCartProducts() {
   let localCart = JSON.parse(localStorage.getItem('cart'));
   const defaultCartProduct = await getJSONData({
