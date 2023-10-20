@@ -243,8 +243,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     addCart(productData);
     window.location.href = 'cart.html';
   });
-
-  console.log(comments[0].productID);
 });
 
 form.addEventListener('submit', async function (e) {
