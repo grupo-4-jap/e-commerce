@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     row.innerHTML = `
       <td class="d-flex align-items-center gap-3">
         <img src="${image}" alt="Imagen del producto" width="150">
-        <p>${name}</p>
+        <p class="m-0">${name}</p>
       </td>
       <td class="cost">${currency} ${unitCost}</td>
       <td><input class="text-center" type="number" value="${count}" min="1" style="width:5em"></td>
