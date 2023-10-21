@@ -48,15 +48,27 @@ function deleteProduct(product) {
   localStorage.setItem('cart', JSON.stringify(newCart));
 }
 
+function updateItemQuantity(DOMItem, newQuantity) {
+  const { id } = DOMItem;
+  const idNumber = id.split('-')[0];
+
+  cart.forEach((cartItem) => {
+    if (cartItem.id == idNumber) cartItem.count = Number(newQuantity);
+  });
+
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   cart = await getCartProducts().then((data) => data);
   const tbody = document.querySelector('tbody');
 
+  // MD or greater devices
   cart.forEach((product) => {
     const { id, name, unitCost, count, currency, image } = product;
     const row = document.createElement('tr');
     row.className = 'article';
-    row.id = id;
+    row.id = `${id}-md`;
 
     row.innerHTML = `
       <td class="d-flex align-items-center gap-3">
@@ -72,18 +84,59 @@ document.addEventListener('DOMContentLoaded', async () => {
     tbody.appendChild(row);
   });
 
+  // Phone devices
+  cart.forEach((product) => {
+    const { id, name, unitCost, count, currency, image } = product;
+    const listGroup = document.querySelector('#list-group');
+    listGroup.innerHTML += `
+      <li class="list-group-item d-flex justify-content-center article" id="${id}-s">
+        <div class="card border-0">
+          <img src="${image}" alt="..." />
+          <div class="mt-2">
+            <h5 class="card-title">${name}</h5>
+            <div class="row">
+              <div class="row col-9">
+                <div class="col">
+                  <p>
+                    <span class="fw-bold">Costo: </span>
+                    <p class="cost">${currency} ${unitCost}</p>
+                  </p>
+                  <p>
+                    <span class="fw-bold">Subtotal: </span>
+                    <p class="total">${currency} ${unitCost * count}</p>
+                  </p>
+                </div>
+                <div class="col-3 d-flex align-self-center">
+                  <input class="text-center" type="number" style="width: 3rem" value="${count}" min="1" />
+                </div>
+              </div>
+              <div class="col d-flex justify-content-center align-self-center ms-3 m-sm-0">
+                <div>
+                  <img class="border rounded border-danger p-2" src="./icons/trash3.svg" width="40" height="40" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    `;
+  });
+
+  // This selects the DOM elements and applies events on them
   document.querySelectorAll('.article').forEach((item) => {
-    // On change input event
+    // On change input value
     const input = item.querySelector('input');
     input.addEventListener('input', (e) => {
       const quantity = e.target.value;
       const productPrice = item.querySelector('.cost').innerText;
       const [currency, cost] = productPrice.split(' ');
+      const finalPrice = cost * quantity;
 
-      item.querySelector('.total').innerText = `${currency} ${cost * quantity}`;
+      item.querySelector('.total').innerText = `${currency} ${finalPrice}`;
+      updateItemQuantity(item, quantity);
     });
 
-    // On click element event
+    // On click delete element
     const trashIcon = item.querySelectorAll('img')[1];
     trashIcon.addEventListener('click', function () {
       deleteProduct(item);
