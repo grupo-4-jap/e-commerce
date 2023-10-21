@@ -138,6 +138,7 @@
         <h4 class="mt-4 mb-3">Tipo de envío</h4>
         <div class="form-check">
           <input
+            value="0.15"
             class="form-check-input"
             type="radio"
             name="flexRadioDefault"
@@ -149,6 +150,7 @@
         </div>
         <div class="form-check">
           <input
+            value="0.07"
             class="form-check-input"
             type="radio"
             name="flexRadioDefault"
@@ -161,6 +163,7 @@
         </div>
         <div class="form-check">
           <input
+            value="0.05"
             class="form-check-input"
             type="radio"
             name="flexRadioDefault"
@@ -204,6 +207,33 @@
           />
         </div>
         <hr class="mt-5" />
+      </div>
+      <div class="container">
+        <h4 class="mt-4 mb-3">Costos</h4>
+
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex flex-row justify-content-between align-items-center"
+            style="min-height: 100%"
+          >
+            <p class="m-0">Subtotal</p>
+            <p id="subtotal"></p>
+          </li>
+          <li
+            class="list-group-item d-flex flex-row justify-content-between align-items-center"
+            style="min-height: 100%"
+          >
+            <p class="m-0">Costo de envío</p>
+            <p id="costo-envio"></p>
+          </li>
+          <li
+            class="list-group-item d-flex flex-row justify-content-between align-items-center"
+            style="min-height: 100%"
+          >
+            <p class="m-0">Total ($)</p>
+            <p id="total"></p>
+          </li>
+        </ul>
       </div>
     </main>
     <footer class="text-muted">
