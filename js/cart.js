@@ -61,7 +61,29 @@ function updateItemQuantity(DOMItem, newQuantity) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
+function getBuyResume() {
+  const DOMsubtotal = document.querySelector('#subtotal');
+  const DOMshippingCost = document.querySelector('#costo-envio');
+  const DOMtotal = document.querySelector('#total');
+
+  let selectedValue = 0;
+  radioButtons.forEach((button) => {
+    if (button.checked) {
+      selectedValue = Number(button.value);
+    }
+  });
+
+  let totalPrice = 0;
+  cart.forEach((item) => {
+    totalPrice += item.count * item.unitCost;
+  });
+
+  DOMsubtotal.innerHTML = `USD ${totalPrice}`;
+  DOMshippingCost.innerHTML = `USD ${(totalPrice * selectedValue).toFixed(0)}`;
+  DOMtotal.innerHTML = `USD ${(totalPrice * (selectedValue + 1)).toFixed(0)}`;
+}
+
+document.addEventListener('DOMContentLoaded', async function () {
   cart = await getCartProducts().then((data) => data);
   const tbody = document.querySelector('tbody');
   getBuyResume();
@@ -152,24 +174,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 });
-function getBuyResume() {
-  const DOMsubtotal = document.querySelector('#subtotal');
-  const DOMshippingCost = document.querySelector('#costo-envio');
-  const DOMtotal = document.querySelector('#total');
-
-  let selectedValue = 0;
-  radioButtons.forEach((button) => {
-    if (button.checked) {
-      selectedValue = Number(button.value);
-    }
-  });
-
-  let totalPrice = 0;
-  cart.forEach((item) => {
-    totalPrice += item.count * item.unitCost;
-  });
-
-  DOMsubtotal.innerHTML = `USD ${totalPrice}`;
-  DOMshippingCost.innerHTML = `USD ${(totalPrice * selectedValue).toFixed(0)}`;
-  DOMtotal.innerHTML = `USD ${(totalPrice * (selectedValue + 1)).toFixed(0)}`;
-}

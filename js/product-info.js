@@ -218,7 +218,7 @@ function saveComment(description, score) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async function () {
   productData = await getJSONData({
     URL: PRODUCT_INFO_URL,
     options: productID,
