@@ -155,18 +155,44 @@ function showRelatedProducts() {
 }
 
 function addCart(product) {
-  const localProducts = JSON.parse(localStorage.getItem('cart'));
+  const localProducts =
+    JSON.parse(localStorage.getItem('cart')) === null
+      ? []
+      : JSON.parse(localStorage.getItem('cart'));
   const products = localProducts === null ? [] : localProducts;
   const { id, name, cost, currency, images } = product;
 
-  products.push({
-    id,
-    name,
-    unitCost: cost,
-    currency,
-    image: images[0],
-    count: 1,
-  });
+  // This prevents repeated items in the cart
+  if (localProducts.length > 0) {
+    const isInCart = localProducts.some(
+      (localProduct) => localProduct.id === id
+    );
+    if (isInCart) {
+      for (const localProduct of localProducts) {
+        if (localProduct.id === product.id) {
+          localProduct.count++;
+        }
+      }
+    } else {
+      products.push({
+        id,
+        name,
+        unitCost: cost,
+        currency,
+        image: images[0],
+        count: 1,
+      });
+    }
+  } else {
+    products.push({
+      id,
+      name,
+      unitCost: cost,
+      currency,
+      image: images[0],
+      count: 1,
+    });
+  }
 
   localStorage.setItem('cart', JSON.stringify(products));
 }
