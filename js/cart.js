@@ -165,6 +165,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const trashIcon = item.querySelectorAll('img')[1];
     trashIcon.addEventListener('click', function () {
       deleteProduct(item);
+      getBuyResume();
     });
   });
 
