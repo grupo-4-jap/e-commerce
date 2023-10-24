@@ -54,7 +54,7 @@ function clearFilters() {
 }
 
 // Events
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async function () {
   // Changes the page's sub-title
   const catName = document.getElementById('catName');
   catName.innerHTML = '';
