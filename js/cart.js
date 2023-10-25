@@ -2,8 +2,13 @@ import getJSONData from './utils/getJSONData.js';
 import { CART_INFO_URL } from './constants/API.js';
 
 const radioButtons = document.querySelectorAll('input[type = "radio"]');
+const creditCardBtn = document.getElementById('credit-card-btn');
+const creditCardInputs = document.querySelectorAll('.credit-card-input');
+const bankTransferBtn = document.getElementById('bank-transfer-btn');
+const bankTransferInput = document.querySelector('.bank-transfer-input');
+const typeOfPayment = document.getElementById('payment-method');
 
-let cart = new Array();
+let cart = Array();
 
 function isProductInCart(cartProducts, productID) {
   if (cartProducts.length === 0) true;
@@ -61,6 +66,26 @@ function updateItemQuantity(DOMItem, newQuantity) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
+creditCardBtn.addEventListener('click', function () {
+  if (creditCardBtn.checked) {
+    bankTransferInput.setAttribute('disabled', '');
+  }
+  creditCardInputs.forEach((input) => {
+    input.removeAttribute('disabled', '');
+  });
+  typeOfPayment.innerHTML = 'Tarjeta de crédito';
+});
+
+bankTransferBtn.addEventListener('click', function () {
+  if (bankTransferBtn.checked) {
+    creditCardInputs.forEach((input) => {
+      input.setAttribute('disabled', '');
+    });
+  }
+  bankTransferInput.removeAttribute('disabled', '');
+  typeOfPayment.innerHTML = 'Transferencia bancaria';
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
   cart = await getCartProducts().then((data) => data);
   const tbody = document.querySelector('tbody');
@@ -86,7 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     tbody.appendChild(row);
   });
 
-  // Phone devices
+  // Mobile devices
   cart.forEach((product) => {
     const { id, name, unitCost, count, currency, image } = product;
     const listGroup = document.querySelector('#list-group');
@@ -152,6 +177,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 });
+
 function getBuyResume() {
   const DOMsubtotal = document.querySelector('#subtotal');
   const DOMshippingCost = document.querySelector('#costo-envio');
