@@ -28,7 +28,7 @@ function checkPage(target) {
 }
 
 // Creates the UI User Nav
-const createUserNav = () => {
+function createUserNav() {
   if (getUserData() != null) {
     const { email } = getUserData();
     userDropdown.innerHTML = `
@@ -42,7 +42,7 @@ const createUserNav = () => {
     </ul>
   `;
   }
-};
+}
 
 function toggleTheme(event) {
   let currentTheme = localStorage.getItem('theme');
@@ -95,7 +95,7 @@ function changeTheme(e) {
   toggleTheme(e);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
   const isLog = isLogged();
   // console.log(`El usuario esta logeado? ${isLog}`);
 
