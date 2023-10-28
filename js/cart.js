@@ -66,7 +66,6 @@ function updateItemQuantity(DOMItem, newQuantity) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-
 creditCardBtn.addEventListener('click', function () {
   if (creditCardBtn.checked) {
     bankTransferInput.setAttribute('disabled', '');
@@ -86,7 +85,6 @@ bankTransferBtn.addEventListener('click', function () {
   bankTransferInput.removeAttribute('disabled', '');
   typeOfPayment.innerHTML = 'Transferencia bancaria';
 });
-
 
 function getBuyResume() {
   const DOMsubtotal = document.querySelector('#subtotal');
@@ -200,5 +198,112 @@ document.addEventListener('DOMContentLoaded', async function () {
     button.addEventListener('click', function () {
       getBuyResume();
     });
+  });
+});
+
+// End purchase button funct.
+document.addEventListener('DOMContentLoaded', function () {
+  const btnEndPurchase = document.getElementById('btn-end-purchase');
+
+  document.querySelectorAll('.invalid-feedback').forEach((feedback) => {
+    feedback.classList.add('d-none');
+  });
+
+  document.querySelectorAll('.form-control').forEach((input) => {
+    input.classList.remove('is-invalid');
+  });
+
+  btnEndPurchase.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const street = document.getElementById('shipping-street').value;
+    const number = document.getElementById('shipping-number').value;
+    const corner = document.getElementById('shipping-corner').value;
+
+    if (street === '') {
+      document.getElementById('street-feedback').classList.remove('d-none');
+      document.getElementById('shipping-street').classList.add('is-invalid');
+    }
+
+    if (number === '') {
+      document.getElementById('number-feedback').classList.remove('d-none');
+      document.getElementById('shipping-number').classList.add('is-invalid');
+    }
+
+    if (corner === '') {
+      document.getElementById('corner-feedback').classList.remove('d-none');
+      document.getElementById('shipping-corner').classList.add('is-invalid');
+    }
+
+    const quantityInputs = document.querySelectorAll(
+      '.article input[type="number"]'
+    );
+    let quantitiesValid = true;
+
+    quantityInputs.forEach((input) => {
+      const quantity = parseInt(input.value, 10);
+
+      if (isNaN(quantity) || quantity <= 0) {
+        quantitiesValid = false;
+        input.classList.add('is-invalid');
+      } else {
+        input.classList.remove('is-invalid');
+      }
+    });
+
+    //////// cambiar esta alerta con Bootstrap /////////
+    if (!quantitiesValid) {
+      alert(
+        'Por favor, ingresa una cantidad válida y mayor a 0 para todos los productos.'
+      );
+      return;
+    }
+
+    const selectedPaymentMethod = document.querySelector(
+      'input[name="transferRadios"]:checked'
+    );
+    console.log(selectedPaymentMethod);
+
+    const paymentFeedback = document.getElementById('payment-feedback');
+    console.log(paymentFeedback);
+
+    //////////// no entiendo por qué no agrega la clase en el div si es idéntico a los shipping inputs (los console.log andan) ////////////
+    if (selectedPaymentMethod === null) {
+      document.getElementById('payment-feedback').classList.remove('d-none');
+      document.getElementById('payment-feedback').classList.add('is-invalid');
+    }
+
+    const paymentMethod = selectedPaymentMethod.value;
+
+    if (paymentMethod === 'option1') {
+      const creditCardNumber =
+        document.getElementById('credit-card-number').value;
+      const ccvNumber = document.getElementById('ccv-number').value;
+      const expirationMonth = document.querySelector(
+        'input[name="month"]'
+      ).value;
+      const expirationYear = document.querySelector('input[name="year"]').value;
+
+      if (
+        !creditCardNumber ||
+        !ccvNumber ||
+        !expirationMonth ||
+        !expirationYear
+      ) {
+        alert('Por favor, completa todos los campos de la tarjeta de crédito.');
+        return;
+      }
+    } else if (paymentMethod === 'option2') {
+      const accountNumber = document.getElementById('account-number').value;
+
+      if (!accountNumber) {
+        alert('Por favor, ingresa el número de transferencia bancaria.');
+        return;
+      }
+    }
+    ///// se debería mejorar alerta con cartel flotante o algo ////
+    if (quantitiesValid && street !== '' && number !== '' && corner !== '') {
+      alert('¡Gracias por tu compra!');
+    }
   });
 });
