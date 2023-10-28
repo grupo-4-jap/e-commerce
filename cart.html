@@ -13,6 +13,7 @@
     />
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/cart.css" />
     <link href="css/styles.css" rel="stylesheet" />
   </head>
 
@@ -64,7 +65,7 @@
     </nav>
 
     <!-- Main body -->
-    <main>
+    <main class="col-6 m-auto">
       <div id="cart-container">
         <div class="container mt-5">
           <h1>Carrito de Compras</h1>
@@ -92,7 +93,7 @@
           <hr class="mt-4" />
         </div>
       </div>
-      <div class="container">
+      <form class="container">
         <h4 class="mt-4 mb-3">Tipo de envío</h4>
         <div class="form-check">
           <input
@@ -137,11 +138,7 @@
             <label for="exampleFormControlInput1" class="form-label">
               Calle:
             </label>
-            <input
-              type="text"
-              class="form-control"
-              id="exampleFormControlInput1"
-            />
+            <input type="text" class="form-control" id="address" />
           </div>
           <div class="mb-3 col">
             <label for="exampleFormControlInput1" class="form-label">
@@ -151,6 +148,7 @@
               type="text"
               class="form-control"
               id="exampleFormControlInput1"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             />
           </div>
         </div>
@@ -164,9 +162,9 @@
             id="exampleFormControlInput1"
           />
         </div>
-        <hr class="mt-5" />
-      </div>
+      </form>
       <div class="container">
+        <hr class="mt-5" />
         <h4 class="mt-4 mb-3">Costos</h4>
 
         <ul class="list-group">
@@ -196,7 +194,7 @@
       </div>
       <div class="container">
         <h4 class="mt-4 mb-3">Formas de pago</h4>
-        <p>
+        <p class="col-5">
           <span id="payment-method"> No ha seleccionado </span>
           <span>
             <!-- Button trigger modal -->
@@ -210,140 +208,15 @@
             </button>
           </span>
         </p>
+      </div>
 
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  Formas de pago
-                </h1>
-                <hr />
-              </div>
-              <div class="modal-body">
-                <div class="col form-check p-0">
-                  <div class="container ps-4">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="exampleRadios"
-                      id="credit-card-btn"
-                      value="option1"
-                    />
-                    <label class="form-check-label" for="exampleRadios1">
-                      Tarjeta de crédito
-                    </label>
-                  </div>
-                  <hr class="mt-4 mb-4" />
-                  <div class="row">
-                    <div class="row mb-3 gap-1">
-                      <div class="col-7">
-                        <label for="credit-card-number" class="form-label">
-                          Número de tarjeta
-                        </label>
-                        <input
-                          type="text"
-                          maxlength="16"
-                          class="form-control credit-card-input"
-                          id="credit-card-number"
-                          required
-                          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                        />
-                      </div>
-                      <div class="col-4">
-                        <label for="ccv-number" class="form-label">
-                          Código de seg.
-                        </label>
-                        <input
-                          type="tel"
-                          maxlength="3"
-                          class="form-control credit-card-input"
-                          id="ccv-number"
-                          pattern="[0-9]*"
-                          required
-                          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                        />
-                      </div>
-                    </div>
-                    <label for="expiration-date" class="form-label">
-                      Vencimiento (MM/AA)
-                    </label>
-                    <span
-                      class="col-4 d-flex flex-row align-items-center gap-2 mb-3"
-                    >
-                      <input
-                        type="tel"
-                        class="form-control credit-card-input"
-                        name="month"
-                        placeholder="MM"
-                        maxlength="2"
-                        size="2"
-                        required
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                      />
-                      <span>/</span>
-                      <input
-                        type="tel"
-                        class="form-control credit-card-input"
-                        name="year"
-                        placeholder="YY"
-                        maxlength="2"
-                        size="2"
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                      />
-                    </span>
-                  </div>
-                  <div class="containter ps-4 mb-3">
-                    <div class="form-check p-0">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        id="bank-transfer-btn"
-                        value="option2"
-                      />
-                      <label class="form-check-label" for="exampleRadios2">
-                        Transferencia bancaria
-                      </label>
-                    </div>
-                  </div>
-                  <hr class="mt-4 mb-4" />
-                  <div class="mb-3">
-                    <label for="account-number" class="form-label">
-                      Número de transferencia
-                    </label>
-                    <input
-                      type="tel"
-                      class="form-control bank-transfer-input"
-                      id="account-number"
-                      required
-                      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-primary m-0"
-                  data-bs-dismiss="modal"
-                  id="close-btn"
-                >
-                  Cerrar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="container text-start">
+        <button class="btn btn-primary" type="submit" id="submit">
+          Finalizar compra
+        </button>
       </div>
     </main>
+
     <footer class="text-muted">
       <div class="container">
         <p class="float-end">
@@ -365,6 +238,135 @@
         <div></div>
       </div>
     </div>
+
+    <!-- Payment Methods Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Formas de pago
+            </h1>
+            <hr />
+          </div>
+          <div class="modal-body">
+            <div class="col form-check p-0">
+              <div class="container ps-4">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="exampleRadios"
+                  id="credit-card-btn"
+                  value="option1"
+                />
+                <label class="form-check-label" for="exampleRadios1">
+                  Tarjeta de crédito
+                </label>
+              </div>
+              <hr class="mt-4 mb-4" />
+              <div class="row">
+                <div class="row mb-3 gap-1">
+                  <div class="col-7">
+                    <label for="credit-card-number" class="form-label">
+                      Número de tarjeta
+                    </label>
+                    <input
+                      type="text"
+                      maxlength="16"
+                      class="form-control credit-card-input"
+                      id="credit-card-number"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    />
+                  </div>
+                  <div class="col-4">
+                    <label for="ccv-number" class="form-label">
+                      Código de seg.
+                    </label>
+                    <input
+                      type="tel"
+                      maxlength="3"
+                      class="form-control credit-card-input"
+                      id="ccv-number"
+                      pattern="[0-9]*"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    />
+                  </div>
+                </div>
+                <label for="expiration-date" class="form-label">
+                  Vencimiento (MM/AA)
+                </label>
+                <span
+                  class="col-4 d-flex flex-row align-items-center gap-2 mb-3"
+                >
+                  <input
+                    type="tel"
+                    class="form-control credit-card-input due-credit-card"
+                    name="month"
+                    placeholder="MM"
+                    maxlength="2"
+                    size="2"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                  />
+                  <span>/</span>
+                  <input
+                    type="tel"
+                    class="form-control credit-card-input due-credit-card"
+                    name="year"
+                    placeholder="YY"
+                    maxlength="2"
+                    size="2"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                  />
+                </span>
+              </div>
+              <div class="containter ps-4 mb-3">
+                <div class="form-check p-0">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="exampleRadios"
+                    id="bank-transfer-btn"
+                    value="option2"
+                  />
+                  <label class="form-check-label" for="exampleRadios2">
+                    Transferencia bancaria
+                  </label>
+                </div>
+              </div>
+              <hr class="mt-4 mb-4" />
+              <div class="mb-3">
+                <label for="account-number" class="form-label">
+                  Número de transferencia
+                </label>
+                <input
+                  type="tel"
+                  class="form-control bank-transfer-input"
+                  id="account-number"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary m-0"
+              data-bs-dismiss="modal"
+              id="close-modal-btn"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script defer type="module" src="./js/bootstrap.bundle.min.js"></script>
     <script defer type="module" src="js/init.js"></script>
     <script defer type="module" src="js/cart.js"></script>
