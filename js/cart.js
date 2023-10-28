@@ -1,7 +1,9 @@
 import getJSONData from './utils/getJSONData.js';
 import { CART_INFO_URL } from './constants/API.js';
 
-const radioButtons = document.querySelectorAll('input[type = "radio"]');
+const shippingRadioButtons = document.querySelectorAll(
+  '.shipping-radio-button'
+);
 const creditCardBtn = document.getElementById('credit-card-btn');
 const creditCardInputs = document.querySelectorAll('.credit-card-input');
 const bankTransferBtn = document.getElementById('bank-transfer-btn');
@@ -66,7 +68,6 @@ function updateItemQuantity(DOMItem, newQuantity) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-
 creditCardBtn.addEventListener('click', function () {
   if (creditCardBtn.checked) {
     bankTransferInput.setAttribute('disabled', '');
@@ -87,14 +88,13 @@ bankTransferBtn.addEventListener('click', function () {
   typeOfPayment.innerHTML = 'Transferencia bancaria';
 });
 
-
 function getBuyResume() {
   const DOMsubtotal = document.querySelector('#subtotal');
   const DOMshippingCost = document.querySelector('#costo-envio');
   const DOMtotal = document.querySelector('#total');
 
   let selectedValue = 0;
-  radioButtons.forEach((button) => {
+  shippingRadioButtons.forEach((button) => {
     if (button.checked) {
       selectedValue = Number(button.value);
     }
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   });
 
-  radioButtons.forEach((button) => {
+  shippingRadioButtons.forEach((button) => {
     button.addEventListener('click', function () {
       getBuyResume();
     });
