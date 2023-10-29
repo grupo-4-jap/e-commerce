@@ -81,8 +81,8 @@ bankTransferBtn.addEventListener('click', function () {
     creditCardInputs.forEach((input) => {
       input.setAttribute('disabled', '');
     });
+    bankTransferInput.removeAttribute('disabled', '');
   }
-  bankTransferInput.removeAttribute('disabled', '');
   typeOfPayment.innerHTML = 'Transferencia bancaria';
 });
 
@@ -215,6 +215,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   btnEndPurchase.addEventListener('click', (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    console.log(cart);
 
     const street = document.getElementById('shipping-street').value;
     const number = document.getElementById('shipping-number').value;
@@ -223,16 +225,25 @@ document.addEventListener('DOMContentLoaded', function () {
     if (street === '') {
       document.getElementById('street-feedback').classList.remove('d-none');
       document.getElementById('shipping-street').classList.add('is-invalid');
+    } else {
+      document.getElementById('street-feedback').classList.add('d-none');
+      document.getElementById('shipping-street').classList.remove('is-invalid');
     }
 
     if (number === '') {
       document.getElementById('number-feedback').classList.remove('d-none');
       document.getElementById('shipping-number').classList.add('is-invalid');
+    } else {
+      document.getElementById('number-feedback').classList.add('d-none');
+      document.getElementById('shipping-number').classList.remove('is-invalid');
     }
 
     if (corner === '') {
       document.getElementById('corner-feedback').classList.remove('d-none');
       document.getElementById('shipping-corner').classList.add('is-invalid');
+    } else {
+      document.getElementById('corner-feedback').classList.add('d-none');
+      document.getElementById('shipping-corner').classList.remove('is-invalid');
     }
 
     const quantityInputs = document.querySelectorAll(
@@ -245,37 +256,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (isNaN(quantity) || quantity <= 0) {
         quantitiesValid = false;
-        input.classList.add('is-invalid');
-      } else {
-        input.classList.remove('is-invalid');
       }
     });
 
-    //////// cambiar esta alerta con Bootstrap /////////
     if (!quantitiesValid) {
-      alert(
-        'Por favor, ingresa una cantidad válida y mayor a 0 para todos los productos.'
-      );
+      document.querySelector('#purchase-alert').innerHTML +=
+        '<div class="alert alert-danger alert-dismissible fade show" role="alert">Ingresa una cantidad válida y mayor a 0 para todos los productos<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
       return;
     }
 
-    const selectedPaymentMethod = document.querySelector(
-      'input[name="transferRadios"]:checked'
+    const paymentMethod = Array.from(
+      document.querySelectorAll('.payment-option')
     );
-    console.log(selectedPaymentMethod);
+    console.log(paymentMethod);
 
     const paymentFeedback = document.getElementById('payment-feedback');
-    console.log(paymentFeedback);
 
-    //////////// no entiendo por qué no agrega la clase en el div si es idéntico a los shipping inputs (los console.log andan) ////////////
-    if (selectedPaymentMethod === null) {
-      document.getElementById('payment-feedback').classList.remove('d-none');
-      document.getElementById('payment-feedback').classList.add('is-invalid');
+    if (!isRadioChecked(paymentMethod)) {
+      paymentFeedback.innerText = 'Debes seleccionar una forma de pago';
+      paymentFeedback.classList.add('visible');
+    } else {
+      paymentFeedback.classList.remove('visible');
     }
 
-    const paymentMethod = selectedPaymentMethod.value;
+    function isRadioChecked(array) {
+      return array.some((element) => element.checked === true);
+    }
 
-    if (paymentMethod === 'option1') {
+    if (paymentMethod[0].checked) {
       const creditCardNumber =
         document.getElementById('credit-card-number').value;
       const ccvNumber = document.getElementById('ccv-number').value;
@@ -283,27 +291,43 @@ document.addEventListener('DOMContentLoaded', function () {
         'input[name="month"]'
       ).value;
       const expirationYear = document.querySelector('input[name="year"]').value;
-
+      console.log(creditCardNumber);
       if (
         !creditCardNumber ||
         !ccvNumber ||
         !expirationMonth ||
         !expirationYear
       ) {
-        alert('Por favor, completa todos los campos de la tarjeta de crédito.');
+        document.querySelector('#purchase-alert').innerHTML +=
+          '<div class="alert alert-danger alert-dismissible fade show" role="alert">Completa todos los campos de la tarjeta de crédito<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
         return;
       }
-    } else if (paymentMethod === 'option2') {
+    } else if (paymentMethod[1].checked) {
       const accountNumber = document.getElementById('account-number').value;
 
       if (!accountNumber) {
-        alert('Por favor, ingresa el número de transferencia bancaria.');
+        document.querySelector('#purchase-alert').innerHTML +=
+          '<div class="alert alert-danger alert-dismissible fade show" role="alert">Ingresa el número de transferencia bancaria<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
         return;
       }
     }
-    ///// se debería mejorar alerta con cartel flotante o algo ////
-    if (quantitiesValid && street !== '' && number !== '' && corner !== '') {
-      alert('¡Gracias por tu compra!');
+
+    if (cart.length === 0) {
+      document.querySelector('#purchase-alert').innerHTML +=
+        '<div class="alert alert-danger alert-dismissible fade show" role="alert">El carrito no puede estar vacío<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+      return;
+    }
+
+    if (
+      quantitiesValid &&
+      street !== '' &&
+      number !== '' &&
+      corner !== '' &&
+      isRadioChecked(paymentMethod) &&
+      cart.length !== 0
+    ) {
+      document.querySelector('#purchase-alert').innerHTML +=
+        '<div class="alert alert-success alert-dismissible fade show" role="alert"> ¡Gracias por tu compra! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
     }
   });
 });

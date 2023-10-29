@@ -13,6 +13,7 @@
     />
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/cart.css" />
     <link href="css/styles.css" rel="stylesheet" />
   </head>
 
@@ -203,25 +204,21 @@
       </div>
       <div class="container">
         <h4 class="mt-4 mb-3">Formas de pago</h4>
-        <div>
-        <p>
+        <div id="payment-div">
           <span id="payment-method"> No ha seleccionado </span>
-          <span>
-            <!-- Button trigger modal -->
-            <button
-              type="button"
-              class="btn btn-link"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              Seleccionar
-            </button>
-          </span>
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-link"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Seleccionar
+          </button>
           <div class="invalid-feedback" id="payment-feedback">
             Selecciona una forma de pago
           </div>
-        </p>
-      </div>
+        </div>
 
         <!-- Modal -->
         <div
@@ -368,6 +365,7 @@
           </button>
         </div>
       </div>
+      <div id="purchase-alert"></div>
     </main>
     <footer class="text-muted">
       <div class="container">
