@@ -1,7 +1,7 @@
 import getJSONData from './utils/getJSONData.js';
 import { CART_INFO_URL } from './constants/API.js';
 
-const radioButtons = document.querySelectorAll('.shipping-option');
+const shippingRadioButtons = document.querySelectorAll('.shipping-option');
 const creditCardBtn = document.getElementById('credit-card-btn');
 const creditCardInputs = document.querySelectorAll('.credit-card-input');
 const bankTransferBtn = document.getElementById('bank-transfer-btn');
@@ -95,7 +95,8 @@ function getBuyResume() {
   const DOMshippingCost = document.querySelector('#costo-envio');
   const DOMtotal = document.querySelector('#total');
 
-  radioButtons.forEach((button) => {
+  let selectedValue = 0;
+  shippingRadioButtons.forEach((button) => {
     if (button.checked) {
       selectedValue = Number(button.value);
     }
@@ -199,7 +200,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   });
 
-  radioButtons.forEach((button) => {
+  shippingRadioButtons.forEach((button) => {
     button.addEventListener('click', function () {
       getBuyResume();
     });
