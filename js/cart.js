@@ -1,7 +1,7 @@
 import getJSONData from './utils/getJSONData.js';
 import { CART_INFO_URL } from './constants/API.js';
 
-const radioButtons = document.querySelectorAll('input[type = "radio"]');
+const radioButtons = document.querySelectorAll('.shipping-option');
 const creditCardBtn = document.getElementById('credit-card-btn');
 const creditCardInputs = document.querySelectorAll('.credit-card-input');
 const bankTransferBtn = document.getElementById('bank-transfer-btn');
@@ -69,11 +69,12 @@ function updateItemQuantity(DOMItem, newQuantity) {
 creditCardBtn.addEventListener('click', function () {
   if (creditCardBtn.checked) {
     bankTransferInput.setAttribute('disabled', '');
+    typeOfPayment.innerHTML = 'Tarjeta de crédito';
+    getBuyResume();
   }
   creditCardInputs.forEach((input) => {
     input.removeAttribute('disabled', '');
   });
-  typeOfPayment.innerHTML = 'Tarjeta de crédito';
 });
 
 bankTransferBtn.addEventListener('click', function () {
@@ -82,16 +83,18 @@ bankTransferBtn.addEventListener('click', function () {
       input.setAttribute('disabled', '');
     });
     bankTransferInput.removeAttribute('disabled', '');
+    typeOfPayment.innerHTML = 'Transferencia bancaria';
+    getBuyResume();
   }
-  typeOfPayment.innerHTML = 'Transferencia bancaria';
 });
+
+let selectedValue = 0;
 
 function getBuyResume() {
   const DOMsubtotal = document.querySelector('#subtotal');
   const DOMshippingCost = document.querySelector('#costo-envio');
   const DOMtotal = document.querySelector('#total');
 
-  let selectedValue = 0;
   radioButtons.forEach((button) => {
     if (button.checked) {
       selectedValue = Number(button.value);
@@ -106,6 +109,8 @@ function getBuyResume() {
   DOMsubtotal.innerHTML = `USD ${totalPrice}`;
   DOMshippingCost.innerHTML = `USD ${(totalPrice * selectedValue).toFixed(0)}`;
   DOMtotal.innerHTML = `USD ${(totalPrice * (selectedValue + 1)).toFixed(0)}`;
+
+  console.log('Selected value in getBuyResume:', selectedValue);
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
