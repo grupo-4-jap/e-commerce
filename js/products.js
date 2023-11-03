@@ -95,9 +95,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     const max = Number(document.getElementById('rangeFilterCountMax').value);
     const filteredList = filterByPrice(productList, min, max);
 
-    console.log(min);
-    console.log(max);
-
     if (min < max) {
       showList(filteredList, { type: PRODUCT });
       addEvents('list-group-item', PRODUCT);
