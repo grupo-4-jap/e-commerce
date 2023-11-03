@@ -7,22 +7,22 @@ function showProductList(array) {
     const { id, image, description, name, soldCount, currency, cost } = product;
 
     htmlContentToAppend += `
-          <div id=${id} class="list-group-item list-group-item-action cursor-active">
-              <div class="row d-flex flex-column flex-md-row">
-                  <div class="col col-md-3">
-                      <img src="${image}" alt="${description}" class="img-thumbnail">
-                  </div>
-                  <div class="col">
-                      <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1 category-title">${name} <span class="d-none d-lg-inline">-</span> <br class="d-lg-none" /> 
-                          <span class="text-secondary small-price">${currency} ${cost}</span> </h5>
-                          <small class="text-muted">${soldCount} vendidos</small>
-                      </div>
-                      <p class="mb-1 d-none d-md-inline">${description}</p>
-                  </div>
-              </div>
+      <div id=${id} class="list-group-item list-group-item-action cursor-active">
+        <div class="row d-flex flex-column flex-md-row">
+          <div class="col col-md-3">
+            <img src="${image}" alt="${description}" class="img-thumbnail">
           </div>
-          `;
+          <div class="col">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1 category-title">${name} <span class="d-none d-lg-inline">-</span> <br class="d-lg-none" /> 
+              <span class="text-secondary small-price">${currency} ${cost}</span> </h5>
+              <small class="text-muted">${soldCount} vendidos</small>
+            </div>
+            <p class="mb-1 d-none d-md-inline">${description}</p>
+          </div>
+        </div>
+      </div>
+      `;
   });
 
   document.getElementById('containerProducts').innerHTML = htmlContentToAppend;
@@ -38,18 +38,18 @@ function showCategoryList(array) {
       htmlContentToAppend += `
         <div id="${id}" class="list-group-item list-group-item-action cursor-active">
           <div class="row d-flex flex-column flex-md-row">
-              <div class="col col-md-3">
-                  <img src="${imgSrc}" alt="${description}" class="img-thumbnail">
+            <div class="col col-md-3">
+              <img src="${imgSrc}" alt="${description}" class="img-thumbnail">
+            </div>
+            <div class="col">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1 category-title">${name}</h5>
+                <small class="text-muted">${productCount} artículos</small>
               </div>
-              <div class="col">
-                  <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1 category-title">${name}</h5>
-                      <small class="text-muted">${productCount} artículos</small>
-                  </div>
-                  <p class="mb-1 d-none d-md-inline">${description}</p>
-              </div>
+              <p class="mb-1 d-none d-md-inline">${description}</p>
+            </div>
           </div>
-      </div>
+        </div>
       `;
     });
   }
