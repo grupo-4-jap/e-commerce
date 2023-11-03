@@ -65,42 +65,54 @@ document.addEventListener('DOMContentLoaded', async function () {
   productList = data.body.products;
 
   // Render list and sub-title
+  productList.length === 0
+    ? (document.querySelector('main').innerHTML = `
+      <h1 class="d-flex justify-content-center align-items-center" style="height: 50vh">
+        WOOOOPS!! PARECE QUE NO HAY PRODUCTOS
+      </h1>`)
+    : showList(productList, { type: PRODUCT });
+
   catName.innerHTML = data.body.catName;
-  showList(productList, { type: PRODUCT });
   addEvents('list-group-item', PRODUCT);
-});
 
-btnSortAsc.addEventListener('click', function () {
-  sortAndShowCategories(ORDER_ASC, productList, PRODUCT);
-  addEvents('list-group-item', PRODUCT);
-});
+  btnSortAsc.addEventListener('click', function () {
+    sortAndShowCategories(ORDER_ASC, productList, PRODUCT);
+    addEvents('list-group-item', PRODUCT);
+  });
 
-btnSortDesc.addEventListener('click', function () {
-  sortAndShowCategories(ORDER_DESC, productList, PRODUCT);
-  addEvents('list-group-item', PRODUCT);
-});
+  btnSortDesc.addEventListener('click', function () {
+    sortAndShowCategories(ORDER_DESC, productList, PRODUCT);
+    addEvents('list-group-item', PRODUCT);
+  });
 
-btnSortByCount.addEventListener('click', function () {
-  sortAndShowCategories(ORDER_BY_PROD_SOLD, productList, PRODUCT);
-  addEvents('list-group-item', PRODUCT);
-});
+  btnSortByCount.addEventListener('click', function () {
+    sortAndShowCategories(ORDER_BY_PROD_SOLD, productList, PRODUCT);
+    addEvents('list-group-item', PRODUCT);
+  });
 
-btnRangeFilterCount.addEventListener('click', async function () {
-  const min = Number(document.getElementById('rangeFilterCountMin').value);
-  const max = Number(document.getElementById('rangeFilterCountMax').value);
-  const filteredList = filterByPrice(productList, min, max);
-  showList(filteredList, { type: PRODUCT });
-  addEvents('list-group-item', PRODUCT);
-});
+  btnRangeFilterCount.addEventListener('click', async function () {
+    const min = Number(document.getElementById('rangeFilterCountMin').value);
+    const max = Number(document.getElementById('rangeFilterCountMax').value);
+    const filteredList = filterByPrice(productList, min, max);
 
-btnClearRangeFilter.addEventListener('click', function (e) {
-  e.stopPropagation();
-  clearFilters();
-});
+    console.log(min);
+    console.log(max);
 
-searchBar.addEventListener('input', function (e) {
-  const value = e.target.value;
+    if (min < max) {
+      showList(filteredList, { type: PRODUCT });
+      addEvents('list-group-item', PRODUCT);
+    }
+  });
 
-  const filteredProducts = filterByNameAndDescription(value, productList);
-  showList(filteredProducts, { type: PRODUCT });
+  btnClearRangeFilter.addEventListener('click', function (e) {
+    e.stopPropagation();
+    clearFilters();
+  });
+
+  searchBar.addEventListener('input', function (e) {
+    const value = e.target.value;
+
+    const filteredProducts = filterByNameAndDescription(value, productList);
+    showList(filteredProducts, { type: PRODUCT });
+  });
 });
