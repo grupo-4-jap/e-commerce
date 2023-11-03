@@ -114,7 +114,11 @@ document.addEventListener('DOMContentLoaded', function () {
     window.location.href = 'cart.html';
   });
   document.getElementById('profile').addEventListener('click', function () {
-    window.location.href = 'my-profile.html';
+    if (isLogged()) {
+      window.location.href = 'my-profile.html';
+    } else {
+      window.location.href = 'login.html';
+    }
   });
   document.getElementById('finish').addEventListener('click', function () {
     localStorage.removeItem('userData');
