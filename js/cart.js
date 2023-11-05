@@ -110,6 +110,8 @@ function getBuyResume() {
   DOMtotal.innerHTML = `USD ${(totalPrice * (selectedValue + 1)).toFixed(0)}`;
 }
 
+// This function checks the validation form and executes the logic in order
+// to finish the transaction
 function checkValidation() {
   const street = document.getElementById('shipping-street').value;
   const number = document.getElementById('shipping-number').value;
@@ -313,10 +315,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       getBuyResume();
     });
   });
-});
 
-// End purchase button funct.
-document.addEventListener('DOMContentLoaded', function () {
   const btnEndPurchase = document.getElementById('btn-end-purchase');
 
   document.querySelectorAll('.invalid-feedback').forEach((feedback) => {
