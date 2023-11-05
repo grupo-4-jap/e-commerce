@@ -57,6 +57,7 @@ function deleteProduct(product) {
   localStorage.setItem('cart', JSON.stringify(newCart));
 }
 
+// Update items quantity in cart stored in LocalStorage
 function updateItemQuantity(DOMItem, newQuantity) {
   const { id } = DOMItem;
   const idNumber = id.split('-')[0];
@@ -110,6 +111,10 @@ function getBuyResume() {
   DOMtotal.innerHTML = `USD ${(totalPrice * (selectedValue + 1)).toFixed(0)}`;
 }
 
+function isRadioChecked(array) {
+  return array.some((element) => element.checked === true);
+}
+
 // This function checks the validation form and executes the logic in order
 // to finish the transaction
 function checkValidation() {
@@ -117,6 +122,7 @@ function checkValidation() {
   const number = document.getElementById('shipping-number').value;
   const corner = document.getElementById('shipping-corner').value;
 
+  // Address inputs check
   if (street === '') {
     document.getElementById('street-feedback').classList.remove('d-none');
     document.getElementById('shipping-street').classList.add('is-invalid');
@@ -144,6 +150,7 @@ function checkValidation() {
   const quantityInputs = document.querySelectorAll(
     '.article input[type="number"]'
   );
+
   let quantitiesValid = true;
 
   quantityInputs.forEach((input) => {
@@ -157,13 +164,12 @@ function checkValidation() {
   if (!quantitiesValid) {
     document.querySelector('#purchase-alert').innerHTML +=
       '<div class="alert alert-danger alert-dismissible fade show" role="alert">Ingresa una cantidad válida y mayor a 0 para todos los productos<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-    return;
+    // return;
   }
 
   const paymentMethod = Array.from(
     document.querySelectorAll('.payment-option')
   );
-  console.log(paymentMethod);
 
   const paymentFeedback = document.getElementById('payment-feedback');
 
@@ -174,17 +180,13 @@ function checkValidation() {
     paymentFeedback.classList.remove('visible');
   }
 
-  function isRadioChecked(array) {
-    return array.some((element) => element.checked === true);
-  }
-
   if (paymentMethod[0].checked) {
     const creditCardNumber =
       document.getElementById('credit-card-number').value;
     const ccvNumber = document.getElementById('ccv-number').value;
     const expirationMonth = document.querySelector('input[name="month"]').value;
     const expirationYear = document.querySelector('input[name="year"]').value;
-    console.log(creditCardNumber);
+
     if (
       !creditCardNumber ||
       !ccvNumber ||
@@ -224,10 +226,23 @@ function checkValidation() {
   }
 }
 
+// There are two versions of the cart, one for mobile device and another for
+// Tablet and desktop device, the function changes the value of the 'sibling' input
+function updateSiblingInput(DOMElement, value) {
+  const split = DOMElement.id.split('-');
+  const id = split[0];
+  const resolution = split[split.length - 1] !== 'md' ? 'md' : 's';
+
+  document.getElementById(`${id}-${resolution}`).querySelector('input').value =
+    value;
+}
+
 document.addEventListener('DOMContentLoaded', async function () {
   cart = await getCartProducts().then((data) => data);
   const tbody = document.querySelector('tbody');
   getBuyResume();
+
+  // Renders the cart elements
   // MD or greater devices
   cart.forEach((product) => {
     const { id, name, unitCost, count, currency, image } = product;
@@ -241,7 +256,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         <p class="m-0">${name}</p>
       </td>
       <td class="cost">${currency} ${unitCost}</td>
-      <td><input class="text-center" type="number" value="${count}" min="1" style="width:5em"></td>
+      <td><input class="text-center" type="number" value="${count}" min="1" style="width:5em" /></td>
       <td class="total">${currency} ${unitCost * count}</td>
       <td class="cursor-active"><img class="border rounded border-danger p-2" src="./icons/trash3.svg" width="40" height="40" /></td>
       `;
@@ -287,7 +302,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     `;
   });
 
-  // This selects the DOM elements and applies events on them
+  // This select the rows in cart in order to apply the "input" event
   document.querySelectorAll('.article').forEach((item) => {
     // On change input value
     const input = item.querySelector('input');
@@ -296,6 +311,8 @@ document.addEventListener('DOMContentLoaded', async function () {
       const productPrice = item.querySelector('.cost').innerText;
       const [currency, cost] = productPrice.split(' ');
       const finalPrice = cost * quantity;
+
+      updateSiblingInput(item, quantity);
 
       item.querySelector('.total').innerText = `${currency} ${finalPrice}`;
       updateItemQuantity(item, quantity);
