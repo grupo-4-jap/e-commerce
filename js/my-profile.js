@@ -1,31 +1,27 @@
 import { getUserData, isLogged } from './utils/loggingUser.js';
 
-// const firstNameInput = document.getElementById('first-name');
-// const secondNameInput = document.getElementById('second-name');
-// const firstLastnameInput = document.getElementById('first-lastname');
-// const secondLastnameInput = document.getElementById('second-lastname');
-const emailInput = document.getElementById('my-profile-email');
-// const phoneInput = document.getElementById('phone');
-// const saveChangesButton = document.getElementById('save-changes-btn');
+const inputs = Array.from(document.querySelectorAll('input'));
+const form = document.querySelector('form');
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', (e) => {
   const userData = getUserData();
 
   if (userData && userData.email) {
+    const emailInput = inputs.find((input) => input.name === 'email');
+    emailInput.setAttribute('disabled', '');
     emailInput.value = userData.email;
   }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const updatedUserData = {};
+
+    inputs.forEach((input) => {
+      const property = input.name;
+      updatedUserData[`${property}`] = input.value;
+    });
+
+    localStorage.setItem('userData', JSON.stringify(updatedUserData));
+  });
 });
-
-// function saveChanges() {
-
-//   const updatedUserData = {
-//     email: emailInput.value,
-//     firstName: firstNameInput.value,
-//     secondName: secondNameInput.value,
-//     firstLastname: firstLastnameInput.value,
-//     secondLastname: secondLastnameInput.value,
-//     phone: phoneInput.value,
-//   };
-
-//   localStorage.setItem('userData', JSON.stringify(updatedUserData));
-// }
