@@ -110,6 +110,118 @@ function getBuyResume() {
   DOMtotal.innerHTML = `USD ${(totalPrice * (selectedValue + 1)).toFixed(0)}`;
 }
 
+function checkValidation() {
+  const street = document.getElementById('shipping-street').value;
+  const number = document.getElementById('shipping-number').value;
+  const corner = document.getElementById('shipping-corner').value;
+
+  if (street === '') {
+    document.getElementById('street-feedback').classList.remove('d-none');
+    document.getElementById('shipping-street').classList.add('is-invalid');
+  } else {
+    document.getElementById('street-feedback').classList.add('d-none');
+    document.getElementById('shipping-street').classList.remove('is-invalid');
+  }
+
+  if (number === '') {
+    document.getElementById('number-feedback').classList.remove('d-none');
+    document.getElementById('shipping-number').classList.add('is-invalid');
+  } else {
+    document.getElementById('number-feedback').classList.add('d-none');
+    document.getElementById('shipping-number').classList.remove('is-invalid');
+  }
+
+  if (corner === '') {
+    document.getElementById('corner-feedback').classList.remove('d-none');
+    document.getElementById('shipping-corner').classList.add('is-invalid');
+  } else {
+    document.getElementById('corner-feedback').classList.add('d-none');
+    document.getElementById('shipping-corner').classList.remove('is-invalid');
+  }
+
+  const quantityInputs = document.querySelectorAll(
+    '.article input[type="number"]'
+  );
+  let quantitiesValid = true;
+
+  quantityInputs.forEach((input) => {
+    const quantity = parseInt(input.value, 10);
+
+    if (isNaN(quantity) || quantity <= 0) {
+      quantitiesValid = false;
+    }
+  });
+
+  if (!quantitiesValid) {
+    document.querySelector('#purchase-alert').innerHTML +=
+      '<div class="alert alert-danger alert-dismissible fade show" role="alert">Ingresa una cantidad válida y mayor a 0 para todos los productos<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    return;
+  }
+
+  const paymentMethod = Array.from(
+    document.querySelectorAll('.payment-option')
+  );
+  console.log(paymentMethod);
+
+  const paymentFeedback = document.getElementById('payment-feedback');
+
+  if (!isRadioChecked(paymentMethod)) {
+    paymentFeedback.innerText = 'Debes seleccionar una forma de pago';
+    paymentFeedback.classList.add('visible');
+  } else {
+    paymentFeedback.classList.remove('visible');
+  }
+
+  function isRadioChecked(array) {
+    return array.some((element) => element.checked === true);
+  }
+
+  if (paymentMethod[0].checked) {
+    const creditCardNumber =
+      document.getElementById('credit-card-number').value;
+    const ccvNumber = document.getElementById('ccv-number').value;
+    const expirationMonth = document.querySelector('input[name="month"]').value;
+    const expirationYear = document.querySelector('input[name="year"]').value;
+    console.log(creditCardNumber);
+    if (
+      !creditCardNumber ||
+      !ccvNumber ||
+      !expirationMonth ||
+      !expirationYear
+    ) {
+      document.querySelector('#purchase-alert').innerHTML +=
+        '<div class="alert alert-danger alert-dismissible fade show" role="alert">Completa todos los campos de la tarjeta de crédito<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+      return;
+    }
+  } else if (paymentMethod[1].checked) {
+    const accountNumber = document.getElementById('account-number').value;
+
+    if (!accountNumber) {
+      document.querySelector('#purchase-alert').innerHTML +=
+        '<div class="alert alert-danger alert-dismissible fade show" role="alert">Ingresa el número de transferencia bancaria<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+      return;
+    }
+  }
+
+  if (cart.length === 0) {
+    document.querySelector('#purchase-alert').innerHTML +=
+      '<div class="alert alert-danger alert-dismissible fade show" role="alert">El carrito no puede estar vacío<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    return;
+  }
+
+  if (
+    quantitiesValid &&
+    street !== '' &&
+    number !== '' &&
+    corner !== '' &&
+    isRadioChecked(paymentMethod) &&
+    cart.length !== 0
+  ) {
+    document.querySelector('#purchase-alert').innerHTML +=
+      '<div class="alert alert-success alert-dismissible fade show" role="alert"> ¡Gracias por tu compra! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async function () {
   cart = await getCartProducts().then((data) => data);
   const tbody = document.querySelector('tbody');
@@ -218,118 +330,7 @@ document.addEventListener('DOMContentLoaded', function () {
   btnEndPurchase.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log(cart);
 
-    const street = document.getElementById('shipping-street').value;
-    const number = document.getElementById('shipping-number').value;
-    const corner = document.getElementById('shipping-corner').value;
-
-    if (street === '') {
-      document.getElementById('street-feedback').classList.remove('d-none');
-      document.getElementById('shipping-street').classList.add('is-invalid');
-    } else {
-      document.getElementById('street-feedback').classList.add('d-none');
-      document.getElementById('shipping-street').classList.remove('is-invalid');
-    }
-
-    if (number === '') {
-      document.getElementById('number-feedback').classList.remove('d-none');
-      document.getElementById('shipping-number').classList.add('is-invalid');
-    } else {
-      document.getElementById('number-feedback').classList.add('d-none');
-      document.getElementById('shipping-number').classList.remove('is-invalid');
-    }
-
-    if (corner === '') {
-      document.getElementById('corner-feedback').classList.remove('d-none');
-      document.getElementById('shipping-corner').classList.add('is-invalid');
-    } else {
-      document.getElementById('corner-feedback').classList.add('d-none');
-      document.getElementById('shipping-corner').classList.remove('is-invalid');
-    }
-
-    const quantityInputs = document.querySelectorAll(
-      '.article input[type="number"]'
-    );
-    let quantitiesValid = true;
-
-    quantityInputs.forEach((input) => {
-      const quantity = parseInt(input.value, 10);
-
-      if (isNaN(quantity) || quantity <= 0) {
-        quantitiesValid = false;
-      }
-    });
-
-    if (!quantitiesValid) {
-      document.querySelector('#purchase-alert').innerHTML +=
-        '<div class="alert alert-danger alert-dismissible fade show" role="alert">Ingresa una cantidad válida y mayor a 0 para todos los productos<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-      return;
-    }
-
-    const paymentMethod = Array.from(
-      document.querySelectorAll('.payment-option')
-    );
-    console.log(paymentMethod);
-
-    const paymentFeedback = document.getElementById('payment-feedback');
-
-    if (!isRadioChecked(paymentMethod)) {
-      paymentFeedback.innerText = 'Debes seleccionar una forma de pago';
-      paymentFeedback.classList.add('visible');
-    } else {
-      paymentFeedback.classList.remove('visible');
-    }
-
-    function isRadioChecked(array) {
-      return array.some((element) => element.checked === true);
-    }
-
-    if (paymentMethod[0].checked) {
-      const creditCardNumber =
-        document.getElementById('credit-card-number').value;
-      const ccvNumber = document.getElementById('ccv-number').value;
-      const expirationMonth = document.querySelector(
-        'input[name="month"]'
-      ).value;
-      const expirationYear = document.querySelector('input[name="year"]').value;
-      console.log(creditCardNumber);
-      if (
-        !creditCardNumber ||
-        !ccvNumber ||
-        !expirationMonth ||
-        !expirationYear
-      ) {
-        document.querySelector('#purchase-alert').innerHTML +=
-          '<div class="alert alert-danger alert-dismissible fade show" role="alert">Completa todos los campos de la tarjeta de crédito<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-        return;
-      }
-    } else if (paymentMethod[1].checked) {
-      const accountNumber = document.getElementById('account-number').value;
-
-      if (!accountNumber) {
-        document.querySelector('#purchase-alert').innerHTML +=
-          '<div class="alert alert-danger alert-dismissible fade show" role="alert">Ingresa el número de transferencia bancaria<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-        return;
-      }
-    }
-
-    if (cart.length === 0) {
-      document.querySelector('#purchase-alert').innerHTML +=
-        '<div class="alert alert-danger alert-dismissible fade show" role="alert">El carrito no puede estar vacío<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-      return;
-    }
-
-    if (
-      quantitiesValid &&
-      street !== '' &&
-      number !== '' &&
-      corner !== '' &&
-      isRadioChecked(paymentMethod) &&
-      cart.length !== 0
-    ) {
-      document.querySelector('#purchase-alert').innerHTML +=
-        '<div class="alert alert-success alert-dismissible fade show" role="alert"> ¡Gracias por tu compra! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-    }
+    checkValidation();
   });
 });
