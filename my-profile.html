@@ -83,47 +83,68 @@
         <h1 class="mb-3">Perfil</h1>
         <hr class="my-4" />
 
-        <div class="col">
+        <form class="w-100">
           <div class="row g-3" id="form-data">
             <div class="col-sm-6">
-              <label for="primer-nombre" class="form-label"
-                >Primer nombre *</label
-              >
-              <input type="text" class="form-control" id="first-name" />
+              <label for="first-name" class="form-label">Primer nombre *</label>
+              <input
+                type="text"
+                class="form-control"
+                id="first-name"
+                name="firstName"
+              />
               <div class="invalid-feedback">Debe ingresar un nombre</div>
             </div>
 
             <div class="col-sm-6">
-              <label for="segundo-nombre" class="form-label"
-                >Segundo nombre</label
-              >
-              <input type="text" class="form-control" id="second-name" />
+              <label for="secondName" class="form-label">Segundo nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                id="second-name"
+                name="secondName"
+              />
             </div>
 
             <div class="col-sm-6">
-              <label for="primer-apellido" class="form-label"
+              <label for="firstLastName" class="form-label"
                 >Primer apellido *</label
               >
-              <input type="text" class="form-control" id="first-lastname" />
+              <input
+                type="text"
+                class="form-control"
+                id="first-lastname"
+                name="firstLastName"
+              />
               <div class="invalid-feedback">Debe ingresar un apellido</div>
             </div>
 
             <div class="col-sm-6">
-              <label for="segundo-apellido" class="form-label"
+              <label for="secondLastName" class="form-label"
                 >Segundo apellido</label
               >
-              <input type="text" class="form-control" id="second-lastname" />
+              <input
+                type="text"
+                class="form-control"
+                id="second-lastname"
+                name="secondLastName"
+              />
             </div>
 
             <div class="col-sm-6">
               <label for="email" class="form-label">E-mail *</label>
-              <input type="email" class="form-control" id="my-profile-email" />
+              <input
+                type="email"
+                class="form-control"
+                id="my-profile-email"
+                name="email"
+              />
               <div class="invalid-feedback">Debe ingresar un email</div>
             </div>
 
             <div class="col-sm-6">
-              <label for="telefono" class="form-label">Teléfono</label>
-              <input type="email" class="form-control" id="phone" />
+              <label for="phone" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="phone" name="phone" />
             </div>
 
             <div class="mt-6">
@@ -137,7 +158,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </main>
     <footer class="text-muted">
