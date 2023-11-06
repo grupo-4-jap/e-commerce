@@ -52,7 +52,7 @@ nav a {
   }
 }
 
-.jumbotron p:la-child {
+.jumbotron p:last-child {
   margin-bottom: 0;
 }
 
