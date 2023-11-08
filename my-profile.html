@@ -6,29 +6,23 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>eMercado - Todo lo que busques está aquí</title>
+
+    <!-- Libraries -->
     <link
       href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i"
       rel="stylesheet"
     />
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/styles.css" rel="stylesheet" />
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
+    <!-- CSS Files -->
+    <link href="css/styles.css" rel="stylesheet" />
+
+    <!-- JS Files  -->
+    <script defer type="module" src="./js/bootstrap.bundle.min.js"></script>
+    <script defer type="module" src="js/init.js"></script>
+    <script defer type="module" src="js/my-profile.js"></script>
+
+    <title>eMercado - Todo lo que busques está aquí</title>
   </head>
 
   <body>
@@ -46,9 +40,11 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
+          <ul
+            class="navbar-nav w-100 justify-content-between align-items-lg-center"
+          >
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Inicio</a>
+              <a class="nav-link active" href="index.html">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="categories.html">Categorías</a>
@@ -89,45 +85,73 @@
 
         <hr class="my-4" />
 
-        <div class="col">
+        <form class="w-100">
           <div class="row g-3" id="form-data">
             <div class="col-sm-6">
-              <label for="primer-nombre" class="form-label"
-                >Primer nombre *</label
-              >
-              <input type="text" class="form-control" id="first-name" />
-              <div class="invalid-feedback">Debe ingresar un nombre</div>
+              <label for="first-name" class="form-label">Primer nombre *</label>
+              <input
+                type="text"
+                class="form-control"
+                id="first-name"
+                name="firstName"
+              />
+              <div class="invalid-feedback d-none" id="name-feedback">
+                Debe ingresar un nombre
+              </div>
             </div>
 
             <div class="col-sm-6">
-              <label for="segundo-nombre" class="form-label"
-                >Segundo nombre</label
-              >
-              <input type="text" class="form-control" id="second-name" />
+              <label for="secondName" class="form-label">Segundo nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                id="second-name"
+                name="secondName"
+              />
             </div>
 
             <div class="col-sm-6">
-              <label for="primer-apellido" class="form-label"
+              <label for="firstLastName" class="form-label"
                 >Primer apellido *</label
               >
-              <input type="text" class="form-control" id="first-lastname" />
-              <div class="invalid-feedback">Debe ingresar un apellido</div>
+              <input
+                type="text"
+                class="form-control"
+                id="lastname"
+                name="lastName"
+              />
+              <div class="invalid-feedback d-none" id="last-name-feedback">
+                Debe ingresar un apellido
+              </div>
             </div>
 
             <div class="col-sm-6">
-              <label for="segundo-apellido" class="form-label"
+              <label for="secondLastName" class="form-label"
                 >Segundo apellido</label
               >
-              <input type="text" class="form-control" id="second-lastname" />
+              <input
+                type="text"
+                class="form-control"
+                id="second-lastname"
+                name="secondLastName"
+              />
             </div>
 
             <div class="col-sm-6">
               <label for="email" class="form-label">E-mail *</label>
-              <input type="email" class="form-control" id="my-profile-email" />
-              <div class="invalid-feedback">Debe ingresar un email</div>
+              <input
+                type="email"
+                class="form-control"
+                id="my-profile-email"
+                name="email"
+              />
+              <div class="invalid-feedback d-none" id="email-feedback">
+                Debe ingresar un email
+              </div>
             </div>
 
             <div class="col-sm-6">
+
               <label for="profile-picture" class="form-label"
                 >Imagen de perfil</label
               >
@@ -151,8 +175,10 @@
             </div>
 
             <div class="col-sm-6">
-              <label for="telefono" class="form-label">Teléfono</label>
-              <input type="email" class="form-control" id="phone" />
+              
+              <label for="phone" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="phone" name="phone" />
+
             </div>
             <div class="mt-6">
               <br />
@@ -165,7 +191,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </main>
     <footer class="text-muted">
@@ -181,8 +207,5 @@
         </p>
       </div>
     </footer>
-    <script defer type="module" src="./js/bootstrap.bundle.min.js"></script>
-    <script defer type="module" src="js/init.js"></script>
-    <script defer type="module" src="js/my-profile.js"></script>
   </body>
 </html>

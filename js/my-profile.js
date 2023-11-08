@@ -1,60 +1,103 @@
-import { getUserData, isLogged } from './utils/loggingUser.js';
+import { getUserData } from './utils/loggingUser.js';
 
-// const firstNameInput = document.getElementById('first-name');
-// const secondNameInput = document.getElementById('second-name');
-// const firstLastnameInput = document.getElementById('first-lastname');
-// const secondLastnameInput = document.getElementById('second-lastname');
-const emailInput = document.getElementById('my-profile-email');
-// const phoneInput = document.getElementById('phone');
-// const saveChangesButton = document.getElementById('save-changes-btn');
+const inputs = Array.from(document.querySelectorAll('input'));
+const form = document.querySelector('form');
+const firstName = document.getElementById('first-name');
+const lastName = document.getElementById('lastname');
+const email = document.getElementById('my-profile-email');
+const nameFeedback = document.getElementById('name-feedback');
+const lastNameFeedback = document.getElementById('last-name-feedback');
+const emailFeedback = document.getElementById('email-feedback');
 
-document.addEventListener('DOMContentLoaded', function () {
+function checkUserValidation() {
+  if (firstName.value === '') {
+    firstName.classList.add('is-invalid');
+    nameFeedback.classList.remove('d-none');
+  } else {
+    firstName.classList.remove('is-invalid');
+    nameFeedback.classList.add('d-none');
+  }
+
+  if (lastName.value === '') {
+    lastName.classList.add('is-invalid');
+    lastNameFeedback.classList.remove('d-none');
+  } else {
+    lastName.classList.remove('is-invalid');
+    lastNameFeedback.classList.add('d-none');
+  }
+
+  if (email.value === '') {
+    email.classList.add('is-invalid');
+    emailFeedback.classList.remove('d-none');
+  } else {
+    email.classList.remove('is-invalid');
+    emailFeedback.classList.add('d-none');
+  }
+}
+
+function isValidated() {
+  return inputs
+    .filter(
+      (input) =>
+        input.id === 'first-name' ||
+        input.id === 'lastname' ||
+        input.id === 'my-profile-email'
+    )
+    .every((input) => input.value !== '');
+}
+
+document.addEventListener('DOMContentLoaded', (e) => {
   const userData = getUserData();
 
   if (userData && userData.email) {
+    const emailInput = inputs.find((input) => input.name === 'email');
     emailInput.value = userData.email;
   }
-});
 
-// function saveChanges() {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    checkUserValidation();
 
-//   const updatedUserData = {
-//     email: emailInput.value,
-//     firstName: firstNameInput.value,
-//     secondName: secondNameInput.value,
-//     firstLastname: firstLastnameInput.value,
-//     secondLastname: secondLastnameInput.value,
-//     phone: phoneInput.value,
-//   };
+    if (isValidated()) {
+      const updatedUserData = {};
 
-//   localStorage.setItem('userData', JSON.stringify(updatedUserData));
-// }
 
-const profilePictureInput = document.getElementById('profile-picture');
-const previewImage = document.getElementById('preview-image');
+  localStorage.setItem('userData', JSON.stringify(updatedUserData));
+ }
 
-profilePictureInput.addEventListener('change', function () {
-  const file = this.files[0];
-  if (file) {
-    const reader = new FileReader();
+    const profilePictureInput = document.getElementById('profile-picture');
+    const previewImage = document.getElementById('preview-image');
 
-    reader.onload = function (event) {
-      previewImage.src = event.target.result;
-      previewImage.style.display = 'block';
-    };
+    profilePictureInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
 
-    reader.addEventListener('load', () => {
-      localStorage.setItem('img', reader.result);
+        reader.onload = function (event) {
+          previewImage.src = event.target.result;
+          previewImage.style.display = 'block';
+        };
+
+        reader.addEventListener('load', () => {
+          localStorage.setItem('img', reader.result);
+        });
+
+        reader.readAsDataURL(file);
+      }
     });
+      
+    const profileImage = localStorage.getItem('img') ?? false;
 
-    reader.readAsDataURL(file);
-  }
-});
+    profileImage
+      ? (previewImage.src = profileImage)
+      : (previewImage.src = './icons/profile.svg');
+  
+      inputs.forEach((input) => {
+        const property = input.name;
+        updatedUserData[`${property}`] = input.value;
+      });
 
-document.addEventListener('DOMContentLoaded', () => {
-  const profileImage = localStorage.getItem('img') ?? false;
-
-  profileImage
-    ? (previewImage.src = profileImage)
-    : (previewImage.src = './icons/profile.svg');
+      localStorage.setItem('userData', JSON.stringify(updatedUserData));
+    }
 });
