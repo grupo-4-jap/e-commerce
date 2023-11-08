@@ -29,3 +29,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //   localStorage.setItem('userData', JSON.stringify(updatedUserData));
 // }
+
+const profilePictureInput = document.getElementById('profile-picture');
+const previewImage = document.getElementById('preview-image');
+
+profilePictureInput.addEventListener('change', function () {
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      previewImage.src = event.target.result;
+      previewImage.style.display = 'block';
+    };
+
+    reader.addEventListener('load', () => {
+      localStorage.setItem('img', reader.result);
+    });
+
+    reader.readAsDataURL(file);
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const profileImage = localStorage.getItem('img') ?? false;
+
+  profileImage
+    ? (previewImage.src = profileImage)
+    : (previewImage.src = './icons/profile.svg');
+});
