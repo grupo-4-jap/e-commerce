@@ -347,3 +347,15 @@ a.custom-card:hover {
     font-size: 1rem;
   }
 }
+
+.portait {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+
+  & img {
+    width: 100%;
+  }
+}

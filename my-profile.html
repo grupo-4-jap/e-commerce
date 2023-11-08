@@ -74,7 +74,15 @@
       <div class="container">
         <br />
         <br />
-        <h1 class="mb-3">Perfil</h1>
+        <div>
+          <div class="d-flex justify-content-between align-items-center">
+            <h1 class="mb-3">Perfil</h1>
+            <div class="portait">
+              <img id="preview-image" src="./icons/profile.svg" alt="Preview" />
+            </div>
+          </div>
+        </div>
+
         <hr class="my-4" />
 
         <form class="w-100">
@@ -143,10 +151,35 @@
             </div>
 
             <div class="col-sm-6">
-              <label for="phone" class="form-label">Teléfono</label>
-              <input type="tel" class="form-control" id="phone" name="phone" />
+
+              <label for="profile-picture" class="form-label"
+                >Imagen de perfil</label
+              >
+              <input
+                type="file"
+                class="form-control"
+                id="profile-picture"
+                accept="image/*"
+              />
+              <img
+                id="preview-image"
+                src="#"
+                alt="Preview"
+                style="
+                  display: none;
+                  max-width: 200px;
+                  max-height: 200px;
+                  margin-top: 10px;
+                "
+              />
             </div>
 
+            <div class="col-sm-6">
+              
+              <label for="phone" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="phone" name="phone" />
+
+            </div>
             <div class="mt-6">
               <br />
               <button
