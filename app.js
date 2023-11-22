@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 // Cats route
 app.use(cats);
 
-// Category products rooutes
+// Category products routes
 app.use(catsProducts);
 
 // Product routes
