@@ -1,6 +1,3 @@
-import getJSONData from './utils/getJSONData.js';
-import { CART_INFO_URL } from './constants/API.js';
-
 const shippingRadioButtons = document.querySelectorAll(
   '.shipping-radio-button'
 );
@@ -12,33 +9,12 @@ const typeOfPayment = document.getElementById('payment-method');
 
 let cart = Array();
 
-function isProductInCart(cartProducts, productID) {
-  if (cartProducts.length === 0) true;
-  for (let i = 0; i < cartProducts.length; i++) {
-    if (cartProducts[i].id !== productID) false;
-  }
-
-  return true;
-}
-
 // If the cart is null this will be filled with the defaultCartProduct that is
 // get from the JSON, but if the cart already have it this won't be filled,
 // then the cart will be concatenated with the localStorage cart
 // which is created with the user activity
 async function getCartProducts() {
   let localCart = JSON.parse(localStorage.getItem('cart'));
-  const defaultCartProduct = await getJSONData({
-    URL: CART_INFO_URL,
-    options: '25801',
-  }).then((data) => data.body.articles);
-
-  if (localCart !== null) {
-    return isProductInCart(localCart, 50924)
-      ? localCart
-      : localCart.concat(defaultCartProduct);
-  } else {
-    localCart = defaultCartProduct;
-  }
 
   localStorage.setItem('cart', JSON.stringify(localCart));
 

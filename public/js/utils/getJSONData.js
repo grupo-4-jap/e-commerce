@@ -5,9 +5,9 @@ export default async function getJSONData({ URL, options }) {
     let response = '';
 
     if (!options) {
-      response = await fetch(URL + '.json');
+      response = await fetch(URL);
     } else {
-      response = await fetch(URL + options + '.json');
+      response = await fetch(URL + options);
     }
 
     if (response.ok) {
