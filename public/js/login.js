@@ -5,6 +5,7 @@ const userInput = document.getElementById('floatingInput');
 const userPassword = document.getElementById('floatingPassword');
 
 loginForm.addEventListener('submit', (e) => {
+  e.stopPropagation();
   e.preventDefault();
 
   const username = userInput.value;

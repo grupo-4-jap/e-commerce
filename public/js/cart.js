@@ -9,6 +9,20 @@ const typeOfPayment = document.getElementById('payment-method');
 
 let cart = Array();
 
+const { token } = await fetch('http://localhost:3000/login', {
+  headers: { 'Content-Type': 'application/json; charset=utf-8' },
+  method: 'POST',
+  body: JSON.stringify({ username: 'admin', password: 'admin' }),
+})
+  .then((response) => response.json())
+  .then((data) => data);
+
+fetch('http://localhost:3000/cart', {
+  headers: {
+    'access-token': token,
+  },
+});
+
 // If the cart is null this will be filled with the defaultCartProduct that is
 // get from the JSON, but if the cart already have it this won't be filled,
 // then the cart will be concatenated with the localStorage cart
