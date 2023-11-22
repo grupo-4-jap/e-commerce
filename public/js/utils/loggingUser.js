@@ -17,6 +17,13 @@ function login(userData) {
     return false;
   }
 
+  // fetch('http://localhost:3000/cart', {
+  //   headers: { 'Content-Type': 'application/json; charset=utf-8' },
+  //   method: 'POST',
+  //   body: JSON.stringify(userData),
+  // })
+  //   .then((response) => response.json())
+  //   .then((data) => console.log(data));
   localStorage.setItem('userData', JSON.stringify(userData));
   return true;
 }

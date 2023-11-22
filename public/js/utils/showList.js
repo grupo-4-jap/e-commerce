@@ -36,7 +36,7 @@ function showCategoryList(array) {
       const { id, imgSrc, description, name, productCount } = category;
 
       htmlContentToAppend += `
-        <div id="${id}" class="list-group-item list-group-item-action cursor-active">
+        <div id="${name.toLowerCase()}" class="list-group-item list-group-item-action cursor-active">
           <div class="row d-flex flex-column flex-md-row">
             <div class="col col-md-3">
               <img src="${imgSrc}" alt="${description}" class="img-thumbnail">

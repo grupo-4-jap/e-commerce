@@ -1,6 +1,3 @@
-import getJSONData from './utils/getJSONData.js';
-import { CART_INFO_URL } from './constants/API.js';
-
 const shippingRadioButtons = document.querySelectorAll(
   '.shipping-radio-button'
 );
@@ -12,14 +9,19 @@ const typeOfPayment = document.getElementById('payment-method');
 
 let cart = Array();
 
-function isProductInCart(cartProducts, productID) {
-  if (cartProducts.length === 0) true;
-  for (let i = 0; i < cartProducts.length; i++) {
-    if (cartProducts[i].id !== productID) false;
-  }
+const { token } = await fetch('http://localhost:3000/login', {
+  headers: { 'Content-Type': 'application/json; charset=utf-8' },
+  method: 'POST',
+  body: JSON.stringify({ username: 'admin', password: 'admin' }),
+})
+  .then((response) => response.json())
+  .then((data) => data);
 
-  return true;
-}
+fetch('http://localhost:3000/cart', {
+  headers: {
+    'access-token': token,
+  },
+});
 
 // If the cart is null this will be filled with the defaultCartProduct that is
 // get from the JSON, but if the cart already have it this won't be filled,
@@ -27,18 +29,6 @@ function isProductInCart(cartProducts, productID) {
 // which is created with the user activity
 async function getCartProducts() {
   let localCart = JSON.parse(localStorage.getItem('cart'));
-  const defaultCartProduct = await getJSONData({
-    URL: CART_INFO_URL,
-    options: '25801',
-  }).then((data) => data.body.articles);
-
-  if (localCart !== null) {
-    return isProductInCart(localCart, 50924)
-      ? localCart
-      : localCart.concat(defaultCartProduct);
-  } else {
-    localCart = defaultCartProduct;
-  }
 
   localStorage.setItem('cart', JSON.stringify(localCart));
 
