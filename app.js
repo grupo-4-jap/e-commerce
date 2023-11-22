@@ -13,7 +13,7 @@ const port = 3001;
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send('<h1>Hello World!</h1>');
+  res.send();
 });
 
 // Cats route
