@@ -1,4 +1,5 @@
 import express from 'express';
+import jwt from 'jsonwebtoken';
 import cors from 'cors';
 
 import cats from './routes/cats.routes.js';
@@ -7,7 +8,7 @@ import products from './routes/products.routes.js';
 import comments from './routes/comments.routes.js';
 
 const app = express();
-const port = 3001;
+const port = 3000;
 
 // Cors config
 app.use(cors());
