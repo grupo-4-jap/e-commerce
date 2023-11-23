@@ -53,9 +53,9 @@ function isValidated() {
 document.addEventListener('DOMContentLoaded', (e) => {
   const userData = getUserData();
 
-  if (userData && userData.email) {
+  if (userData && userData.username) {
     const emailInput = inputs.find((input) => input.name === 'email');
-    emailInput.value = userData.email;
+    emailInput.value = userData.username;
   }
 
   form.addEventListener('submit', (e) => {

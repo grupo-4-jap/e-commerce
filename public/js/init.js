@@ -30,10 +30,10 @@ function checkPage(target) {
 // Creates the UI User Nav
 function createUserNav() {
   if (getUserData() != null) {
-    const { email } = getUserData();
+    const { username } = getUserData();
     userDropdown.innerHTML = `
     <button class="btn dropdown-toggle nav-btn" style="color: rgba(255,255,255,.55);" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-      Hola ${email}
+      Hola ${username}
     </button>
     <ul class="dropdown-menu user-dropdown ms-lg-3" aria-labelledby="dropdownMenuButton1">
       <li><a id="cart" class="dropdown-item" href="#">Mi carrito</a></li>

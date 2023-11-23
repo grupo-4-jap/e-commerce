@@ -10,7 +10,7 @@ function login(userData) {
     return false;
   }
 
-  if (!('email' in userData) || !('password' in userData)) {
+  if (!('username' in userData) || !('password' in userData)) {
     // console.log(
     // 'No existe el valor de email y contraseña en los datos del usuario'
     // );

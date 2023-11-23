@@ -13,7 +13,7 @@ loginForm.addEventListener('submit', (e) => {
 
   if (username != '' && password != '') {
     login({
-      email: username,
+      username: username,
       password: password,
     });
     location.href = 'index.html';
