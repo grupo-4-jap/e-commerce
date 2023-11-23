@@ -6,10 +6,10 @@ const inputs = Array.from(document.querySelectorAll('input')).filter(
 const form = document.querySelector('form');
 const firstName = document.getElementById('first-name');
 const lastName = document.getElementById('lastname');
-const email = document.getElementById('my-profile-email');
+const email = document.getElementById('my-profile-username');
 const nameFeedback = document.getElementById('name-feedback');
 const lastNameFeedback = document.getElementById('last-name-feedback');
-const emailFeedback = document.getElementById('email-feedback');
+const emailFeedback = document.getElementById('username-feedback');
 const profilePictureInput = document.getElementById('profile-picture');
 const previewImage = document.getElementById('preview-image');
 
@@ -53,9 +53,9 @@ function isValidated() {
 document.addEventListener('DOMContentLoaded', (e) => {
   const userData = getUserData();
 
-  if (userData && userData.email) {
-    const emailInput = inputs.find((input) => input.name === 'email');
-    emailInput.value = userData.email;
+  if (userData && userData.username) {
+    const usernameInput = inputs.find((input) => input.name === 'username');
+    usernameInput.value = userData.username;
   }
 
   form.addEventListener('submit', (e) => {

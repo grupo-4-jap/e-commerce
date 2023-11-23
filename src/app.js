@@ -12,6 +12,24 @@ const SECRET_KEY = 'TOP SECRET KEY';
 const app = express();
 const port = 3000;
 
+const users = [
+  {
+    username: 'admin@admin.com',
+    password: 'password123',
+  },
+  {
+    username: 'subgrupo4@login.com',
+    password: 'super-pass',
+  },
+];
+
+function checkUser(usersArray, inputs) {
+  const { username, password } = inputs;
+  return usersArray.find(
+    (user) => user.username === username && user.password === password
+  );
+}
+
 // Cors config
 app.use(cors());
 app.use(express.json());
@@ -47,8 +65,8 @@ app.get('/cart', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  if (username === 'admin' && password === 'admin') {
+  if (checkUser(users, req.body)) {
+    const { username } = req.body;
     const token = jwt.sign({ username }, SECRET_KEY);
     res.status(200).json({ token });
   } else {

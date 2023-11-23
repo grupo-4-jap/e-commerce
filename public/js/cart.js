@@ -1,3 +1,5 @@
+import { showAlert } from './utils/showAlert.js';
+
 const shippingRadioButtons = document.querySelectorAll(
   '.shipping-radio-button'
 );
@@ -9,19 +11,24 @@ const typeOfPayment = document.getElementById('payment-method');
 
 let cart = Array();
 
-const { token } = await fetch('http://localhost:3000/login', {
-  headers: { 'Content-Type': 'application/json; charset=utf-8' },
-  method: 'POST',
-  body: JSON.stringify({ username: 'admin', password: 'admin' }),
-})
-  .then((response) => response.json())
-  .then((data) => data);
+const userData = localStorage.getItem('userData');
 
-fetch('http://localhost:3000/cart', {
-  headers: {
-    'access-token': token,
-  },
-});
+async function checkAuth() {
+  const { token } = await fetch('http://localhost:3000/login', {
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    method: 'POST',
+    // body: JSON.stringify({ username: 'admin', password: 'admin' }),
+    body: userData,
+  })
+    .then((response) => response.json())
+    .then((data) => data);
+
+  return fetch('http://localhost:3000/cart', {
+    headers: {
+      'access-token': token,
+    },
+  }).then((res) => res.ok);
+}
 
 // If the cart is null this will be filled with the defaultCartProduct that is
 // get from the JSON, but if the cart already have it this won't be filled,
@@ -228,115 +235,120 @@ function updateSiblingInput(DOMElement, value) {
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
-  cart = await getCartProducts().then((data) => data);
-  const tbody = document.querySelector('tbody');
-  getBuyResume();
+  const isAuthorized = await checkAuth();
+  if (!isAuthorized) {
+    showAlert('Debes estar autorizado para ver el carrito', 'danger');
+  } else {
+    cart = await getCartProducts().then((data) => data);
+    const tbody = document.querySelector('tbody');
+    getBuyResume();
 
-  // Renders the cart elements
-  // MD or greater devices
-  cart.forEach((product) => {
-    const { id, name, unitCost, count, currency, image } = product;
-    const row = document.createElement('tr');
-    row.className = 'article';
-    row.id = `${id}-md`;
+    // Renders the cart elements
+    // MD or greater devices
+    cart.forEach((product) => {
+      const { id, name, unitCost, count, currency, image } = product;
+      const row = document.createElement('tr');
+      row.className = 'article';
+      row.id = `${id}-md`;
 
-    row.innerHTML = `
-      <td class="d-flex align-items-center gap-3">
-        <img src="${image}" alt="Imagen del producto" width="150">
-        <p class="m-0">${name}</p>
-      </td>
-      <td class="cost">${currency} ${unitCost}</td>
-      <td><input class="text-center" type="number" value="${count}" min="1" style="width:5em" /></td>
-      <td class="total">${currency} ${unitCost * count}</td>
-      <td class="cursor-active"><img class="border rounded border-danger p-2" src="./icons/trash3.svg" width="40" height="40" /></td>
-      `;
+      row.innerHTML = `
+        <td class="d-flex align-items-center gap-3">
+          <img src="${image}" alt="Imagen del producto" width="150">
+          <p class="m-0">${name}</p>
+        </td>
+        <td class="cost">${currency} ${unitCost}</td>
+        <td><input class="text-center" type="number" value="${count}" min="1" style="width:5em" /></td>
+        <td class="total">${currency} ${unitCost * count}</td>
+        <td class="cursor-active"><img class="border rounded border-danger p-2" src="./icons/trash3.svg" width="40" height="40" /></td>
+        `;
 
-    tbody.appendChild(row);
-  });
+      tbody.appendChild(row);
+    });
 
-  // Mobile devices
-  cart.forEach((product) => {
-    const { id, name, unitCost, count, currency, image } = product;
-    const listGroup = document.querySelector('#list-group');
-    listGroup.innerHTML += `
-      <li class="list-group-item d-flex justify-content-center article" id="${id}-s">
-        <div class="card border-0">
-          <img src="${image}" alt="..." />
-          <div class="mt-2">
-            <h5 class="card-title">${name}</h5>
-            <div class="row">
-              <div class="row col-9">
-                <div class="col">
-                  <p>
-                    <span class="fw-bold">Costo: </span>
-                    <p class="cost">${currency} ${unitCost}</p>
-                  </p>
-                  <p>
-                    <span class="fw-bold">Subtotal: </span>
-                    <p class="total">${currency} ${unitCost * count}</p>
-                  </p>
+    // Mobile devices
+    cart.forEach((product) => {
+      const { id, name, unitCost, count, currency, image } = product;
+      const listGroup = document.querySelector('#list-group');
+      listGroup.innerHTML += `
+        <li class="list-group-item d-flex justify-content-center article" id="${id}-s">
+          <div class="card border-0">
+            <img src="${image}" alt="..." />
+            <div class="mt-2">
+              <h5 class="card-title">${name}</h5>
+              <div class="row">
+                <div class="row col-9">
+                  <div class="col">
+                    <p>
+                      <span class="fw-bold">Costo: </span>
+                      <p class="cost">${currency} ${unitCost}</p>
+                    </p>
+                    <p>
+                      <span class="fw-bold">Subtotal: </span>
+                      <p class="total">${currency} ${unitCost * count}</p>
+                    </p>
+                  </div>
+                  <div class="col-3 d-flex align-self-center">
+                    <input class="text-center" type="number" style="width: 3rem" value="${count}" min="1" />
+                  </div>
                 </div>
-                <div class="col-3 d-flex align-self-center">
-                  <input class="text-center" type="number" style="width: 3rem" value="${count}" min="1" />
-                </div>
-              </div>
-              <div class="col d-flex justify-content-center align-self-center ms-3 m-sm-0">
-                <div>
-                  <img class="border rounded border-danger p-2" src="./icons/trash3.svg" width="40" height="40" />
+                <div class="col d-flex justify-content-center align-self-center ms-3 m-sm-0">
+                  <div>
+                    <img class="border rounded border-danger p-2" src="./icons/trash3.svg" width="40" height="40" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </li>
-    `;
-  });
-
-  // This select the rows in cart in order to apply the "input" event
-  document.querySelectorAll('.article').forEach((item) => {
-    // On change input value
-    const input = item.querySelector('input');
-    input.addEventListener('input', (e) => {
-      const quantity = e.target.value;
-      const productPrice = item.querySelector('.cost').innerText;
-      const [currency, cost] = productPrice.split(' ');
-      const finalPrice = cost * quantity;
-
-      updateSiblingInput(item, quantity);
-
-      item.querySelector('.total').innerText = `${currency} ${finalPrice}`;
-      updateItemQuantity(item, quantity);
-      getBuyResume();
+        </li>
+      `;
     });
 
-    // On click delete element
-    const trashIcon = item.querySelectorAll('img')[1];
-    trashIcon.addEventListener('click', function () {
-      deleteProduct(item);
-      getBuyResume();
+    // This select the rows in cart in order to apply the "input" event
+    document.querySelectorAll('.article').forEach((item) => {
+      // On change input value
+      const input = item.querySelector('input');
+      input.addEventListener('input', (e) => {
+        const quantity = e.target.value;
+        const productPrice = item.querySelector('.cost').innerText;
+        const [currency, cost] = productPrice.split(' ');
+        const finalPrice = cost * quantity;
+
+        updateSiblingInput(item, quantity);
+
+        item.querySelector('.total').innerText = `${currency} ${finalPrice}`;
+        updateItemQuantity(item, quantity);
+        getBuyResume();
+      });
+
+      // On click delete element
+      const trashIcon = item.querySelectorAll('img')[1];
+      trashIcon.addEventListener('click', function () {
+        deleteProduct(item);
+        getBuyResume();
+      });
     });
-  });
 
-  shippingRadioButtons.forEach((button) => {
-    button.addEventListener('click', function () {
-      getBuyResume();
+    shippingRadioButtons.forEach((button) => {
+      button.addEventListener('click', function () {
+        getBuyResume();
+      });
     });
-  });
 
-  const btnEndPurchase = document.getElementById('btn-end-purchase');
+    const btnEndPurchase = document.getElementById('btn-end-purchase');
 
-  document.querySelectorAll('.invalid-feedback').forEach((feedback) => {
-    feedback.classList.add('d-none');
-  });
+    document.querySelectorAll('.invalid-feedback').forEach((feedback) => {
+      feedback.classList.add('d-none');
+    });
 
-  document.querySelectorAll('.form-control').forEach((input) => {
-    input.classList.remove('is-invalid');
-  });
+    document.querySelectorAll('.form-control').forEach((input) => {
+      input.classList.remove('is-invalid');
+    });
 
-  btnEndPurchase.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    btnEndPurchase.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-    checkValidation();
-  });
+      checkValidation();
+    });
+  }
 });
