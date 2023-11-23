@@ -2,6 +2,8 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 
+import users from './db/users.json' assert { type: 'json' };
+
 import cats from './routes/cats.routes.js';
 import catsProducts from './routes/catsProducts.routes.js';
 import products from './routes/products.routes.js';
@@ -11,17 +13,6 @@ const SECRET_KEY = 'TOP SECRET KEY';
 
 const app = express();
 const port = 3000;
-
-const users = [
-  {
-    username: 'admin@admin.com',
-    password: 'password123',
-  },
-  {
-    username: 'subgrupo4@login.com',
-    password: 'super-pass',
-  },
-];
 
 function checkUser(usersArray, inputs) {
   const { username, password } = inputs;
