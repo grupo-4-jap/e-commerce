@@ -1,0 +1,15 @@
+GET http://localhost:3000/cart
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.UG96emk.FlxhaeStzjRVdZepZj0rrDb8jzRIW8_XYA2Z-MU28wI
+
+###
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "Pozzi"
+}
+
+###
+
+GET http://localhost:3000/login

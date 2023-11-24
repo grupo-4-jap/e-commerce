@@ -4,7 +4,7 @@ const loginForm = document.querySelector('.login');
 const userInput = document.getElementById('floatingInput');
 const userPassword = document.getElementById('floatingPassword');
 
-loginForm.addEventListener('submit', (e) => {
+loginForm.addEventListener('submit', async (e) => {
   e.stopPropagation();
   e.preventDefault();
 
@@ -12,7 +12,7 @@ loginForm.addEventListener('submit', (e) => {
   const password = userPassword.value;
 
   if (username != '' && password != '') {
-    login({
+    await login({
       username: username,
       password: password,
     });

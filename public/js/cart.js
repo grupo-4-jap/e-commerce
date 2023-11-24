@@ -1,4 +1,5 @@
 import { showAlert } from './utils/showAlert.js';
+import getJSONData from './utils/getJSONData.js';
 
 const shippingRadioButtons = document.querySelectorAll(
   '.shipping-radio-button'
@@ -14,20 +15,13 @@ let cart = Array();
 const userData = localStorage.getItem('userData');
 
 async function checkAuth() {
-  const { token } = await fetch('http://localhost:3000/login', {
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    method: 'POST',
-    // body: JSON.stringify({ username: 'admin', password: 'admin' }),
-    body: userData,
-  })
-    .then((response) => response.json())
-    .then((data) => data);
+  const { token } = JSON.parse(localStorage.getItem('userData'));
 
   return fetch('http://localhost:3000/cart', {
     headers: {
-      'access-token': token,
+      Authorization: `Bearer ${token}`,
     },
-  }).then((res) => res.ok);
+  });
 }
 
 // If the cart is null this will be filled with the defaultCartProduct that is
@@ -35,11 +29,16 @@ async function checkAuth() {
 // then the cart will be concatenated with the localStorage cart
 // which is created with the user activity
 async function getCartProducts() {
-  let localCart = JSON.parse(localStorage.getItem('cart'));
+  const { token } = JSON.parse(localStorage.getItem('userData'));
 
-  localStorage.setItem('cart', JSON.stringify(localCart));
+  const res = await fetch('http://localhost:3000/cart', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await res.json();
 
-  return localCart;
+  return data;
 }
 
 function deleteProduct(product) {
@@ -239,7 +238,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (!isAuthorized) {
     showAlert('Debes estar autorizado para ver el carrito', 'danger');
   } else {
-    cart = await getCartProducts().then((data) => data);
+    cart = await getCartProducts();
     const tbody = document.querySelector('tbody');
     getBuyResume();
 
