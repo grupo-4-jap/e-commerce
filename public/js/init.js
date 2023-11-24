@@ -2,12 +2,7 @@ import { getUserData, isLogged } from './utils/loggingUser.js';
 
 const userDropdown = document.getElementById('loggeado');
 const themeTogglerBtn = document.getElementById('theme-toggler');
-
-const icon = '';
-if (themeTogglerBtn) {
-  icon = themeTogglerBtn.children[0];
-}
-
+const icon = themeTogglerBtn.children[0];
 const page = document.querySelector('html');
 const backgroundImage = document.querySelector('.jumbotron');
 const album = document.getElementById('album');
@@ -49,57 +44,55 @@ function createUserNav() {
   }
 }
 
-if (getCurrentPage() !== 'login.html') {
-  function toggleTheme(event) {
-    let currentTheme = localStorage.getItem('theme');
+function toggleTheme(event) {
+  let currentTheme = localStorage.getItem('theme');
 
-    if (event != undefined && event.type === 'click') {
-      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    }
-
-    const themeObject =
-      currentTheme === 'dark'
-        ? {
-            theme: 'dark',
-            iconSrc: './icons/sun-fill.svg',
-            imageSrc: './img/cover_back_dark.png',
-            bgColor: 'bg-dark',
-            borderColor: 'border-secondary',
-          }
-        : {
-            theme: 'light',
-            iconSrc: './icons/moon-stars-fill.svg',
-            imageSrc: './img/cover_back.png',
-            bgColor: 'bg-light',
-            borderColor: '',
-          };
-
-    let { theme, iconSrc, imageSrc, bgColor, borderColor } = themeObject;
-
-    if (checkPage('index.html') || checkPage('')) {
-      backgroundImage.style.backgroundImage = `url(${imageSrc})`;
-      album.className = `album py-5 ${bgColor}`;
-      categoryBtn.className = `btn ${bgColor} btn-lg btn-block`;
-    }
-
-    if (checkPage('categories.html') || checkPage('products.html')) {
-      catAndProdButtons.forEach((button) => {
-        button.className = `btn ${bgColor} ${borderColor}`;
-      });
-    }
-
-    icon.src = iconSrc;
-    page.setAttribute('data-bs-theme', theme);
-    localStorage.setItem('theme', theme);
+  if (event != undefined && event.type === 'click') {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
   }
 
-  function checkTheme() {
-    toggleTheme();
+  const themeObject =
+    currentTheme === 'dark'
+      ? {
+          theme: 'dark',
+          iconSrc: './icons/sun-fill.svg',
+          imageSrc: './img/cover_back_dark.png',
+          bgColor: 'bg-dark',
+          borderColor: 'border-secondary',
+        }
+      : {
+          theme: 'light',
+          iconSrc: './icons/moon-stars-fill.svg',
+          imageSrc: './img/cover_back.png',
+          bgColor: 'bg-light',
+          borderColor: '',
+        };
+
+  let { theme, iconSrc, imageSrc, bgColor, borderColor } = themeObject;
+
+  if (checkPage('index.html') || checkPage('')) {
+    backgroundImage.style.backgroundImage = `url(${imageSrc})`;
+    album.className = `album py-5 ${bgColor}`;
+    categoryBtn.className = `btn ${bgColor} btn-lg btn-block`;
   }
 
-  function changeTheme(e) {
-    toggleTheme(e);
+  if (checkPage('categories.html') || checkPage('products.html')) {
+    catAndProdButtons.forEach((button) => {
+      button.className = `btn ${bgColor} ${borderColor}`;
+    });
   }
+
+  icon.src = iconSrc;
+  page.setAttribute('data-bs-theme', theme);
+  localStorage.setItem('theme', theme);
+}
+
+function checkTheme() {
+  toggleTheme();
+}
+
+function changeTheme(e) {
+  toggleTheme(e);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -111,27 +104,25 @@ document.addEventListener('DOMContentLoaded', function () {
     location.href = 'index.html';
   }
 
-  if (getCurrentPage() !== 'login.html') {
-    document.getElementById('cart').addEventListener('click', function () {
-      window.location.href = 'cart.html';
-    });
-    document.getElementById('profile').addEventListener('click', function () {
-      if (isLogged()) {
-        window.location.href = 'my-profile.html';
-      } else {
-        window.location.href = 'login.html';
-      }
-    });
-    document.getElementById('finish').addEventListener('click', function () {
-      localStorage.removeItem('userData');
+  createUserNav();
+  checkTheme();
+
+  document.getElementById('cart').addEventListener('click', function () {
+    window.location.href = 'cart.html';
+  });
+  document.getElementById('profile').addEventListener('click', function () {
+    if (isLogged()) {
+      window.location.href = 'my-profile.html';
+    } else {
       window.location.href = 'login.html';
-    });
+    }
+  });
+  document.getElementById('finish').addEventListener('click', function () {
+    localStorage.removeItem('userData');
+    window.location.href = 'login.html';
+  });
 
-    createUserNav();
-    checkTheme();
-
-    themeTogglerBtn.addEventListener('click', function (e) {
-      changeTheme(e);
-    });
-  }
+  themeTogglerBtn.addEventListener('click', function (e) {
+    changeTheme(e);
+  });
 });
