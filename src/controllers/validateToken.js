@@ -4,8 +4,6 @@ export function validateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const accessToken = authHeader && authHeader.split(' ')[1];
 
-  console.log(accessToken);
-
   if (accessToken == null) return res.sendStatus(401);
 
   jwt.verify(accessToken, process.env.SECRET_KEY, (err, user) => {

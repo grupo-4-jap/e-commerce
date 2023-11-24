@@ -97,7 +97,6 @@ function changeTheme(e) {
 
 document.addEventListener('DOMContentLoaded', function () {
   const isLog = isLogged();
-  // console.log(`El usuario esta logeado? ${isLog}`);
 
   if (!isLog && !checkPage('login.html')) {
     location.href = 'login.html';
