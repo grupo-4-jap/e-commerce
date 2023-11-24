@@ -1,11 +1,11 @@
 import { login } from './utils/loggingUser.js';
+import { showAlert } from './utils/showAlert.js';
 
-const loginForm = document.querySelector('.login');
+const loginForm = document.querySelector('form');
 const userInput = document.getElementById('floatingInput');
 const userPassword = document.getElementById('floatingPassword');
 
 loginForm.addEventListener('submit', async (e) => {
-  e.stopPropagation();
   e.preventDefault();
 
   const username = userInput.value;
@@ -18,7 +18,7 @@ loginForm.addEventListener('submit', async (e) => {
     });
     location.href = 'index.html';
   } else {
-    alert('Debe ingresar su usuario y contraseña');
+    showAlert('Debe ingresar su usuario y contraseña', 'danger');
   }
 });
 

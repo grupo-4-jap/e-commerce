@@ -1,3 +1,5 @@
+import { showAlert } from './showAlert.js';
+
 // Logging user
 async function login(userData) {
   // if (isLogged()) return false;
@@ -10,7 +12,15 @@ async function login(userData) {
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
     method: 'POST',
     body: JSON.stringify(userData),
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (res.ok) {
+      showAlert('Usuario no registrado', 'danger');
+
+      throw new Error('Usuario no autorizado');
+    }
+
+    return res.json();
+  });
 
   delete userData.password;
   userData.accessToken = accessToken;
