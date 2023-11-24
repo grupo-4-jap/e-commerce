@@ -15,11 +15,11 @@ let cart = Array();
 const userData = localStorage.getItem('userData');
 
 async function checkAuth() {
-  const { token } = JSON.parse(localStorage.getItem('userData'));
+  const { accessToken } = JSON.parse(localStorage.getItem('userData'));
 
   return fetch('http://localhost:3000/cart', {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
 }
@@ -29,16 +29,20 @@ async function checkAuth() {
 // then the cart will be concatenated with the localStorage cart
 // which is created with the user activity
 async function getCartProducts() {
-  const { token } = JSON.parse(localStorage.getItem('userData'));
+  const { accessToken } = JSON.parse(localStorage.getItem('userData'));
 
-  const res = await fetch('http://localhost:3000/cart', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const data = await res.json();
+  try {
+    const res = await fetch('http://localhost:3000/cart', {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const data = await res.json();
 
-  return data;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function deleteProduct(product) {

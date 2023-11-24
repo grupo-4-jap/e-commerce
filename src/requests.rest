@@ -1,5 +1,5 @@
 GET http://localhost:3000/cart
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.UG96emk.FlxhaeStzjRVdZepZj0rrDb8jzRIW8_XYA2Z-MU28wI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.YWRtaW5AYWRtaW4uY29t.FFT3yptbtZFboDb4o6JkdoadUjNByKQnGgS3jcgMP5g
 
 ###
 
@@ -7,7 +7,8 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "username": "Pozzi"
+  "username": "admin@admin.com",
+  "password": "admin1234"
 }
 
 ###

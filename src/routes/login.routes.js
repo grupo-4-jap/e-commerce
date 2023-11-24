@@ -21,7 +21,7 @@ router.post('/login', (req, res) => {
     const accessToken = generateAccessToken(username);
     res
       .header('authorization', accessToken)
-      .json({ message: 'Usuario autenticado', token: accessToken });
+      .json({ message: 'Usuario autenticado', accessToken: accessToken });
   }
 });
 

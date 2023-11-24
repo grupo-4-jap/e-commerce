@@ -13,7 +13,7 @@ async function login(userData) {
   }).then((res) => res.json());
 
   delete userData.password;
-  userData.token = accessToken;
+  userData.accessToken = accessToken;
 
   localStorage.setItem('userData', JSON.stringify(userData));
   return true;
