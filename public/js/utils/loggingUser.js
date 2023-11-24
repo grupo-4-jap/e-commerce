@@ -13,7 +13,7 @@ async function login(userData) {
     method: 'POST',
     body: JSON.stringify(userData),
   }).then((res) => {
-    if (res.ok) {
+    if (!res.ok) {
       showAlert('Usuario no registrado', 'danger');
 
       throw new Error('Usuario no autorizado');
