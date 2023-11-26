@@ -17,7 +17,8 @@ router.get('/cart', validateToken, (req, res) => {
 
 function isItemInCart(serverCart, itemToAdd) {
   if (serverCart.length === 0) return false;
-  return serverCart.every((item) => item.id === itemToAdd.id);
+
+  return serverCart.some((item) => item.id === itemToAdd.id);
 }
 
 router.post('/cart', (req, res) => {

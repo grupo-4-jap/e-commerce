@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     showAlert('Debes estar autorizado para ver el carrito', 'danger');
   } else {
     cart = await getCartProducts();
-    console.log(cart);
+
     const tbody = document.querySelector('tbody');
     getBuyResume();
 
