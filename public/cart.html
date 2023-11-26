@@ -93,279 +93,268 @@
           <hr class="mt-4" />
         </div>
       </div>
-      <div class="container">
-        <h4 class="mt-4 mb-3">Tipo de envío</h4>
-        <div class="form-check">
-          <input
-            value="0.15"
-            class="form-check-input shipping-radio-button shipping-option"
-            type="radio"
-            name="shipping"
-            id="shipping1"
-          />
-          <label class="form-check-label" for="shipping1">
-            Premium 2 a 5 días (15%)
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            value="0.07"
-            class="form-check-input shipping-radio-button shipping-option"
-            type="radio"
-            name="shipping"
-            id="shipping2"
-            checked
-          />
-          <label class="form-check-label" for="shipping2">
-            Express 5 a 8 días (7%)
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            value="0.05"
-            class="form-check-input shipping-radio-button shipping-option"
-            type="radio"
-            name="shipping"
-            id="shipping3"
-          />
-          <label class="form-check-label" for="shipping3">
-            Standard 12 a 15 días (5%)
-          </label>
-        </div>
-        <!-- class="is-invalid" adds red border and ! -->
-        <h4 class="mt-4 mb-3">Dirección de envío</h4>
-        <div class="row">
-          <div class="mb-3 col">
-            <label for="shipping-street" class="form-label">Calle:</label>
+      <form class="container">
+        <div class="container">
+          <h4 class="mt-4 mb-3">Tipo de envío</h4>
+          <div class="form-check">
             <input
-              type="text"
-              class="form-control"
-              id="shipping-street"
-              required
+              value="0.15"
+              class="form-check-input shipping-radio-button shipping-option"
+              type="radio"
+              name="shipping"
+              id="shipping1"
             />
-            <div class="invalid-feedback d-none" id="street-feedback">
-              Ingresa una calle
-            </div>
+            <label class="form-check-label" for="shipping1">
+              Premium 2 a 5 días (15%)
+            </label>
           </div>
-          <div class="mb-3 col">
-            <label for="shipping-number" class="form-label">Número:</label>
+          <div class="form-check">
             <input
-              type="text"
-              class="form-control"
-              id="shipping-number"
-              required
+              value="0.07"
+              class="form-check-input shipping-radio-button shipping-option"
+              type="radio"
+              name="shipping"
+              id="shipping2"
+              checked
             />
-            <div class="invalid-feedback d-none" id="number-feedback">
-              Ingresa un número
-            </div>
+            <label class="form-check-label" for="shipping2">
+              Express 5 a 8 días (7%)
+            </label>
           </div>
-        </div>
-        <div class="mb-3 col-6">
-          <label for="shipping-corner" class="form-label">Esquina:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="shipping-corner"
-            required
-          />
-          <div class="invalid-feedback d-none" id="corner-feedback">
-            Ingresa una esquina
+          <div class="form-check">
+            <input
+              value="0.05"
+              class="form-check-input shipping-radio-button shipping-option"
+              type="radio"
+              name="shipping"
+              id="shipping3"
+            />
+            <label class="form-check-label" for="shipping3">
+              Standard 12 a 15 días (5%)
+            </label>
           </div>
-        </div>
-        <hr class="mt-5" />
-      </div>
-      <div class="container">
-        <h4 class="mt-4 mb-3">Costos</h4>
-
-        <ul class="list-group">
-          <li
-            class="list-group-item d-flex flex-row justify-content-between align-items-center"
-            style="min-height: 100%"
-          >
-            <p class="m-0">Subtotal</p>
-            <p class="m-0" id="subtotal"></p>
-          </li>
-          <li
-            class="list-group-item d-flex flex-row justify-content-between align-items-center"
-            style="min-height: 100%"
-          >
-            <p class="m-0">Costo de envío</p>
-            <p class="m-0" id="costo-envio"></p>
-          </li>
-          <li
-            class="list-group-item d-flex flex-row justify-content-between align-items-center"
-            style="min-height: 100%"
-          >
-            <p class="m-0">Total ($)</p>
-            <p class="m-0" id="total"></p>
-          </li>
-        </ul>
-        <hr class="mt-5" />
-      </div>
-      <div class="container">
-        <h4 class="mt-4 mb-3">Formas de pago</h4>
-        <div id="payment-div">
-          <span id="payment-method"> No ha seleccionado </span>
-          <!-- Button trigger modal -->
-          <button
-            type="button"
-            class="btn btn-link"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            Seleccionar
-          </button>
-          <div class="invalid-feedback" id="payment-feedback">
-            Selecciona una forma de pago
-          </div>
-        </div>
-
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  Formas de pago
-                </h1>
-                <hr />
+          <!-- class="is-invalid" adds red border and ! -->
+          <h4 class="mt-4 mb-3">Dirección de envío</h4>
+          <div class="row">
+            <div class="mb-3 col">
+              <label for="shipping-street" class="form-label">Calle:</label>
+              <input type="text" class="form-control" id="shipping-street" />
+              <div class="invalid-feedback d-none" id="street-feedback">
+                Ingresa una calle
               </div>
-              <div class="modal-body">
-                <div class="col form-check p-0">
-                  <div class="container ps-4">
-                    <input
-                      class="form-check-input payment-option"
-                      type="radio"
-                      name="transferRadios"
-                      id="credit-card-btn"
-                      value="option1"
-                    />
-                    <label class="form-check-label" for="exampleRadios1">
-                      Tarjeta de crédito
-                    </label>
-                  </div>
-                  <hr class="mt-4 mb-4" />
-                  <div class="row">
-                    <div class="row mb-3 gap-1">
-                      <div class="col-7">
-                        <label for="credit-card-number" class="form-label">
-                          Número de tarjeta
-                        </label>
-                        <input
-                          type="text"
-                          maxlength="16"
-                          class="form-control credit-card-input"
-                          id="credit-card-number"
-                          required
-                          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                        />
-                      </div>
-                      <div class="col-4">
-                        <label for="ccv-number" class="form-label">
-                          Código de seg.
-                        </label>
-                        <input
-                          type="tel"
-                          maxlength="3"
-                          class="form-control credit-card-input"
-                          id="ccv-number"
-                          pattern="[0-9]*"
-                          required
-                          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                        />
-                      </div>
-                    </div>
-                    <label for="expiration-date" class="form-label">
-                      Vencimiento (MM/AA)
-                    </label>
-                    <span
-                      class="col-4 d-flex flex-row align-items-center gap-2 mb-3"
-                    >
-                      <input
-                        type="tel"
-                        class="form-control credit-card-input"
-                        name="month"
-                        placeholder="MM"
-                        maxlength="2"
-                        size="2"
-                        required
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                      />
-                      <span>/</span>
-                      <input
-                        type="tel"
-                        class="form-control credit-card-input"
-                        name="year"
-                        placeholder="YY"
-                        maxlength="2"
-                        size="2"
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                      />
-                    </span>
-                  </div>
-                  <div class="containter ps-4 mb-3">
-                    <div class="form-check p-0">
+            </div>
+            <div class="mb-3 col">
+              <label for="shipping-number" class="form-label">Número:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="shipping-number"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              />
+              <div class="invalid-feedback d-none" id="number-feedback">
+                Ingresa un número
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 col-6">
+            <label for="shipping-corner" class="form-label">Esquina:</label>
+            <input type="text" class="form-control" id="shipping-corner" />
+            <div class="invalid-feedback d-none" id="corner-feedback">
+              Ingresa una esquina
+            </div>
+          </div>
+          <hr class="mt-5" />
+        </div>
+        <div class="container" id="subtotal">
+          <h4 class="mt-4 mb-3">Costos</h4>
+
+          <ul class="list-group">
+            <li
+              class="list-group-item d-flex flex-row justify-content-between align-items-center"
+              style="min-height: 100%"
+            >
+              <p class="m-0">Subtotal</p>
+              <p class="m-0 subtotal-child"></p>
+            </li>
+            <li
+              class="list-group-item d-flex flex-row justify-content-between align-items-center"
+              style="min-height: 100%"
+            >
+              <p class="m-0">Costo de envío</p>
+              <p class="m-0 subtotal-child"></p>
+            </li>
+            <li
+              class="list-group-item d-flex flex-row justify-content-between align-items-center"
+              style="min-height: 100%"
+            >
+              <p class="m-0">Total ($)</p>
+              <p class="m-0 subtotal-child"></p>
+            </li>
+          </ul>
+          <hr class="mt-5" />
+        </div>
+        <div class="container">
+          <h4 class="mt-4 mb-3">Formas de pago</h4>
+          <div id="payment-div">
+            <span id="payment-method"> No ha seleccionado </span>
+            <!-- Button trigger modal -->
+            <button
+              type="button"
+              class="btn btn-link"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Seleccionar
+            </button>
+            <div class="invalid-feedback" id="payment-feedback">
+              Selecciona una forma de pago
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    Formas de pago
+                  </h1>
+                  <hr />
+                </div>
+                <div class="modal-body">
+                  <div class="col form-check p-0">
+                    <div class="container ps-4">
                       <input
                         class="form-check-input payment-option"
                         type="radio"
                         name="transferRadios"
-                        id="bank-transfer-btn"
-                        value="option2"
+                        id="credit-card-btn"
+                        value="option1"
                       />
-                      <label class="form-check-label" for="exampleRadios2">
-                        Transferencia bancaria
+                      <label class="form-check-label" for="transferRadios">
+                        Tarjeta de crédito
                       </label>
                     </div>
-                  </div>
-                  <hr class="mt-4 mb-4" />
-                  <div class="mb-3">
-                    <label for="account-number" class="form-label">
-                      Número de transferencia
-                    </label>
-                    <input
-                      type="tel"
-                      class="form-control bank-transfer-input"
-                      id="account-number"
-                      required
-                      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                    />
+                    <hr class="mt-4 mb-4" />
+                    <div class="row">
+                      <div class="row mb-3 gap-1">
+                        <div class="col-7">
+                          <label for="credit-card-number" class="form-label">
+                            Número de tarjeta
+                          </label>
+                          <input
+                            type="text"
+                            maxlength="16"
+                            class="form-control credit-card-input"
+                            id="credit-card-number"
+                            name="credit-card-number"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                          />
+                        </div>
+                        <div class="col-4">
+                          <label for="ccv-number" class="form-label">
+                            Código de seg.
+                          </label>
+                          <input
+                            type="tel"
+                            maxlength="3"
+                            class="form-control credit-card-input"
+                            id="ccv-number"
+                            pattern="[0-9]*"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                          />
+                        </div>
+                      </div>
+                      <label for="expiration-date" class="form-label">
+                        Vencimiento (MM/AA)
+                      </label>
+                      <span
+                        class="col-4 d-flex flex-row align-items-center gap-2 mb-3"
+                      >
+                        <input
+                          type="tel"
+                          class="form-control credit-card-input"
+                          name="month"
+                          placeholder="MM"
+                          maxlength="2"
+                          size="2"
+                          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        />
+                        <span>/</span>
+                        <input
+                          type="tel"
+                          class="form-control credit-card-input"
+                          name="year"
+                          placeholder="YY"
+                          maxlength="2"
+                          size="2"
+                          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        />
+                      </span>
+                    </div>
+                    <div class="containter ps-4 mb-3">
+                      <div class="form-check p-0">
+                        <input
+                          class="form-check-input payment-option"
+                          type="radio"
+                          name="transferRadios"
+                          id="bank-transfer-btn"
+                          value="option2"
+                        />
+                        <label class="form-check-label" for="exampleRadios2">
+                          Transferencia bancaria
+                        </label>
+                      </div>
+                    </div>
+                    <hr class="mt-4 mb-4" />
+                    <div class="mb-3">
+                      <label for="account-number" class="form-label">
+                        Número de transferencia
+                      </label>
+                      <input
+                        type="tel"
+                        class="form-control bank-transfer-input"
+                        id="account-number"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-primary m-0"
-                  data-bs-dismiss="modal"
-                  id="close-btn"
-                >
-                  Cerrar
-                </button>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-primary m-0"
+                    data-bs-dismiss="modal"
+                    id="close-btn"
+                  >
+                    Cerrar
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- End purchase button -->
-      <div class="container mt-4">
-        <div>
-          <button
-            type="submit"
-            id="btn-end-purchase"
-            class="btn btn-primary btn-lg"
-            style="width: 100%"
-          >
-            Finalizar compra
-          </button>
+        <!-- End purchase button -->
+        <div class="container mt-4">
+          <div>
+            <button
+              type="submit"
+              id="btn-end-purchase"
+              class="btn btn-primary btn-lg"
+              style="width: 100%"
+            >
+              Finalizar compra
+            </button>
+          </div>
         </div>
-      </div>
-      <div id="purchase-alert"></div>
+        <div id="purchase-alert"></div>
+      </form>
     </main>
     <footer class="text-muted">
       <div class="container">
