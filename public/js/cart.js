@@ -1,6 +1,7 @@
 import { showAlert } from './utils/showAlert.js';
 import getJSONData from './utils/getJSONData.js';
 import { getCartProducts } from './utils/getCartProducts.js';
+import { CART_URL } from './constants/API.js';
 
 const shippingRadioButtons = document.querySelectorAll(
   '.shipping-radio-button'
@@ -38,15 +39,39 @@ function deleteProduct(product) {
 }
 
 // Update items quantity in cart stored in LocalStorage
-function updateItemQuantity(DOMItem, newQuantity) {
+async function updateItemQuantity(DOMItem, newValue) {
+  // const { id } = DOMItem;
+  // const idNumber = id.split('-')[0];
+
+  // cart.forEach((cartItem) => {
+  //   if (cartItem.id == idNumber) ++cartItem.count;
+  // });
+
+  // localStorage.setItem('cart', JSON.stringify(cart));
+
+  const cart = await getCartProducts();
+  const { accessToken } = JSON.parse(localStorage.getItem('userData'));
   const { id } = DOMItem;
   const idNumber = id.split('-')[0];
+  const itemToModify = cart.find((item) => item.id === Number(idNumber));
+  const index = cart.indexOf(itemToModify);
 
-  cart.forEach((cartItem) => {
-    if (cartItem.id == idNumber) cartItem.count = Number(newQuantity);
-  });
+  const operation = newValue > itemToModify.count ? 'add' : 'subtract';
 
-  localStorage.setItem('cart', JSON.stringify(cart));
+  fetch(`${CART_URL}/${index}`, {
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: 'PUT',
+    body: JSON.stringify([operation]),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+
+      return res.json();
+    })
+    .catch((error) => console.error(error));
 }
 
 creditCardBtn.addEventListener('click', function () {
@@ -96,7 +121,7 @@ function isRadioChecked(array) {
 }
 
 // This function checks the validation form and executes the logic in order
-// to finish the transaction
+// to finish the operation
 function checkValidation() {
   const street = document.getElementById('shipping-street').value;
   const number = document.getElementById('shipping-number').value;

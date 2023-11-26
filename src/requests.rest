@@ -1,4 +1,10 @@
+# Cart request
 GET http://localhost:3000/cart
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.YWRtaW5AYWRtaW4uY29t.FFT3yptbtZFboDb4o6JkdoadUjNByKQnGgS3jcgMP5g
+
+###
+
+GET http://localhost:3000/cart/0
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.YWRtaW5AYWRtaW4uY29t.FFT3yptbtZFboDb4o6JkdoadUjNByKQnGgS3jcgMP5g
 
 ###
@@ -13,6 +19,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.YWRtaW5AYWRtaW4uY29t.FFT3yptbtZFboDb4
 
 ###
 
+# Login request
 POST http://localhost:3000/login
 Content-Type: application/json
 
@@ -20,7 +27,3 @@ Content-Type: application/json
   "username": "admin@admin.com",
   "password": "admin1234"
 }
-
-###
-
-GET http://localhost:3000/login
