@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 
 import { validateToken } from '../controllers/validateToken.js';
+import { isItemInCart } from '../controllers/isItemInCart.js';
 
 const router = Router();
 
@@ -15,13 +16,7 @@ router.get('/cart', validateToken, (req, res) => {
   res.sendFile(__dirFile);
 });
 
-function isItemInCart(serverCart, itemToAdd) {
-  if (serverCart.length === 0) return false;
-
-  return serverCart.some((item) => item.id === itemToAdd.id);
-}
-
-router.post('/cart', (req, res) => {
+router.post('/cart', validateToken, (req, res) => {
   const [cart] = req.body;
 
   const jsonString = fs.readFileSync(__dirFile, 'utf-8', (err, data) => {
