@@ -70,6 +70,30 @@ router.put('/cart/:id', validateToken, (req, res) => {
     fs.writeFileSync(__dirFile, JSON.stringify(cart));
   } catch (err) {
     console.error(err);
+    res.send('error al escribir el archivo en la base de datos');
+  }
+
+  res.send(cart[id]);
+});
+
+router.delete('/cart/:id', validateToken, (req, res) => {
+  const { id } = req.params;
+
+  const files = fs.readFileSync(__dirFile, 'utf-8', (err, data) => {
+    if (err) res.send('Error al leer el archivo en la base de datos');
+
+    return data;
+  });
+
+  const cart = JSON.parse(files);
+
+  cart.splice(id, 1);
+
+  try {
+    fs.writeFileSync(__dirFile, JSON.stringify(cart));
+  } catch (err) {
+    console.error(error);
+    res.send('Error al escribir el archivo en la base de datos');
   }
 
   res.send(cart[id]);

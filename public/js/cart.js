@@ -14,8 +14,6 @@ const typeOfPayment = document.getElementById('payment-method');
 
 let cart = Array();
 
-const userData = localStorage.getItem('userData');
-
 async function checkAuth() {
   const { accessToken } = JSON.parse(localStorage.getItem('userData'));
 
@@ -26,16 +24,32 @@ async function checkAuth() {
   });
 }
 
-function deleteProduct(product) {
+async function deleteProduct(product) {
+  // const DOMProduct = document.getElementById(`${product.id}`);
+  // DOMProduct.remove();
+  // const itemToDelete = cart.find((item) => item.id === Number(product.id));
+  // const index = cart.indexOf(itemToDelete);
+  // const newCart = cart;
+  // newCart.splice(index, 1);
+  // localStorage.setItem('cart', JSON.stringify(newCart));
+
+  const { accessToken } = JSON.parse(localStorage.getItem('userData'));
   const DOMProduct = document.getElementById(`${product.id}`);
   DOMProduct.remove();
 
-  const itemToDelete = cart.find((item) => item.id === Number(product.id));
-  const index = cart.indexOf(itemToDelete);
-  const newCart = cart;
-  newCart.splice(index, 1);
+  const split = DOMProduct.id.split('-');
+  const id = split[0];
 
-  localStorage.setItem('cart', JSON.stringify(newCart));
+  const cart = await getCartProducts();
+  const itemToDelete = cart.find((item) => item.id === Number(id));
+  const index = cart.indexOf(itemToDelete);
+
+  fetch(`${CART_URL}/${index}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: 'DELETE',
+  }).then((res) => res);
 }
 
 // Update items quantity in cart stored in LocalStorage
