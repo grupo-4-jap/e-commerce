@@ -2,32 +2,32 @@ import { showAlert } from './utils/showAlert.js';
 import { getCartProducts } from './utils/getCartProducts.js';
 import { CART_URL } from './constants/API.js';
 
-const shippingRadioButtons = document.querySelectorAll(
-  '.shipping-radio-button'
-);
 const creditCardBtn = document.getElementById('credit-card-btn');
 const creditCardInputs = document.querySelectorAll('.credit-card-input');
 const bankTransferBtn = document.getElementById('bank-transfer-btn');
 const bankTransferInput = document.querySelector('.bank-transfer-input');
+const shippingRadioButtons = document.querySelectorAll(
+  '.shipping-radio-button'
+);
 const typeOfPayment = document.getElementById('payment-method');
 const form = document.querySelector('form');
+const modalCloseBtn = document.querySelector('#close-modal-btn');
+
+const { accessToken } = JSON.parse(localStorage.getItem('userData'));
 
 let cart = Array();
 
 async function checkAuth() {
-  const { accessToken } = JSON.parse(localStorage.getItem('userData'));
-
   const res = await fetch('http://localhost:3000/cart', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
 
-  return res.ok;
+  return res.ok ? true : false;
 }
 
 async function deleteProduct(product) {
-  const { accessToken } = JSON.parse(localStorage.getItem('userData'));
   const DOMProduct = document.getElementById(`${product.id}`);
   DOMProduct.remove();
 
@@ -48,7 +48,6 @@ async function deleteProduct(product) {
 
 // Update items quantity in cart stored in LocalStorage
 async function updateItemQuantity(DOMItem, newValue) {
-  const { accessToken } = JSON.parse(localStorage.getItem('userData'));
   const { id } = DOMItem;
   const idNumber = id.split('-')[0];
   const itemToModify = cart.find((item) => item.id === Number(idNumber));
@@ -105,22 +104,10 @@ function updateSiblingInput(DOMElement, value) {
     value;
 }
 
-function isRadioChecked(array) {
-  return array.some((element) => element.checked === true);
-}
-
 function getInputsToValidate() {
-  // DOM Elements
-  const formInputs = Array.from(form.querySelectorAll('input')).filter(
+  return Array.from(form.querySelectorAll('input')).filter(
     (input) => input.type !== 'radio'
   );
-  const modal = document.querySelector('.modal-body');
-  const modalInputs = Array.from(modal.querySelectorAll('input')).filter(
-    (input) => input.type !== 'radio' && input.disabled === false
-  );
-
-  // Array
-  return formInputs.concat(modalInputs);
 }
 
 function getValidation() {
@@ -128,13 +115,21 @@ function getValidation() {
   const modalInputs = inputs.filter(
     (input) =>
       input.className.includes('credit-card-input') ||
-      input.className.includes('bank-transfer')
+      input.className.includes('bank-transfer-input')
   );
 
-  // Check every input is validated
   inputs.forEach((input) => {
     input.setAttribute('required', '');
     input.checkValidity();
+
+    const feedback = input.parentElement.querySelector('.invalid-feedback');
+    if (feedback) {
+      if (!input.checkValidity()) {
+        feedback.style = 'display: block !important;';
+      } else {
+        feedback.style = 'display: none !important;';
+      }
+    }
   });
 
   // Checks validation for modal
@@ -150,26 +145,14 @@ function getValidation() {
   return isValid && !isCartEmpty;
 }
 
-function resetCart(inputs, localCart) {
-  // Remove from localStorage
-  localStorage.removeItem('cart');
-
-  // Empty the localArray
-  localCart.length = 0;
-
-  // Empty inputs value and delete required attribute
-  inputs.forEach((input) => {
-    input.value = '';
-    input.removeAttribute('required');
-  });
-}
-
 // Renders the cart elements
 function showCart(array) {
   const tbody = document.querySelector('tbody');
 
+  if (array.length === 0) tbody.innerHTML = '';
+
   // MD or greater devices
-  cart.forEach((product) => {
+  array.forEach((product) => {
     const { id, name, cost, count, currency, images } = product;
     const row = document.createElement('tr');
     row.className = 'article';
@@ -190,7 +173,7 @@ function showCart(array) {
   });
 
   // Mobile devices
-  cart.forEach((product) => {
+  array.forEach((product) => {
     const { id, name, cost, count, currency, images } = product;
     const listGroup = document.querySelector('#list-group');
     listGroup.innerHTML += `
@@ -253,7 +236,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         updateSiblingInput(item, quantity);
 
         item.querySelector('.total').innerText = `${currency} ${finalPrice}`;
+
         await updateItemQuantity(item, quantity);
+
         getBuyResume();
       });
 
@@ -264,38 +249,33 @@ document.addEventListener('DOMContentLoaded', async function () {
         getBuyResume();
       });
     });
-
-    shippingRadioButtons.forEach((button) => {
-      button.addEventListener('click', function () {
-        getBuyResume();
-      });
-    });
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      if (getValidation()) {
-        cart.length = 0;
-        getBuyResume();
-        showCart(cart);
-      }
-    });
-
-    document.querySelectorAll('.invalid-feedback').forEach((feedback) => {
-      feedback.classList.add('d-none');
-    });
-
-    document.querySelectorAll('.form-control').forEach((input) => {
-      input.classList.remove('is-invalid');
-    });
-
-    // btnEndPurchase.addEventListener('click', (e) => {
-    //   e.preventDefault();
-    //   e.stopPropagation();
-
-    //   checkValidation();
-    // });
   }
+
+  shippingRadioButtons.forEach((button) => {
+    button.addEventListener('click', function () {
+      getBuyResume();
+    });
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (getValidation()) {
+      cart.length = 0;
+      getBuyResume();
+      console.log(cart);
+      showCart(cart);
+      showAlert('Tu compra ha sido realizada con éxito', 'success');
+      document
+        .querySelectorAll('[required]')
+        .forEach((input) => input.removeAttribute('required'));
+    }
+  });
+
+  modalCloseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    getValidation();
+  });
 
   creditCardBtn.addEventListener('click', function () {
     if (creditCardBtn.checked) {
@@ -312,8 +292,22 @@ document.addEventListener('DOMContentLoaded', async function () {
       creditCardInputs.forEach((input) => {
         input.setAttribute('disabled', '');
       });
-      bankTransferInput.removeAttribute('disabled', '');
     }
+    bankTransferInput.removeAttribute('disabled', '');
     typeOfPayment.innerHTML = 'Transferencia bancaria';
+  });
+
+  Array.from(form.querySelectorAll('input')).forEach((input) => {
+    const feedback = input.parentElement.querySelector('.invalid-feedback');
+
+    if (feedback) {
+      input.addEventListener('input', () => {
+        const isValid = input.checkValidity();
+
+        isValid
+          ? (feedback.style = 'display: d-none !important;')
+          : (feedback.style = 'display: block !important;');
+      });
+    }
   });
 });

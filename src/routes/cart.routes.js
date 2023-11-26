@@ -92,7 +92,7 @@ router.delete('/cart/:id', validateToken, (req, res) => {
   try {
     fs.writeFileSync(__dirFile, JSON.stringify(cart));
   } catch (err) {
-    console.error(error);
+    console.error(err);
     res.send('Error al escribir el archivo en la base de datos');
   }
 

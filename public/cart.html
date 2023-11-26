@@ -231,7 +231,7 @@
                   <div class="col form-check p-0">
                     <div class="container ps-4">
                       <input
-                        class="form-check-input payment-option"
+                        class="form-check-input payment-option input-hidden"
                         type="radio"
                         name="transferRadios"
                         id="credit-card-btn"
@@ -251,7 +251,7 @@
                           <input
                             type="text"
                             maxlength="16"
-                            class="form-control credit-card-input"
+                            class="form-control credit-card-input input-hidden"
                             id="credit-card-number"
                             name="credit-card-number"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
@@ -264,7 +264,7 @@
                           <input
                             type="tel"
                             maxlength="3"
-                            class="form-control credit-card-input"
+                            class="form-control credit-card-input input-hidden"
                             id="ccv-number"
                             pattern="[0-9]*"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
@@ -279,7 +279,7 @@
                       >
                         <input
                           type="tel"
-                          class="form-control credit-card-input"
+                          class="form-control credit-card-input input-hidden"
                           name="month"
                           placeholder="MM"
                           maxlength="2"
@@ -289,7 +289,7 @@
                         <span>/</span>
                         <input
                           type="tel"
-                          class="form-control credit-card-input"
+                          class="form-control credit-card-input input-hidden"
                           name="year"
                           placeholder="YY"
                           maxlength="2"
@@ -301,7 +301,7 @@
                     <div class="containter ps-4 mb-3">
                       <div class="form-check p-0">
                         <input
-                          class="form-check-input payment-option"
+                          class="form-check-input payment-option input-hidden"
                           type="radio"
                           name="transferRadios"
                           id="bank-transfer-btn"
@@ -319,7 +319,7 @@
                       </label>
                       <input
                         type="tel"
-                        class="form-control bank-transfer-input"
+                        class="form-control bank-transfer-input input-hidden"
                         id="account-number"
                         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                       />
@@ -331,7 +331,7 @@
                     type="button"
                     class="btn btn-primary m-0"
                     data-bs-dismiss="modal"
-                    id="close-btn"
+                    id="close-modal-btn"
                   >
                     Cerrar
                   </button>
