@@ -1,4 +1,6 @@
 import { showAlert } from './utils/showAlert.js';
+import getJSONData from './utils/getJSONData.js';
+import { getCartProducts } from './utils/getCartProducts.js';
 
 const shippingRadioButtons = document.querySelectorAll(
   '.shipping-radio-button'
@@ -14,32 +16,13 @@ let cart = Array();
 const userData = localStorage.getItem('userData');
 
 async function checkAuth() {
-  const { token } = await fetch('http://localhost:3000/login', {
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    method: 'POST',
-    // body: JSON.stringify({ username: 'admin', password: 'admin' }),
-    body: userData,
-  })
-    .then((response) => response.json())
-    .then((data) => data);
+  const { accessToken } = JSON.parse(localStorage.getItem('userData'));
 
   return fetch('http://localhost:3000/cart', {
     headers: {
-      'access-token': token,
+      Authorization: `Bearer ${accessToken}`,
     },
-  }).then((res) => res.ok);
-}
-
-// If the cart is null this will be filled with the defaultCartProduct that is
-// get from the JSON, but if the cart already have it this won't be filled,
-// then the cart will be concatenated with the localStorage cart
-// which is created with the user activity
-async function getCartProducts() {
-  let localCart = JSON.parse(localStorage.getItem('cart'));
-
-  localStorage.setItem('cart', JSON.stringify(localCart));
-
-  return localCart;
+  });
 }
 
 function deleteProduct(product) {
@@ -100,7 +83,7 @@ function getBuyResume() {
 
   let totalPrice = 0;
   cart.forEach((item) => {
-    totalPrice += item.count * item.unitCost;
+    totalPrice += item.count * item.cost;
   });
 
   DOMsubtotal.innerHTML = `USD ${totalPrice}`;
@@ -239,26 +222,27 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (!isAuthorized) {
     showAlert('Debes estar autorizado para ver el carrito', 'danger');
   } else {
-    cart = await getCartProducts().then((data) => data);
+    cart = await getCartProducts();
+    console.log(cart);
     const tbody = document.querySelector('tbody');
     getBuyResume();
 
     // Renders the cart elements
     // MD or greater devices
     cart.forEach((product) => {
-      const { id, name, unitCost, count, currency, image } = product;
+      const { id, name, cost, count, currency, images } = product;
       const row = document.createElement('tr');
       row.className = 'article';
       row.id = `${id}-md`;
 
       row.innerHTML = `
         <td class="d-flex align-items-center gap-3">
-          <img src="${image}" alt="Imagen del producto" width="150">
+          <img src="${images[0]}" alt="Imagen del producto" width="150">
           <p class="m-0">${name}</p>
         </td>
-        <td class="cost">${currency} ${unitCost}</td>
+        <td class="cost">${currency} ${cost}</td>
         <td><input class="text-center" type="number" value="${count}" min="1" style="width:5em" /></td>
-        <td class="total">${currency} ${unitCost * count}</td>
+        <td class="total">${currency} ${cost * count}</td>
         <td class="cursor-active"><img class="border rounded border-danger p-2" src="./icons/trash3.svg" width="40" height="40" /></td>
         `;
 
@@ -267,12 +251,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Mobile devices
     cart.forEach((product) => {
-      const { id, name, unitCost, count, currency, image } = product;
+      const { id, name, cost, count, currency, images } = product;
       const listGroup = document.querySelector('#list-group');
       listGroup.innerHTML += `
         <li class="list-group-item d-flex justify-content-center article" id="${id}-s">
           <div class="card border-0">
-            <img src="${image}" alt="..." />
+            <img src="${images[0]}" alt="..." />
             <div class="mt-2">
               <h5 class="card-title">${name}</h5>
               <div class="row">
@@ -280,11 +264,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                   <div class="col">
                     <p>
                       <span class="fw-bold">Costo: </span>
-                      <p class="cost">${currency} ${unitCost}</p>
+                      <p class="cost">${currency} ${cost}</p>
                     </p>
                     <p>
                       <span class="fw-bold">Subtotal: </span>
-                      <p class="total">${currency} ${unitCost * count}</p>
+                      <p class="total">${currency} ${cost * count}</p>
                     </p>
                   </div>
                   <div class="col-3 d-flex align-self-center">

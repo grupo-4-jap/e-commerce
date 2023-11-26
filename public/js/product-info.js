@@ -7,6 +7,7 @@ import getJSONData from './utils/getJSONData.js';
 import { getUserData } from './utils/loggingUser.js';
 import addEvents from './utils/addEvents.js';
 import { PRODUCT } from './constants/CONSTANTS.js';
+import { getCartProducts } from './utils/getCartProducts.js';
 
 // Get product-info data
 const productID = getProductID();
@@ -154,47 +155,57 @@ function showRelatedProducts() {
   });
 }
 
-function addCart(product) {
-  const localProducts =
-    JSON.parse(localStorage.getItem('cart')) === null
-      ? []
-      : JSON.parse(localStorage.getItem('cart'));
-  const products = localProducts === null ? [] : localProducts;
-  const { id, name, cost, currency, images } = product;
+async function addCart(product) {
+  // const localProducts =
+  //   JSON.parse(localStorage.getItem('cart')) === null
+  //     ? []
+  //     : JSON.parse(localStorage.getItem('cart'));
+  // const products = localProducts === null ? [] : localProducts;
+  // const { id, name, cost, currency, images } = product;
+  // // This prevents repeated items in the cart
+  // if (localProducts.length > 0) {
+  //   const isInCart = localProducts.some(
+  //     (localProduct) => localProduct.id === id
+  //   );
+  //   if (isInCart) {
+  //     for (const localProduct of localProducts) {
+  //       if (localProduct.id === product.id) {
+  //         localProduct.count++;
+  //       }
+  //     }
+  //   } else {
+  //     products.push({
+  //       id,
+  //       name,
+  //       unitCost: cost,
+  //       currency,
+  //       image: images[0],
+  //       count: 1,
+  //     });
+  //   }
+  // } else {
+  //   products.push({
+  //     id,
+  //     name,
+  //     unitCost: cost,
+  //     currency,
+  //     image: images[0],
+  //     count: 1,
+  //   });
+  // }
+  // localStorage.setItem('cart', JSON.stringify(products));
 
-  // This prevents repeated items in the cart
-  if (localProducts.length > 0) {
-    const isInCart = localProducts.some(
-      (localProduct) => localProduct.id === id
-    );
-    if (isInCart) {
-      for (const localProduct of localProducts) {
-        if (localProduct.id === product.id) {
-          localProduct.count++;
-        }
-      }
-    } else {
-      products.push({
-        id,
-        name,
-        unitCost: cost,
-        currency,
-        image: images[0],
-        count: 1,
-      });
-    }
-  } else {
-    products.push({
-      id,
-      name,
-      unitCost: cost,
-      currency,
-      image: images[0],
-      count: 1,
-    });
-  }
+  product.count = 1;
+  const { accessToken } = JSON.parse(localStorage.getItem('userData'));
 
-  localStorage.setItem('cart', JSON.stringify(products));
+  await fetch('http://localhost:3000/cart', {
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      authorization: `Bearer ${accessToken}`,
+    },
+    method: 'POST',
+    body: JSON.stringify([product]),
+  });
 }
 
 function getComments() {

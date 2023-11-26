@@ -296,6 +296,7 @@ a.custom-card:hover {
 
   .btn-hover:hover {
     transform: scale(1.03);
+    background-color: var(--our-primary-color);
   }
 }
 

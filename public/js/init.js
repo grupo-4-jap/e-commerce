@@ -97,7 +97,6 @@ function changeTheme(e) {
 
 document.addEventListener('DOMContentLoaded', function () {
   const isLog = isLogged();
-  // console.log(`El usuario esta logeado? ${isLog}`);
 
   if (!isLog && !checkPage('login.html')) {
     location.href = 'login.html';
@@ -107,9 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   createUserNav();
   checkTheme();
-});
 
-document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('cart').addEventListener('click', function () {
     window.location.href = 'cart.html';
   });
@@ -124,8 +121,8 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.removeItem('userData');
     window.location.href = 'login.html';
   });
-});
 
-themeTogglerBtn.addEventListener('click', function (e) {
-  changeTheme(e);
+  themeTogglerBtn.addEventListener('click', function (e) {
+    changeTheme(e);
+  });
 });

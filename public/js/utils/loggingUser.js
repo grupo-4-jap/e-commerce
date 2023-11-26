@@ -1,29 +1,30 @@
+import { showAlert } from './showAlert.js';
+
 // Logging user
-function login(userData) {
-  if (isLogged()) {
-    // console.log('El usuario ya esta logeado');
-    return false;
-  }
+async function login(userData) {
+  // if (isLogged()) return false;
 
-  if (userData === null) {
-    // console.log('user Data es nulo');
-    return false;
-  }
+  if (userData === null) return false;
 
-  if (!('username' in userData) || !('password' in userData)) {
-    // console.log(
-    // 'No existe el valor de email y contraseña en los datos del usuario'
-    // );
-    return false;
-  }
+  if (!('username' in userData)) return false;
 
-  // fetch('http://localhost:3000/cart', {
-  //   headers: { 'Content-Type': 'application/json; charset=utf-8' },
-  //   method: 'POST',
-  //   body: JSON.stringify(userData),
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => console.log(data));
+  const { accessToken } = await fetch('http://localhost:3000/login', {
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    method: 'POST',
+    body: JSON.stringify(userData),
+  }).then((res) => {
+    if (!res.ok) {
+      showAlert('Usuario no registrado', 'danger');
+
+      throw new Error('Usuario no autorizado');
+    }
+
+    return res.json();
+  });
+
+  delete userData.password;
+  userData.accessToken = accessToken;
+
   localStorage.setItem('userData', JSON.stringify(userData));
   return true;
 }
