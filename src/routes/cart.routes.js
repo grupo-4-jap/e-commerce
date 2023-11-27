@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 
 import { validateToken } from '../controllers/validateToken.js';
+import { isItemInCart } from '../controllers/isItemInCart.js';
 
 const router = Router();
 
@@ -15,12 +16,7 @@ router.get('/cart', validateToken, (req, res) => {
   res.sendFile(__dirFile);
 });
 
-function isItemInCart(serverCart, itemToAdd) {
-  if (serverCart.length === 0) return false;
-  return serverCart.every((item) => item.id === itemToAdd.id);
-}
-
-router.post('/cart', (req, res) => {
+router.post('/cart', validateToken, (req, res) => {
   const [cart] = req.body;
 
   const jsonString = fs.readFileSync(__dirFile, 'utf-8', (err, data) => {
@@ -46,6 +42,61 @@ router.post('/cart', (req, res) => {
   }
 
   res.send('Data saved successfully');
+});
+
+router.get('/cart/:id', validateToken, (req, res) => {
+  res.send(req.body);
+});
+
+router.put('/cart/:id', validateToken, (req, res) => {
+  const [operation] = req.body;
+  const { id } = req.params;
+
+  const files = fs.readFileSync(__dirFile, 'utf-8', (err, data) => {
+    if (err) res.send('Error al leer el archivo en la base de datos');
+
+    return data;
+  });
+
+  const cart = JSON.parse(files);
+
+  cart.forEach((item, index) => {
+    if (index == id) {
+      operation === 'add' ? ++item.count : --item.count;
+    }
+  });
+
+  try {
+    fs.writeFileSync(__dirFile, JSON.stringify(cart));
+  } catch (err) {
+    console.error(err);
+    res.send('error al escribir el archivo en la base de datos');
+  }
+
+  res.send(cart[id]);
+});
+
+router.delete('/cart/:id', validateToken, (req, res) => {
+  const { id } = req.params;
+
+  const files = fs.readFileSync(__dirFile, 'utf-8', (err, data) => {
+    if (err) res.send('Error al leer el archivo en la base de datos');
+
+    return data;
+  });
+
+  const cart = JSON.parse(files);
+
+  cart.splice(id, 1);
+
+  try {
+    fs.writeFileSync(__dirFile, JSON.stringify(cart));
+  } catch (err) {
+    console.error(err);
+    res.send('Error al escribir el archivo en la base de datos');
+  }
+
+  res.send(cart[id]);
 });
 
 export default router;
